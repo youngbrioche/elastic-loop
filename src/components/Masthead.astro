@@ -35,7 +35,14 @@ const isActive = (slug: string) => path === `/${slug}`;
     </nav>
     <div class="mh-right">
       <a class="mh-ext" href="https://www.robert-glaser.de" target="_blank" rel="noopener">robert-glaser.de&nbsp;&#8599;</a>
-      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+        <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+        <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </button>
     </div>
   </div>
 </header>
@@ -123,11 +130,21 @@ const isActive = (slug: string) => path === `/${slug}`;
     height: 40px;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    line-height: 1;
     color: var(--rg-fg-1);
     cursor: pointer;
     padding: 0;
+  }
+  .nav-toggle svg {
+    display: block;
+  }
+  .nav-toggle .icon-close {
+    display: none;
+  }
+  .masthead.nav-open .nav-toggle .icon-open {
+    display: none;
+  }
+  .masthead.nav-open .nav-toggle .icon-close {
+    display: block;
   }
 
   @media (max-width: 860px) {
@@ -173,7 +190,6 @@ const isActive = (slug: string) => path === `/${slug}`;
   const toggle = header?.querySelector<HTMLButtonElement>('.nav-toggle');
   toggle?.addEventListener('click', () => {
     const open = header!.classList.toggle('nav-open');
-    toggle.textContent = open ? '✕' : '☰';
     toggle.setAttribute('aria-expanded', String(open));
   });
 </script>
