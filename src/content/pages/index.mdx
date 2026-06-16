@@ -1,6 +1,6 @@
 ---
 title: "The Elastic Loop"
-description: "A framework for everyone delegating work to machines. When to keep the loop tight, when to let it stretch, and what has to be true before you let go."
+description: "A framework for everyone delegating work to machines. When to keep the loop tight, when to let it stretch, and what has to be in place before you let go."
 kicker: "Helping software build itself"
 order: 0
 status: seed
@@ -18,7 +18,7 @@ import Term from '../../components/Term.astro';
 
 <div class="reading hub-lead">
 
-The Elastic Loop is a working model for delegating work, specificly building software products, to AI agents without losing track of it: when to keep the loop tight, when to let it stretch, and what has to be true before you let go. It is for engineers, but just as much for the product people, the designers, the domain experts, the people who shape how a team works, and the leaders deciding where the money goes. The breadth is the point. Once an agent does the building, two judgments decide the outcome: what is worth building, and whether what came back is any good. Both are spread across every one of those roles, not concentrated in whoever sits at the keyboard.
+The Elastic Loop is a working model for delegating work, specifically building software products, to AI agents. It is for you if you want to learn when to keep the work loop tight, when to let it stretch, and what has to be in place before you let go. It is for engineers, but just as much for the product people, the designers, the domain experts, the people who shape how a team works, and the leaders deciding where the money goes. The breadth is the point. Once agents do the building, two judgments decide the outcome: what is worth building, and whether what came back is any good. Both are spread across every one of those roles, not concentrated in whoever sits at the keyboard.
 
 </div>
 
@@ -26,7 +26,7 @@ The Elastic Loop is a working model for delegating work, specificly building sof
 
 Chances are you have done this today: you asked an AI for something, read the answer, winced, rephrased, read again. That round trip is the loop, and it is the unit everything here is built from. You put in intent, the agent does some work, you check what came back, and what you learned shapes the next ask. The size of a loop is how much work happens between two of your looks: a sentence, a feature, a week of output.
 
-The version you ran this morning is the tightest one. Every turn under your eyes, every result checked before it counts, and that mode works well. The question this framework keeps circling is how far the loop can stretch beyond it: first elastic, where you hand over a bounded chunk of work and check in at agreed points, then loose, where the agent works for multiple hours on its own while you do something else. And what has to be true before you can let go that far.
+The version you ran this morning is the tightest one. Every turn under your eyes, every result checked before it counts, and that mode works well. The question this framework keeps circling is how far the loop can stretch beyond it: first elastic, where you hand over a bounded chunk of work and check in at agreed points, then loose, where the agent works for multiple hours on its own while you do something else. And what has to be in place before you can let go that far.
 
 ## The whole framework in one sentence
 
@@ -48,7 +48,7 @@ The version you ran this morning is the tightest one. Every turn under your eyes
 
 <div>
 
-**Keeps it useful.** <Term id="backpressure">Backpressure</Term> is the word that stuck in agentic engineering for resistance: anything an agent's output has to survive before it counts ([Geoffrey Huntley](https://ghuntley.com/ralph/) and [Moss Banay](https://banay.me/dont-waste-your-backpressure/) did much of the early work on it). A failing test is backpressure, and so is a designer's critique or an acceptance scenario from someone who knows the domain. Plenty of the resistance that matters never touches a compiler. Engineers will know the word from streams and TCP, where it means downstream throttling upstream; this is a borrowing of the physics, not the protocol.
+**Keeps it useful.** <Term id="backpressure">Backpressure</Term> is the word that stuck in agentic engineering for resistance: anything an agent's output has to survive before it counts ([Geoffrey Huntley](https://ghuntley.com/ralph/) and [Moss Banay](https://banay.me/dont-waste-your-backpressure/) did much of the early work on it). A failing test is backpressure, and so is a designer's critique or an acceptance scenario from someone who knows the domain. Plenty of the resistance that matters never touches a compiler. The challenge is how much of this backpressure can be automated, so it does not need a human in the loop stopping the belt.
 
 </div>
 
@@ -62,23 +62,23 @@ The version you ran this morning is the tightest one. Every turn under your eyes
 
 ## Where does your next task belong?
 
-Two questions decide where a task sits: how much line does the agent get, and what holds the output other than you? Read the grid on those two axes. Each step up adds one more dam between the agent and what ships.
+Two questions decide where a task sits: how much leash does the agent get, and what holds the output other than you? Read the grid on those two axes. Each step up adds one more dam between the agent and shipped product.
 
 <MasterGrid />
 
 ### What is context?
 
-A longer leash does not call for more context. The amount a task needs is fixed. What changes is how much of it the agent has to reach on its own, without you handing it over turn by turn from your own head.
+A longer leash does not call for more context. The amount a task needs is fixed. What changes is how much of it the agent has to reach on its own, without you handing it over turn by turn from your own head or systems the agent can not use on its own.
 
-So what is this context, concretely? Everything the agent would need to stop guessing: the decision history that evaporated in a chat thread three months ago, the business rules that live only in your most experienced colleague's head, the design system, API docs that describe what the system does today rather than two years ago, who the customer is and what they have already tried. Most of this exists in any team that has shipped something. It just rarely exists in a form an agent can read, because heads, hallway conversations, and meeting recordings nobody rewatches do not count.
+So what is *context*? Basically, everything the agent would need to stop guessing: the decision history that evaporated in a chat thread three months ago, the business rules that live only in your most experienced colleague's head, the design system, API docs that describe what the system does today rather than two years ago, who the customer is and what they have already tried. Most of this exists in any team that has shipped something. It just rarely exists in a form an agent can read, because heads, kitchen conversations, and meeting recordings nobody rewatches do not count.
 
 Freshness is part of the bar, and on the right side of the grid it is the sharp part. In a tight loop a stale document costs you one correction, because you watch the wrong turn happen. In a loose loop a stale document is worse than none, because the agent follows it with full conviction and nobody contradicts it for hours.
 
-Moving that knowledge into a state where it stays available and current without a human pumping it in has become a discipline of its own, usually filed under context engineering. It is slower work than adding another check, which is why the floor sits where it does.
+Moving that knowledge into a state where it stays available and current without a human pumping it in has become a discipline of its own, usually filed under *context engineering*. It is slower work than adding another check, which is why the floor sits where it does.
 
 ## Two ways this goes wrong
 
-> Sprawl is the explosion. Slop is the slow collision. Both are what happens when a search process runs without backpressure, and only one of them announces itself.
+> Sprawl is the explosion. Slop is the slow collision.<br />Both are what happens when a search process runs without backpressure, and only one of them announces itself.
 
 A <Term id="search-space">search process</Term>, because that is what an agentic loop is, essentially: it explores a space of possible solutions and looks for one or many variants that fit your intent (see [Why](/why)).
 
@@ -88,7 +88,7 @@ A <Term id="search-space">search process</Term>, because that is what an agentic
 
 ### Sprawl
 
-Output without containment: variant inflation, refactoring PRs nobody asked for, backlogs gathering mold. It happens far from any repo too. Picture the team that generates thirty landing-page variants in an afternoon while nobody is assigned to review even one. The good news is that sprawl announces itself. You can see it in CI logs and PR volume and pull people back. Think of a pressure reactor: the agents generate pressure, and the containment wall is what makes a productive reaction possible in the first place.
+Output without containment: variant inflation, refactoring PRs nobody asked for, backlogs gathering mold. It happens far from any repo too. Picture the team that generates thirty landing-page variants in an afternoon while nobody is assigned to review even one. The good news is that sprawl announces itself. You can see it in pull request volume, and pull people back. Think of a pressure reactor: agents generate pressure, and the containment wall is what makes a productive reaction possible in the first place.
 
 </div>
 
@@ -96,7 +96,7 @@ Output without containment: variant inflation, refactoring PRs nobody asked for,
 
 ### Slop
 
-The stock-photo feeling: output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. The everyday version is the onboarding text that sounds like every onboarding text ever written. Slop does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. It gets squeezed from both sides: context up front keeps the agent from starting in the <Term id="statistical-middle">statistical middle</Term> of everything it has ever read, and product backpressure at the back pulls the output out of it.
+The stock-photo feeling: output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. Lots of noise, almost no signal. The everyday version is the onboarding text that sounds like every onboarding text ever written. Slop does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. Colleagues you avoid texting with, because they sent you uncanny copywriting, lots of it. It gets squeezed from both sides: context up front keeps the agent from starting in the <Term id="statistical-middle">statistical middle</Term> of everything it has ever read, and product backpressure at the back pulls the output out of it.
 
 </div>
 
@@ -114,7 +114,7 @@ One honest caveat, because sprawl has two natures and the grid only catches one.
 
 ### The truffle
 
-Delegation runs on taste: qualitative judgment built through sensory contact with the work, the kind you get from reading diffs, shipping mistakes, and watching real users get stuck. I reach for this one with engineers who review every turn because letting go feels like losing the craft. Tight is a legitimate mode, just not the only one. And I reach for it with everyone who judges output without building it: designers, domain experts, anyone whose "this is off" is worth more than a passing test suite. The talk this framework grew out of, [How Does Truffle Taste?](https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/), was built around it.
+Delegation runs on taste, and taste is typically acquired. Qualitative judgment built through sensory contact with the work, the kind you get from reading diffs, shipping mistakes, and watching real users get stuck. I reach for this one with engineers who review every turn because letting go feels like losing the craft. Tight is a legitimate mode, just not the only one. And I reach for it with everyone who judges output without building it: designers, domain experts, anyone whose "this is off" is worth more than a passing test suite. The talk this framework grew out of, [How Does Truffle Taste?](https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/), was built around it.
 
 </div>
 
@@ -140,7 +140,7 @@ Backpressure is containment, and containment is what allows a productive reactio
 
 ## Where to start
 
-If you are new to all of this, start with Loops; if you never write code, Roles is your door in.
+If you are new to all of this, start with Loops.
 
 <StartList cards={[
   { href: '/loops', num: '01', title: 'Loops', text: 'Tight, elastic, loose: three zones and how to size the loop for the task in front of you. None of the zones outranks the others, each just comes with different preconditions.' },
@@ -152,6 +152,6 @@ If you are new to all of this, start with Loops; if you never write code, Roles 
 
 </div>
 
-## Even machines.
+## A framework for everyone delegating work to machines. Even machines.
 
-The quiet part: agents have started applying this loop to themselves. [Cursor's First Proof](https://1stproof.org/) and [OpenAI's harness engineering](https://openai.com/index/harness-engineering/) arrived at the same shape independently: decompose, parallelize, verify, iterate. Anthropic's Fable model shows strong signs of being post-trained to put itself in reinforced loops, and the [dynamic workflows](https://code.claude.com/docs/en/workflows) feature builds harnessed loops on the fly for the task at hand. I am keeping this as a coda rather than a headline, because it is the most interesting thread here and the one I am least sure about.
+Agents have started applying this loop to themselves. [Cursor's First Proof](https://1stproof.org/) and [OpenAI's harness engineering](https://openai.com/index/harness-engineering/) arrived at the same shape independently: decompose, parallelize, verify, iterate. Anthropic's Fable model shows strong signs of being post-trained to put itself in reinforced loops, and the [dynamic workflows](https://code.claude.com/docs/en/workflows) feature builds harnessed loops on the fly for the task at hand. I am keeping this as a coda rather than a headline, because it is the most interesting thread here and the one I am least sure about.
