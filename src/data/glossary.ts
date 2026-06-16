@@ -31,8 +31,8 @@ export const glossary: Record<string, GlossaryEntry> = {
   },
   backpressure: {
     term: 'Backpressure',
-    def: 'Any resistance an agent’s output has to survive before it counts: a failing test, a code review, a domain expert saying “this is wrong”.',
-    anchor: 'A red build is backpressure. So is a PO rejecting a story that technically works but misses the point.',
+    def: 'The resistance an agent works against while it builds, well before any review at the end: a failing test or type error on the technical side, an acceptance scenario or rubric on the product side. Some of it reaches the agent automatically as a signal in the loop; some it imposes on itself by following a discipline set at the start, like writing the failing test first and working until it goes green. The more of it you can encode, the longer you can let the loop run.',
+    anchor: 'A red build is backpressure; the agent reads it and fixes the code. So are acceptance criteria: write them well and the agent works against your definition of good as it goes, instead of a person catching the miss at the end.',
   },
   'search-space': {
     term: 'Search space',
