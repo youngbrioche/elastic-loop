@@ -30,8 +30,10 @@ const { kicker, title, tagline } = Astro.props;
 </section>
 
 <style>
+  /* No horizontal padding: the hub <main> already supplies the gutter, so the
+     hero must align flush with the content below it. Vertical spacing only. */
   .hero {
-    padding: 72px 24px 24px;
+    padding: 72px 0 24px;
   }
 
   .hero-inner {
