@@ -14,11 +14,11 @@
       </div>
       <div class="head">
         <div class="head-title">Elastic</div>
-        <div class="head-sub">checkpoints at agreed points &middot; hours</div>
+        <div class="head-sub">checkpoints at agreed points &middot; minutes to hours</div>
       </div>
       <div class="head">
         <div class="head-title">Loose</div>
-        <div class="head-sub">days of autonomy &middot; outcomes only</div>
+        <div class="head-sub">multiple hours of autonomy &middot; outcomes only</div>
       </div>
     </div>
     <!-- body -->
@@ -100,7 +100,7 @@
   .body-grid {
     display: grid;
     grid-template-columns: 190px 1fr 1fr 1fr;
-    grid-template-rows: repeat(3, 132px);
+    grid-template-rows: repeat(3, minmax(132px, auto));
     gap: 0;
   }
   .bl { border-left: 1px solid var(--rg-border); }

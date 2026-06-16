@@ -89,7 +89,7 @@ The trap deserves its own paragraph. A polished demo can hide slop, and verifica
 
 ## Does any of this exist outside slide decks?
 
-OpenClaw is the closest thing we have to a running reference in the wild: a 375k-star project with roughly 7,000 open issues and PRs, operated deep in the loose zone. What strikes me is the ring of [metatools](https://openclaw.ai/ecosystem/) the team built around the agent. Almost none of it is the harness itself. It is what has to surround a harness before you can let an agent run loose for days and trust what comes back, and it does two jobs at once: supply backpressure, and give the agent enough infrastructure to reach its own verdict.
+OpenClaw is the closest thing we have to a running reference in the wild: a 375k-star project with roughly 7,000 open issues and PRs, operated deep in the loose zone. What strikes me is the ring of [metatools](https://openclaw.ai/ecosystem/) the team built around the agent. Almost none of it is the harness itself. It is what has to surround a harness before you can let an agent run loose for hours and trust what comes back, and it does two jobs at once: supply backpressure, and give the agent enough infrastructure to reach its own verdict.
 
 - Context tooling like the crawl family that externalizes scattered knowledge into searchable stores, so the agent can ground itself instead of guessing
 - Execution machinery like crabbox, fanning tests across operating systems and clouds in reproducible containers, so the agent can answer what no prompt can answer for it: does this bug actually reproduce?

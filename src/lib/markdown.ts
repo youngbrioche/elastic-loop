@@ -48,7 +48,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
   ],
   [
     /<LoopSizes[\s\S]*?\/>/g,
-    '*[Figure: Three sizes of the same loop. Tight: minutes, in the loop at every turn. Elastic: hours, at checkpoints on the edge. Loose: days, only at the outcome gate.]*',
+    '*[Figure: Three sizes of the same loop. Tight: minutes, in the loop at every turn. Elastic: minutes to hours, at checkpoints on the edge. Loose: multiple hours, only at the outcome gate.]*',
   ],
   // Hero carries no prose of its own (title comes from the header block).
   [/<Hero[\s\S]*?\/>/g, ''],
