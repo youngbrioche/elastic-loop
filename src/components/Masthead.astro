@@ -59,9 +59,9 @@ const isActive = (slug: string) => path === `/${slug}`;
   }
 
   .mh-row {
-    max-width: 1200px;
+    max-width: 1288px;
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 24px;
     height: 72px;
     display: flex;
     align-items: center;
@@ -149,7 +149,7 @@ const isActive = (slug: string) => path === `/${slug}`;
 
   @media (max-width: 860px) {
     .mh-row {
-      padding: 0 20px;
+      padding: 0 24px;
       gap: 14px;
     }
     .nav-toggle {
@@ -181,6 +181,12 @@ const isActive = (slug: string) => path === `/${slug}`;
       padding: 13px 2px;
       font-size: 18px;
       border-top: 1px solid var(--rg-border);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .mh-row {
+      padding: 0 20px;
     }
   }
 </style>
