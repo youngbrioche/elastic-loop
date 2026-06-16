@@ -1,0 +1,77 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Masthead from '../components/Masthead.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  updated?: Date;
+}
+
+const { title, description, slug, updated } = Astro.props;
+
+const SITE_URL = 'https://elastic-loop.robert-glaser.de';
+const SITE_NAME = 'The Elastic Loop';
+const isIndex = slug === 'index';
+
+const pageTitle = isIndex ? SITE_NAME : `${title} · ${SITE_NAME}`;
+const canonical = SITE_URL + (isIndex ? '/' : `/${slug}`);
+const markdownHref = isIndex ? '/index.md' : `/${slug}.md`;
+
+const author = {
+  '@type': 'Person',
+  name: 'Robert Glaser',
+  url: 'https://www.robert-glaser.de',
+};
+
+const website = {
+  '@type': 'WebSite',
+  name: SITE_NAME,
+  url: SITE_URL + '/',
+};
+
+const jsonLd = isIndex
+  ? {
+      '@context': 'https://schema.org',
+      ...website,
+      description,
+      author,
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      author,
+      isPartOf: website,
+      ...(updated ? { dateModified: updated.toISOString().slice(0, 10) } : {}),
+    };
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={isIndex ? 'website' : 'article'} />
+    <meta property="og:url" content={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="text/markdown" href={markdownHref} />
+    <link rel="alternate" href="/llms.txt" type="text/plain" title="llms.txt" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <Masthead />
+    <slot />
+    <Footer />
+  </body>
+</html>

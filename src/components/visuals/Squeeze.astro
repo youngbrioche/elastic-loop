@@ -1,0 +1,222 @@
+---
+// The squeeze: context positions the start outside the statistical middle;
+// backpressure pulls the output the rest of the way in the same direction.
+// Build-time port of buildSqueeze() from the hifi mockup — the SVG is generated
+// once at build time with a deterministic PRNG, so output is stable across builds.
+
+const mint = 'var(--rg-accent)';
+const ink = '#15171A';
+
+// deterministic LCG (same seed and constants as the mockup)
+let s = 1234567;
+const rnd = (): number => {
+  s = (s * 1664525 + 1013904223) % 4294967296;
+  return s / 4294967296;
+};
+
+const els: string[] = [];
+
+// 120 dots, Gaussian-ish cloud around the statistical middle
+for (let i = 0; i < 120; i++) {
+  const gx = (rnd() + rnd() + rnd() + rnd()) / 4;
+  const gy = (rnd() + rnd() + rnd() + rnd()) / 4;
+  const x = 430 + (gx - 0.5) * 330;
+  const y = 165 + (gy - 0.5) * 230;
+  const d = Math.min(1, Math.hypot((x - 430) / 165, (y - 165) / 115));
+  const r = d < 0.45 ? 2.6 : 2.1;
+  const opacity = Math.max(0.05, 0.36 - 0.28 * d);
+  els.push(`<circle cx="${x}" cy="${y}" r="${r}" fill="${ink}" opacity="${opacity}"/>`);
+}
+
+// arrow between two points: runs along the axis joining their centres, with a
+// gap at each end (off1/off2 = distance from each centre) so it begins and ends
+// cleanly at the dot edges instead of inside them. Arrowhead tip sits at the gap.
+const arrow = (
+  cx1: number, cy1: number, off1: number,
+  cx2: number, cy2: number, off2: number,
+  dashed: boolean,
+): string => {
+  const ang = Math.atan2(cy2 - cy1, cx2 - cx1);
+  const x1 = cx1 + off1 * Math.cos(ang);
+  const y1 = cy1 + off1 * Math.sin(ang);
+  const tx = cx2 - off2 * Math.cos(ang); // arrowhead tip
+  const ty = cy2 - off2 * Math.sin(ang);
+  const bx = tx - 10 * Math.cos(ang); // arrowhead base
+  const by = ty - 10 * Math.sin(ang);
+  const px = 4.5 * Math.sin(ang);
+  const py = 4.5 * Math.cos(ang);
+  return (
+    `<line x1="${x1}" y1="${y1}" x2="${bx}" y2="${by}" stroke="${mint}" stroke-width="2"${dashed ? ' stroke-dasharray="6 5"' : ''}/>` +
+    `<polygon points="${tx},${ty} ${bx + px},${by - py} ${bx - px},${by + py}" fill="${mint}"/>`
+  );
+};
+
+// ungrounded start, dead center of the cloud — a background-colour halo clears the
+// surrounding dots so the start point reads clearly instead of merging with the blob
+els.push(`<circle cx="430" cy="165" r="11" fill="var(--rg-bg-1)"/>`);
+els.push(`<circle cx="430" cy="165" r="6.5" fill="${ink}"/>`);
+// segment 1: context places the start outside the middle (dashed = before any work)
+els.push(arrow(430, 165, 14, 640, 118, 11, true));
+// grounded start: outlined dot exactly at the end of segment 1
+els.push(`<circle cx="640" cy="118" r="7" fill="#FFFFFF" stroke="${mint}" stroke-width="2.5"/>`);
+// segment 2: backpressure pulls the rest of the way, same direction (solid = continuous pressure)
+els.push(arrow(640, 118, 11, 798, 81, 12, false));
+// the solution: filled dot exactly at the end of segment 2
+els.push(`<circle cx="798" cy="81" r="8" fill="${mint}"/>`);
+
+const svg = `<svg viewBox="0 0 980 340" width="100%" height="100%" style="position:absolute;inset:0;display:block" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${els.join('')}</svg>`;
+---
+
+<figure class="wide squeeze">
+  <div class="squeeze-scroll">
+    <div class="canvas">
+      <div class="svg-layer" set:html={svg} />
+      <!-- context, left -->
+      <div class="ctx-label">
+        <div class="label-kicker">Context</div>
+        <div class="label-text">positions the start: before any work happens, grounding places the agent at your specifics, outside the middle</div>
+      </div>
+      <!-- ungrounded start label -->
+      <div class="pt-label ungrounded">ungrounded start</div>
+      <!-- segment captions -->
+      <div class="seg-caption seg-context">context positions</div>
+      <div class="seg-caption seg-backpressure">backpressure pulls</div>
+      <!-- grounded start label -->
+      <div class="pt-label grounded">grounded start</div>
+      <!-- solution label -->
+      <div class="pt-label solution">your specific solution</div>
+      <!-- middle label -->
+      <div class="middle-label">the statistical middle &mdash; plausible, generic, everyone&rsquo;s output</div>
+      <!-- backpressure, right -->
+      <div class="bp-label">
+        <div class="label-kicker">Product &amp; domain backpressure</div>
+        <div class="label-text">holds it there and pulls the output the rest of the way toward your product</div>
+      </div>
+    </div>
+  </div>
+  <figcaption>The squeeze: context positions the start outside the middle before any work happens; backpressure pulls the output the rest of the way in the same direction.</figcaption>
+</figure>
+
+<style>
+  .squeeze {
+    padding: 0;
+  }
+  .canvas {
+    position: relative;
+    aspect-ratio: 980 / 340;
+    border: 1px solid var(--rg-border);
+    border-radius: 8px;
+    background: var(--rg-bg-1);
+    overflow: hidden;
+  }
+  .svg-layer {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ctx-label {
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    width: 190px;
+  }
+  .bp-label {
+    position: absolute;
+    right: 28px;
+    bottom: 28px;
+    width: 210px;
+    text-align: right;
+  }
+  .label-kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rg-accent);
+  }
+  .label-text {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--rg-fg-3);
+    margin-top: 6px;
+  }
+
+  .pt-label {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 1px 6px;
+  }
+  .ungrounded {
+    left: 43.9%;
+    top: 55.5%;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--rg-fg-2);
+  }
+  .grounded {
+    left: 65.3%;
+    top: 23%;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--rg-fg-1);
+  }
+  .solution {
+    left: 81.6%;
+    top: 12.5%;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rg-fg-1);
+  }
+
+  .seg-caption {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rg-accent);
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 1px 6px;
+  }
+  .seg-context {
+    left: 54.8%;
+    top: 46.5%;
+  }
+  .seg-backpressure {
+    left: 75.8%;
+    top: 37%;
+  }
+
+  .middle-label {
+    position: absolute;
+    left: 43.9%;
+    top: 84%;
+    transform: translateX(-50%);
+    font-size: 13.5px;
+    color: var(--rg-fg-3);
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2px 8px;
+  }
+
+  figcaption {
+    font-size: 14px;
+    color: var(--rg-fg-3);
+    margin-top: 14px;
+  }
+
+  @media (max-width: 760px) {
+    .squeeze-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+    .squeeze-scroll > * {
+      min-width: 680px;
+    }
+  }
+</style>

@@ -1,0 +1,5 @@
+- Multiple agents may work in parallel on this repo
+- write commit messages in English, commit and push your work while you go
+- do not add `Co-Authored-By` trailers (or any AI/agent attribution) to commit messages
+- Use correct typography when copywriting
+- Iterate using your preferred browser tool when doing frontend work, until the work is done

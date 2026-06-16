@@ -1,0 +1,70 @@
+---
+interface Props {
+  cols?: 2 | 3;
+  ruled?: boolean;
+  strong?: boolean;
+}
+const { cols = 2, ruled = true, strong = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'card-grid',
+    cols === 3 ? 'cols-3' : 'cols-2',
+    { ruled, strong },
+  ]}
+>
+  <slot />
+</div>
+
+<style>
+  .card-grid {
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+  }
+  .cols-2 {
+    max-width: 980px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: 32px 48px;
+  }
+  .cols-3 {
+    max-width: 1080px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 40px;
+  }
+
+  /* cards: every direct <div> child from the slot */
+  .card-grid.ruled > :global(div) {
+    border-top: 1px solid var(--rg-border);
+    padding-top: 20px;
+  }
+  .card-grid.ruled.strong > :global(div) {
+    border-top: 2px solid var(--rg-fg-1);
+  }
+
+  /* markdown content inside the cards */
+  .card-grid :global(h3) {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--rg-fg-1);
+    margin: 0 0 10px;
+  }
+  .cols-2 :global(h3) {
+    font-size: 21px;
+    margin: 0 0 12px;
+  }
+  .card-grid :global(p) {
+    font-size: 15.5px;
+    line-height: 1.62;
+    color: var(--rg-fg-1);
+    margin: 0;
+  }
+  .cols-2 :global(p) {
+    font-size: 16.5px;
+  }
+  .card-grid :global(p + p) {
+    margin-top: 12px;
+  }
+</style>

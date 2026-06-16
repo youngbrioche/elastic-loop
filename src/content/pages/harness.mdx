@@ -1,0 +1,119 @@
+---
+title: "Harness"
+description: "The backpressure layers in full: what holds agent output honest against the system, and what holds it honest against the product."
+kicker: "Part three"
+order: 3
+status: seed
+updated: 2026-06-12
+---
+
+import PageIntro from '../../components/PageIntro.astro';
+import Term from '../../components/Term.astro';
+
+<PageIntro kicker="Part three" title="Harness">
+A <Term id="harness">harness</Term> is the scaffold that turns a model into an agent, assembled from many parts. Among those: the loop it works in, the tools it can reach, how its context is kept manageable as a run grows long, the hooks that fire on what it does, subagents, and guardrails. A raw model answers once. A harness is what lets it take a hundred turns on a task while you look away. It is also where you start attaching resistance. A hook can block a bad commit, an AGENTS.md can carry rules the agent is meant to follow but can still quietly ignore, and plenty of resistance lives outside the harness too, in a git hook, in CI, in a human reviewer. <Term id="backpressure">Backpressure</Term> is the name for all of it, and the more of it you can encode, the more line you can pay out, from tight to elastic to loose. On the [master grid](/#where-does-your-next-task-belong), the vertical axis is exactly this: no automated checks, then technical ones, then full backpressure that adds product and domain judgment on top. This page is about that top level. What actually goes into it, and what does it cost the human to keep running?
+</PageIntro>
+
+I work with four clusters, and each one owns a different question about the same piece of agent output:
+
+- **Engineering + Architecture** asks: is it correct?
+- **Product + Domain** asks: is it right?
+- **Security + Compliance** asks: is it allowed?
+- **Operations** asks: does it hold up in production?
+
+Correct and right are different questions! A change can pass every test, satisfy every type checker, and still solve a problem no user has. It can be correct and right and still touch data it had no business touching. And it can clear all three and quietly fall over under real load three weeks later. Four clusters, four ways for plausible output to be wrong, four kinds of resistance the output has to survive before it counts.
+
+## One layer compiles, the other one doesn't
+
+The technical layer is the one you have probably seen versions of already, because it is where the public harness debate lives. Its building blocks:
+
+- repo rules, AGENTS.md, skills and runbooks
+- language servers, compilers, linters
+- tests in all their forms
+- CI and security checks
+- PR diffs and reviewer subagents
+- logs, traces, and UI checks
+- sandbox boundaries, approval gates, rollback paths
+
+Each of these is something the agent's work has to get past without a human watching every turn.
+
+The product and domain layer is built from different stuff, and almost none of it compiles:
+
+1. the actual user problem and the job to be done
+2. explicit non-goals (the solution spaces you deliberately ruled out)
+3. domain rules and edge cases
+4. acceptance scenarios and counterexamples
+5. quality standards from the people who own product, UX, risk, and operations
+6. variant comparisons with explicit trade-offs
+7. and production signals like rework, support feedback, and usage patterns
+
+Notice how much of this list is knowledge that lives in someone's head until somebody does the work of writing it down in a form an agent can be held against.
+
+## Your test suite will not catch slop
+
+Here is the function assignment that makes the two layers more than a tidy taxonomy. The technical layer primarily prevents sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". The product and domain layer primarily prevents slop, the slow collision: scenarios, counterexamples, and domain rubrics (written grading criteria) pull the output away from the <Term id="statistical-middle">statistical middle</Term> and into the specific solution space of this product, this domain, this user. That is the back half of the squeeze: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.
+
+> Technical backpressure makes agent work correct against the system. Product-specific backpressure makes it useful against the product.
+
+You need both, and they are not interchangeable. A perfect test suite will wave through onboarding copy that sounds like every onboarding copy ever written, because nothing in it knows what your product is for.
+
+## Backpressure only counts if it sticks
+
+There is a condition both layers share: backpressure is only effective once the signal changes a later decision. A failing test that gets retried into silence is noise. A rejected variant that teaches nobody anything is wasted compute. The signal has to land somewhere: a changed plan, an updated memory, a better test, a more precise rubric, a new counterexample. <Term id="retained-feedback">Retained feedback</Term> is what connects the two layers, because retention works the same way whether the signal came from a compiler or from a domain expert.
+
+**Example: Agent skills**
+
+Agent skills are the most tangible retention site I know. A skill is procedural memory in executable form, and a skill that does not get better after repeated use is just static documentation wearing a different hat. The raw material for improving it sits right in the agent traces: retry loops and dead ends, wrong or outdated commands, missing setup assumptions, the places where the agent made a best-guess decision because the skill left a gap. Treat those signals as skill deltas, patch immediately when risk and evidence allow it, route the rest through a review gate, and skill maintenance becomes a closure mechanism inside the loop instead of a chore outside it. You could even optimize the token efficiency of your skill by telling the agent to use the initial version as a baseline, and run experiments on it until token consumption is improved while the result stays the same (don't let it rephrase the skill in caveman lingo).
+
+## The quiet layer
+
+Why does the product and domain layer get so little attention? Because its failure mode is quiet. Sprawl shows up in CI logs and PR volume; you can see it and pull people back. Slop shows up in the market, quarters later, or in some people's stomachs, the longer they look at it. The engineering mainstream of the harness debate (OpenAI's [harness engineering](https://openai.com/index/harness-engineering/) write-up, Addy Osmani's [work on agent harnesses](https://addyosmani.com/blog/agent-harness-engineering/)) covers the technical layer well. But the other layer needs different disciplines and different roles: product people, designers, domain experts, the people whose "this is off" never touches a compiler. Their judgment is the backpressure itself, the thing the output has to clear while it is being made, well before any review step at the end.
+
+## The wins and the costs land on different desks
+
+There is a version of this that has nothing to do with tooling. Charity Majors [wrote in June](https://charity.wtf/2026/06/02/ai-enthusiasts-are-in-a-race-against-time-ai-skeptics-are-in-a-race-against-entropy-xpost/) about the gap between the people experiencing AI wins and the people carrying the costs: "There is no natural feedback loop." The wins land on one team's dashboard while the cleanup, the reliability erosion, and the on-call pain land on someone else entirely, and the organization polarizes instead of learning. Seen through this framework's lens, the skeptics in that fight are often the people carrying the backpressure the system failed to encode. They hold the realistic information about failure modes precisely because the consequences flow to them.
+
+Her question for the enthusiasts is the one I would put on the wall:
+
+> "What would it take for you to feel comfortable shipping code to production without reading it?"
+
+That single question turns a culture war into a loop-sizing requirement. Answer it honestly and you get a concrete list: the evals, the feature flags, the blast-radius limits, the rollback paths. Which is to say, you get a harness spec.
+
+## How many agents can one person actually check?
+
+Context and backpressure both work on the content of the loop: context is the gate in front of it, deciding whether the agent can do the work at all, and backpressure is the continuous pressure inside it, holding that work against reality. Neither says anything about how expensive it is for the human to close the loop at the human gate. Even the best-calibrated loose loop ends in a human decision point, and when closing it means wading through diffs, logs, and pull requests, the ceiling on parallel loops is set by the verification cost per judgment rather than by containment. That cost is the third lever.
+
+Three families of mechanisms, and they sit on different levers. Self-inspection by the agent (opening the build in a browser, reading the DOM snapshot or screenshot, running Lighthouse, axe, Core Web Vitals) is backpressure in the engineering cluster, already covered above, no new lever required. The numeric signals are the clean ones here: a performance budget that speaks when broken and stays silent when held is sounder than an LLM judge grading aesthetics. Self-demonstration sits on both levers at once. Simon Willison's [Showboat](https://github.com/simonw/showboat) is a CLI through which the agent presents its own work; Peter Steinberger has agents record a video demo of what they built. The demo makes the gate cheaper, since the human grades an outcome instead of digging through the artifact, and the act of building the demo is forced self-confrontation: while assembling it, the agent stumbles over its own defects, feedback that would never have existed without the obligation to present. Legibility artifacts (screenshots, recordings, trace summaries) are pure gate relief and carry no backpressure at all.
+
+The trap deserves its own paragraph. A polished demo can hide slop, and verification stress is partly productive: it is the friction where bad judgment gets caught. Self-demonstration makes the human gate cheaper to clear without making the judgment behind it any sharper. Demo mechanisms lower the cost of good judgment, while the judgment itself still has to come from outcome grading against goldens and counterexamples.
+
+## Does any of this exist outside slide decks?
+
+OpenClaw is the closest thing we have to a running reference in the wild: a 375k-star project with roughly 7,000 open issues and PRs, operated deep in the loose zone. What strikes me is the ring of [metatools](https://openclaw.ai/ecosystem/) the team built around the agent. Almost none of it is the harness itself. It is what has to surround a harness before you can let an agent run loose for days and trust what comes back, and it does two jobs at once: supply backpressure, and give the agent enough infrastructure to reach its own verdict.
+
+- Context tooling like the crawl family that externalizes scattered knowledge into searchable stores, so the agent can ground itself instead of guessing
+- Execution machinery like crabbox, fanning tests across operating systems and clouds in reproducible containers, so the agent can answer what no prompt can answer for it: does this bug actually reproduce?
+- Backpressure like ClawPatch (a reviewer subagent with a fix loop) and clawbench, which puts pressure on the harness itself
+- Verification through evidence ledgers and human gates that carry the final judgment back to a person
+
+The price of that autonomy was an explosion of infrastructure around a comparatively small harness.
+
+My favorite vignette is Vincent Koc running 24 tmux panes of agent sessions from a Mac Mini, reading failures, deciding what runs next. Rather than leaving the loop, the human steps one level up, and his judgment moves to the orchestration layer. Those 24 panes are also the verification cost ceiling from the section above: what caps him is the cost per human judgment at the gate rather than any lack of containment, and every mechanism that lowers that cost lets the same attention orchestrate more panes.
+
+## An old discipline on a new substrate
+
+None of this is unprecedented, and it helps to know that. Long before anyone wired a compiler into an agent loop, factories had already worked out how to run a process that produces variable output: how to catch defects without inspecting every part by hand, and how to feed what each run teaches back into the line. The discipline has names, and most of them trace to one place, the Toyota Production System and the lean tradition that grew from it. Lay the two side by side and the mapping is close enough to be useful rather than cute.
+
+| Factory floor | Harness equivalent |
+|---|---|
+| <Term id="tpm">Total productive maintenance</Term> | Keeping the agent-legible environment in repair: AGENTS.md, skills, runbooks, reproducible setup |
+| <Term id="spc">Statistical process control</Term> | Watching loops for drift and rework signals instead of inspecting every output |
+| <Term id="kaizen">Kaizen</Term> | The learning loop: production signals distilled back into skills, tests, and docs |
+| <Term id="andon">Andon</Term> | Backpressure that stays silent on success and speaks only on failure |
+| <Term id="poka-yoke">Poka-yoke</Term> | Deterministic backpressure that makes a class of mistake impossible: compilers, type checkers, scope denial |
+| <Term id="jidoka">Jidoka</Term> | Human-in-the-loop gates: the line stops and escalates to a person on a real anomaly |
+| <Term id="oee">Overall equipment effectiveness</Term> | Loop metrics: validated loops per month, loop closure rate |
+
+The parallel is worth more than a clever table, for two reasons. The reassurance: these are not hypotheses. Manufacturing has run on statistical process control and continuous improvement for decades, so the shape of the answer is known even where the agentic details still are not. And it is an orthogonal lineage. Most of the harness debate argues from the software tradition of Agile, DevOps, and CI/CD, while this one comes in from the factory floor, which is exactly why it tends to land with people who have run a real process.
+
+The warning is the one the lean tradition keeps relearning. None of these mechanisms is a tool you install once. They are practices a team keeps alive, or they quietly rot, and a rotting harness is worse than none, because it still looks like it is working. Which is the same thing the [roles](/roles) page says from the other direction: you build and evolve the factory alongside the products it turns out, or you do not really have one.

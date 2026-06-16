@@ -1,0 +1,85 @@
+---
+interface Card {
+  href: string;
+  num: string;
+  title: string;
+  text: string;
+}
+interface Props {
+  cards: Card[];
+}
+const { cards } = Astro.props;
+---
+
+<div class="start-list">
+  {
+    cards.map((card) => (
+      <a href={card.href}>
+        <span class="num">{card.num}</span>
+        <span class="title">{card.title}</span>
+        <span class="text">{card.text}</span>
+        <span class="arrow">&#8594;</span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .start-list {
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .start-list > a {
+    display: grid;
+    grid-template-columns: 72px 200px 1fr 48px;
+    gap: 24px;
+    align-items: baseline;
+    padding: 26px 16px;
+    text-decoration: none;
+    border-top: 1px solid var(--rg-border);
+  }
+  .start-list > a:last-child {
+    border-bottom: 1px solid var(--rg-border);
+  }
+  .start-list > a:hover {
+    background: var(--rg-bg-2);
+  }
+
+  .num {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--rg-accent);
+  }
+  .title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--rg-fg-1);
+  }
+  .text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--rg-fg-2);
+  }
+  .arrow {
+    font-size: 20px;
+    color: var(--rg-accent);
+    text-align: right;
+  }
+
+  @media (max-width: 860px) {
+    .start-list > a {
+      grid-template-columns: 54px 1fr;
+      gap: 4px 14px;
+      padding: 22px 6px;
+    }
+    .text {
+      grid-column: 1 / -1;
+    }
+    .arrow {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+title: "Grading"
+description: "Outcome grading is the new specification. Tests, rubrics, scenarios, golden examples of known-good output, and why a rubric is not automatically truth."
+kicker: "Part four"
+order: 4
+status: seed
+updated: 2026-06-12
+---
+
+import PageIntro from '../../components/PageIntro.astro';
+import Term from '../../components/Term.astro';
+
+<PageIntro kicker="Part four" title="Grading">
+If you come from deterministic software development, where a requirement translates into code and the code either meets it or it doesn't, the rest of this framework probably feels like it has a hole in the middle. Agents search a space of possible solutions (the longer argument lives on [Why](/why)), and a search process needs something to search against. That something is <Term id="outcome-grading">outcome grading</Term>: the ability to judge whether a result is good, precisely enough that a machine can iterate against the judgment. It is the bridge between the spec world and the search-space world, and without it the framework falls apart for exactly the people I most want to reach. So this page exists to build the bridge properly.
+</PageIntro>
+
+## You have been grading outcomes all along
+
+Grading comes in instruments, and they form a ladder from primitive to broad.
+
+- **Tests** check known cases. If you write software, you have been doing outcome grading all along, just in its most primitive form: this input, this expected output, pass or fail.
+- **<Term id="rubric">Rubrics</Term>** widen that to qualitative criteria for whole classes of behavior (does the answer cite the source, does the refund flow respect the policy, does the tone match the brand). Think acceptance criteria, reused as a grading checklist.
+- **Scenarios** generalize beyond the cases you already thought of: walkthroughs of situations the system should handle, written by someone who knows where the domain gets weird.
+- **<Term id="golden">Goldens</Term> and <Term id="counterexample">counterexamples</Term>** calibrate everything else. Goldens are outputs you have blessed as correct and keep as the answer key; counterexamples are the plausible-looking wrong ones, which in my experience are worth more per line than almost any other artifact.
+- **<Term id="llm-judge">LLM judges</Term>** make qualitative grading scalable, with failure modes of their own (more on that in a moment).
+- **Human review** stays irreplaceable wherever the call is genuinely a judgment call.
+- **Production signals** are reality itself as the last layer: usage, rework, support tickets, exceptions, logs, the market quietly grading what everything upstream let through.
+
+Notice who can contribute to this ladder. Tests belong to engineers (remember product owners writing Cucumber tests?). Scenarios, counterexamples, and rubrics very often belong to the domain expert, the designer, the product person. That is the point [Roles](/roles) makes in full.
+
+## The spec changes jobs as the loop stretches
+
+So where does that leave the specification? I keep meeting two camps: one that wants to write everything down before the agent moves, and one that has declared specs dead. Both are answering a sizing question with a doctrine. The spec changes its job as the loop stretches:
+
+| Loop mode | Role of the spec | Harness focus | Grading focus |
+|---|---|---|---|
+| Tight / Exploratory | Starter grip: intent, examples, non-goals | IDE, tests, UI, logs | Human judgment, small tests, diff feedback |
+| Task / Implementation | Steering artifact: boundaries, acceptance, context | Reproducible setup, CI, PR review | Tests, acceptance criteria, review checklist |
+| Feature / Delegation | Delegation contract: goal, constraints, risks, search space | Worktree, sandbox, traces, checkpoints | Outcome rubric, scenarios, counterexamples, human review |
+| <Term id="dark-factory">Dark Factory</Term> | Executable spec in the production system | Isolated runtime, permissions, audit, rollback, observability | Automated graders, goldens, abort criteria, regression gates |
+| Learning Loop | Feedback distillate for the next piece of work | Stored traces, error classes, skills, docs | Rework, production signals, drift, pattern learning |
+
+Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering artifact to a contract to something executable, and finally to distilled feedback for the next round. Keep in mind, though:
+
+**The spec is useful when it structures the <Term id="search-space">search space</Term>. It becomes harmful when it replaces the search space.**
+
+The spec can and should never be the beginning of a waterfall, but rather a living artifact humans (and agents) iterate on. Zero-shotting is not a sport! Well, most times it's not. And yet the pendulum is swinging back toward exactly that little waterfall right now: write everything down first, let the agent execute, and treat anyone who wants to feed learning back mid-run as undisciplined. Organizations rehearsed this movement for twenty years of doing agile without becoming agile, adopting the ceremony and dropping the feedback loop.
+
+A spec that pins down every implementation detail has quietly turned the agent back into a typist, and you paid for a search process you never ran.
+
+The reflex has a name by now. ThoughtWorks tracks [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) on the Radar, notably no further than Assess, warning that teams might "relearn a bitter lesson, that handcrafted detailed rules for AI ultimately do not scale". Birgitta Böckeler [sorts the practice](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) into three levels of rigor: spec-first writes the spec up front and archives it once the code exists, spec-anchored keeps it in the repo, maintained with every change and validated against the implementation, and spec-as-source treats code as mere generated output of the spec, a future no tool delivers in production today. Spec-anchored is the close relative of this framework: a living, versioned artifact instead of one-way planning.
+
+What this framework adds is a shift of attention from the input layer to the evaluation layer. Whichever rigor level you run, the artifacts humans iterate on in wide loops are the spec, the rubrics, the scenarios, the goldens, and the counterexamples, in short the grading material, while the agents iterate on the output itself. When you catch yourself patching the output instead of sharpening the grader, you are working on the wrong layer, and the loop will keep producing the thing you just fixed.
+
+## A rubric is not automatically truth
+
+Here is the caveat I want printed in bold on every eval dashboard: writing a rubric does not make the rubric true. Good graders are engineering artifacts themselves, calibrated with counterexamples, error taxonomies, human review, and <Term id="drift">drift</Term> control. Skip that work and the agent will optimize against the grader you actually built, which usually means output that sounds plausible rather than output that is right. An LLM judge calibrated on nothing will happily wave through the <Term id="statistical-middle">statistical middle</Term>, and slop walks in wearing a passing grade! A polished demo of the agent's own work deserves the same skepticism: it makes your judgment cheaper to apply, while the grading substance still has to come from goldens, counterexamples, and scenarios.
+
+There is also a structural answer to the agent satisfying the letter of your grader while missing the point (<Term id="reward-hacking">reward hacking</Term>, if you want the ML name, the AI cousin of teaching to the test). StrongDM's software factory shows what it looks like when you take it seriously ([Simon Willison has a good writeup](https://simonwillison.net/2026/Feb/7/software-factory/)). Their internal charter reads
+
+> "Code must not be written by humans. Code must not be reviewed by humans,"
+
+which is too radical for most organizations I work with, but the design vocabulary travels well. Their scenario <Term id="holdout">holdouts</Term> keep the test sets outside the repo, so the agent cannot tune itself to pass an exam it can read, the same instinct that made machine-learning teams guard their test data for decades. And their satisfaction testing asks a second AI, across thousands of runs, how often the agent's path through a scenario would actually leave the user happy.
+
+## What you do with cheap search
+
+Once grading works, the economics get interesting. When search gets cheap, the move is to generate several variants and select, rather than pushing one ticket through faster. <Term id="best-of-n">Best-of-n</Term> becomes a delivery discipline. Basically, what digital product development has always preached, except that building variants with the actual material (code) was slow and expensive. That's why the Design Sprint exists.
+
+But (and this is the part I see teams get wrong in the first month) variants are only valuable when they are born close to the decision and close to the system: near the target architecture, inside the design system, against real APIs and data structures, checkable through the same tests and scenarios that grade everything else. The anti-pattern is the gorgeous prototype with no system contact, a demo that nobody can merge and nobody learns from. A variant only becomes learning once a decision rides on it; without that, it is just more output.
+
+Which leaves the question I would ask your team before any tooling discussion:
+
+> If an agent handed you five solutions tomorrow, could you say which one is best, and could you say why in a form a machine could check next time?

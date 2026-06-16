@@ -1,0 +1,47 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+}
+
+const { kicker, title } = Astro.props;
+---
+
+<header class="page-intro reading">
+  <div class="rg-kicker kicker">The Elastic Loop &middot; {kicker}</div>
+  <h1>{title}</h1>
+  <div class="lead"><slot /></div>
+</header>
+
+<style>
+  .page-intro {
+    margin-bottom: 40px;
+  }
+
+  .kicker {
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--rg-fg-1);
+    margin: 0 0 26px;
+  }
+
+  .lead,
+  .lead :global(p) {
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--rg-fg-2);
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: clamp(34px, 11vw, 50px);
+    }
+  }
+</style>

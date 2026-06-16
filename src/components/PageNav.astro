@@ -1,0 +1,47 @@
+---
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  prev?: NavLink;
+  next?: NavLink;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="page-nav" aria-label="Section navigation">
+  {prev ? <a class="prev" href={prev.href}>{prev.label}</a> : <span />}
+  {next && <a class="next" href={next.href}>{next.label}</a>}
+</nav>
+
+<style>
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    border-top: 1px solid var(--rg-border);
+    padding-top: 24px;
+    margin-top: 56px;
+  }
+
+  .page-nav a {
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .page-nav a:hover {
+    color: var(--rg-accent);
+  }
+
+  .prev {
+    font-weight: 500;
+    color: var(--rg-fg-2);
+  }
+
+  .next {
+    font-weight: 600;
+    color: var(--rg-fg-1);
+  }
+</style>

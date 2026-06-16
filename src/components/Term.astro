@@ -1,0 +1,123 @@
+---
+import { glossary } from '../data/glossary';
+
+interface Props {
+  /** Glossary key from src/data/glossary.ts. */
+  id: string;
+}
+
+const { id } = Astro.props;
+const entry = glossary[id];
+
+if (!entry) {
+  throw new Error(
+    `<Term id="${id}"> has no entry in src/data/glossary.ts. Add it there or fix the id.`,
+  );
+}
+
+const popId = `term-${id}`;
+---
+<span class="term"><button type="button" class="term-trigger" aria-describedby={popId}><slot /></button><span class="term-pop" id={popId} role="tooltip"><span class="term-pop-name">{entry.term}</span><span class="term-pop-def">{entry.def}</span>{entry.anchor && <span class="term-pop-anchor">{entry.anchor}</span>}</span></span><style>
+  .term {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .term-trigger {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    cursor: help;
+    white-space: normal;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--rg-accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .term-trigger:hover {
+    color: var(--rg-accent-hover);
+  }
+
+  .term-pop {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 8px);
+    z-index: 30;
+    width: max-content;
+    max-width: min(320px, 78vw);
+    background: var(--rg-bg-1);
+    border: 1px solid var(--rg-border-strong);
+    border-radius: var(--rg-radius-md);
+    box-shadow: var(--rg-shadow-md);
+    padding: 12px 14px;
+    white-space: normal;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--rg-dur) var(--rg-ease),
+      transform var(--rg-dur) var(--rg-ease),
+      visibility var(--rg-dur);
+  }
+
+  .term:hover .term-pop,
+  .term:focus-within .term-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Below ~860px the reading column nears the full viewport width, so a popover
+     anchored to its trigger (left: 0) could extend past the right edge no matter
+     where the term sits inline, adding horizontal page scroll. Detach it from the
+     trigger and pin it to the viewport gutters so it always fits and never widens
+     the page. (On desktop the column is centered with wide margins, so the
+     trigger-anchored popover stays inside the viewport and is left as-is.) */
+  @media (max-width: 860px) {
+    .term-pop {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      top: auto;
+      bottom: 16px;
+      width: auto;
+      max-width: none;
+      transform: translateY(8px);
+    }
+    .term:hover .term-pop,
+    .term:focus-within .term-pop {
+      transform: translateY(0);
+    }
+  }
+
+  .term-pop-name {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rg-fg-1);
+    margin-bottom: 5px;
+  }
+
+  .term-pop-def {
+    display: block;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--rg-fg-2);
+  }
+
+  .term-pop-anchor {
+    display: block;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--rg-fg-3);
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid var(--rg-border);
+  }
+</style>

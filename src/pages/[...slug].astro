@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageNav from '../components/PageNav.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((entry) => ({
+    params: { slug: entry.id === 'index' ? undefined : entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const isIndex = entry.id === 'index';
+
+let prev: { href: string; label: string } | undefined;
+let next: { href: string; label: string } | undefined;
+
+if (!isIndex) {
+  const subPages = (await getCollection('pages'))
+    .filter((e) => e.id !== 'index')
+    .sort((a, b) => a.data.order - b.data.order);
+  const i = subPages.findIndex((e) => e.id === entry.id);
+  const prevEntry = i > 0 ? subPages[i - 1] : undefined;
+  const nextEntry = i < subPages.length - 1 ? subPages[i + 1] : undefined;
+
+  prev = prevEntry
+    ? { href: `/${prevEntry.id}`, label: `← ${prevEntry.data.title}` }
+    : { href: '/', label: '← Back to home' };
+  next = nextEntry
+    ? { href: `/${nextEntry.id}`, label: `Next: ${nextEntry.data.title} →` }
+    : undefined;
+}
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  slug={entry.id}
+  updated={entry.data.updated}
+>
+  <main class:list={[isIndex ? 'hub' : 'subpage']}>
+    <Content components={{}} />
+    {
+      !isIndex && (
+        <div class="reading">
+          <PageNav prev={prev} next={next} />
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  main.subpage {
+    padding: 88px 24px 120px;
+  }
+
+  /* The hub (home) emits the same bare reading column + full-width components as
+     the sub-pages, but had no horizontal padding, so on narrow viewports text,
+     cards and the StartList stuck to the viewport edge. Match the sub-page
+     horizontal gutter (the hub keeps its own top spacing via the Hero/content). */
+  main.hub {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media (max-width: 600px) {
+    main.subpage,
+    main.hub {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+</style>

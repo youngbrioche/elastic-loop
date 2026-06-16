@@ -1,0 +1,237 @@
+/* ============================================================
+   The Elastic Loop — global styles
+   Reset, prose defaults for Markdown content (scoped to main),
+   shared utility classes, and the responsive layer.
+   Sizes/colors/spacings translated 1:1 from the hi-fi mockup
+   (reference/hifi-mockup/Elastic Loop Site.dc.html).
+   ============================================================ */
+
+/* ---------- reset / defaults ---------- */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: var(--rg-fg-1);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: #E4F6EF; }
+
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+
+/* ---------- utility classes (shared contract) ---------- */
+
+/* .rg-kicker, .rg-meta, a.rg-prose-link already live in tokens.css — not duplicated here. */
+
+.reading { max-width: 740px; margin-left: auto; margin-right: auto; }
+.wide    { max-width: 980px; margin-left: auto; margin-right: auto; }
+.wider   { max-width: 1080px; margin-left: auto; margin-right: auto; }
+
+/* Reading column for bare Markdown flowing straight into <main>.
+   Both the hub and the sub-pages (loops/why/harness/grading/roles) emit naked
+   p/h2/ul/… as direct children of <main> with no .reading wrapper, so the line
+   length ran to the full viewport. Constrain those direct children to the 740px
+   reading column, centered — matching the hi-fi mockup. Components that bring
+   their own width (Hero, .reading / .wide / .wider figures, PageIntro, CardGrid,
+   StartList, visuals) are NOT direct bare-tag children, so their wider alignment
+   is untouched. */
+main[class] > p,
+main[class] > h2,
+main[class] > h3,
+main[class] > h4,
+main[class] > ul,
+main[class] > ol,
+main[class] > blockquote,
+main[class] > table,
+main[class] > pre {
+  max-width: 740px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lead-xl {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--rg-fg-1);
+}
+
+.lead-lg {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--rg-fg-1);
+}
+
+/* Hub intro: the bare paragraph after the Hero, given the same lead treatment
+   the sub-pages get from PageIntro (.lead, 21px / fg-2) so the home intro reads
+   as an intro rather than body copy. Wrapped in .reading for the 740px column. */
+.hub-lead p {
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--rg-fg-2);
+  margin: 0;
+}
+
+/* ---------- prose (Markdown content inside main) ---------- */
+
+main h1 {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--rg-fg-1);
+  margin: 0 0 26px;
+}
+
+main h2 {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--rg-fg-1);
+  margin: 88px 0 22px; /* margin-top doubles as section spacing */
+}
+
+main h3 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--rg-fg-1);
+  margin: 40px 0 14px;
+}
+
+main p {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--rg-fg-1);
+  margin: 0 0 24px;
+}
+
+main ol,
+main ul {
+  margin: 0 0 24px;
+  padding-left: 26px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--rg-fg-1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+main strong { font-weight: 700; }
+
+/* Naked content links behave like a.rg-prose-link */
+main a {
+  color: var(--rg-accent);
+  text-decoration: none;
+  box-shadow: inset 0 -1px 0 var(--rg-accent);
+}
+main a:hover { color: var(--rg-accent-hover); }
+
+/* Lead statement (like .lead-lg in the mockup) — no border, no indent */
+main blockquote {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--rg-fg-1);
+  margin: 0 0 24px;
+  padding: 0;
+  border: none;
+}
+main blockquote p {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+/* Tables (e.g. /grading) */
+main table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--rg-fg-1);
+  margin: 0 0 24px;
+}
+main th {
+  font-weight: 700;
+  text-align: left;
+}
+main th,
+main td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rg-border);
+}
+main thead th { border-bottom: 1px solid var(--rg-border); }
+
+/* Figures */
+main figure { margin: 48px 0; }
+main figcaption {
+  font-size: 14px;
+  color: var(--rg-fg-3);
+  margin-top: 14px;
+}
+
+/* ---------- responsive layer (from the mockup style block) ---------- */
+
+.nav-toggle { display: none; }
+
+@media (max-width: 860px) {
+  .mh-row { padding: 0 20px !important; gap: 14px !important; }
+  .nav-toggle { display: inline-flex !important; }
+  .mh-ext { display: none !important; }
+  .mh-nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column !important; align-items: stretch !important;
+    gap: 0 !important; padding: 6px 20px 14px !important;
+    background: rgba(255,255,255,0.98); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rg-border);
+    box-shadow: 0 14px 26px -18px rgba(21,23,26,0.32);
+    display: none !important;
+  }
+  header.nav-open .mh-nav { display: flex !important; }
+  .mh-nav a { padding: 13px 2px !important; font-size: 18px !important; border-top: 1px solid var(--rg-border); }
+
+  .loopviz { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+
+  .start-list > a { grid-template-columns: 54px 1fr !important; gap: 4px 14px !important; padding: 22px 6px !important; }
+  .start-list > a > span:nth-child(3) { grid-column: 1 / -1 !important; }
+  .start-list > a > span:nth-child(4) { display: none !important; }
+}
+
+@media (max-width: 760px) {
+  .matrix-scroll, .squeeze-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+  .matrix-scroll > * { min-width: 580px; }
+  .squeeze-scroll > * { min-width: 680px; }
+
+  /* Bare Markdown tables (e.g. /grading) are wider than a phone viewport and
+     would otherwise widen the whole page. Turn the table itself into a horizontal
+     scroll container — same pattern as the matrix/squeeze figures above. */
+  main[class] > table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  main[class] > table > :where(thead, tbody) { min-width: 640px; }
+}
+
+@media (max-width: 600px) {
+  main h1 { font-size: clamp(34px, 11vw, 50px) !important; }
+  main h2 { font-size: clamp(25px, 7vw, 32px) !important; }
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+  .lead-xl { font-size: clamp(23px, 6.6vw, 30px) !important; line-height: 1.3 !important; }
+  .lead-lg { font-size: clamp(21px, 5.8vw, 25px) !important; }
+  main blockquote { font-size: clamp(21px, 5.8vw, 25px) !important; }
+}

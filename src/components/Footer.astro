@@ -1,0 +1,164 @@
+---
+import changelog from '../data/changelog.json';
+---
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-heading">Where this came from</div>
+      <p class="origin">
+        The Elastic Loop grew out of <a
+          href="https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/"
+          target="_blank"
+          rel="noopener"
+          class="rg-prose-link">How Does Truffle Taste?</a
+        >, the canonical write-up of the talk.
+      </p>
+    </div>
+    <div>
+      <div class="footer-heading">Changelog</div>
+      <div class="changelog">
+        {
+          changelog.map((entry) => (
+            <div class="changelog-entry">
+              <span class="changelog-date">{entry.date}</span>
+              <span class="changelog-text">{entry.text}</span>
+            </div>
+          ))
+        }
+      </div>
+      <a
+        class="releases-pill"
+        href="https://github.com/youngbrioche/elastic-loop/releases"
+        target="_blank"
+        rel="noopener">All releases on GitHub&nbsp;&#8599;</a
+      >
+    </div>
+  </div>
+  <div class="footer-bottom-wrap">
+    <div class="footer-bottom">
+      <span class="footer-wordmark">The Elastic Loop</span>
+      <span class="footer-copy"
+        >&copy; 2026 Robert Glaser &middot; <a href="https://www.robert-glaser.de" target="_blank" rel="noopener"
+          >robert-glaser.de</a
+        ></span
+      >
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--rg-border);
+    background: var(--rg-bg-2);
+  }
+
+  .footer-grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 24px 28px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+  }
+
+  .footer-heading {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rg-fg-3);
+    margin-bottom: 16px;
+  }
+
+  .origin {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--rg-fg-1);
+    margin: 0;
+  }
+
+  .changelog {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .changelog-entry {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .changelog-date {
+    font-size: 13px;
+    color: var(--rg-fg-3);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .changelog-text {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--rg-fg-1);
+  }
+
+  .releases-pill {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--rg-fg-1);
+    text-decoration: none;
+    border: 1px solid var(--rg-border-strong);
+    border-radius: 999px;
+    padding: 8px 18px;
+    background: var(--rg-bg-1);
+  }
+  .releases-pill:hover {
+    border-color: var(--rg-accent);
+    color: var(--rg-accent);
+  }
+
+  .footer-bottom-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--rg-border);
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px 24px;
+  }
+
+  .footer-wordmark {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--rg-fg-1);
+  }
+
+  .footer-copy {
+    font-size: 13.5px;
+    color: var(--rg-fg-3);
+  }
+  .footer-copy a {
+    color: var(--rg-fg-3);
+    text-decoration: none;
+  }
+  .footer-copy a:hover {
+    color: var(--rg-accent);
+  }
+
+  @media (max-width: 860px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

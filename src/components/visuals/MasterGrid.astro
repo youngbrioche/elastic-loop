@@ -1,0 +1,253 @@
+---
+// The master grid: leash across, backpressure up, context floor beneath.
+// Pixel-faithful port of the hifi mockup (Elastic Loop Site.dc.html, master grid section).
+---
+
+<figure class="wider master-grid">
+  <div class="matrix-scroll">
+    <!-- column heads -->
+    <div class="heads">
+      <div></div>
+      <div class="head">
+        <div class="head-title">Tight</div>
+        <div class="head-sub">every turn supervised &middot; minutes</div>
+      </div>
+      <div class="head">
+        <div class="head-title">Elastic</div>
+        <div class="head-sub">checkpoints at agreed points &middot; hours</div>
+      </div>
+      <div class="head">
+        <div class="head-title">Loose</div>
+        <div class="head-sub">days of autonomy &middot; outcomes only</div>
+      </div>
+    </div>
+    <!-- body -->
+    <div class="body-frame">
+      <div class="body-grid">
+        <!-- ROW 1 — Full backpressure -->
+        <div class="row-label rb">
+          <div class="row-title">Full backpressure</div>
+          <div class="row-sub">technical + product / domain</div>
+        </div>
+        <div class="cell bl bb">High-risk work, research, regulated change</div>
+        <div class="cell bl bb">A delegated feature with product backpressure</div>
+        <div class="cell bl bb">The dark factory, done right: agents delivering asynchronously against automated checks, humans reviewing outcomes</div>
+        <!-- ROW 2 — Technical only -->
+        <div class="row-label rb">
+          <div class="row-title">Technical only</div>
+          <div class="row-sub">tests, CI, linters</div>
+        </div>
+        <div class="cell bl bb">Pair coding with tests, linting etc.</div>
+        <div class="cell bl bb">Delegated implementation, system-checked but slop-exposed</div>
+        <div class="danger danger-slop bl bb">
+          <div class="danger-head"><span class="danger-title slop-title">Slop at scale</span></div>
+          <div class="danger-sub slop-sub">looks like productivity while the output drifts generic</div>
+        </div>
+        <!-- ROW 3 — No automated checks -->
+        <div class="row-label">
+          <div class="row-title">No automated checks</div>
+          <div class="row-sub">you hold the line</div>
+        </div>
+        <div class="cell bl">You are the dam, reading every turn</div>
+        <div class="cell bl">Output piles up between check-ins, nobody on the volume</div>
+        <div class="danger danger-sprawl bl">
+          <div class="danger-head"><span class="danger-title sprawl-title">Sprawl at scale</span></div>
+          <div class="danger-sub sprawl-sub">output multiplying faster than anyone can contain it</div>
+        </div>
+      </div>
+    </div>
+    <!-- CONTEXT FLOOR — a separate layer beneath the grid, rising left to right -->
+    <div class="floor-row">
+      <div class="floor-label">Context floor</div>
+      <div class="floor-band">
+        <div class="floor-shape"></div>
+        <div class="floor-note">Loose only opens once the context can serve itself</div>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .master-grid {
+    padding: 0;
+  }
+
+  .heads {
+    display: grid;
+    grid-template-columns: 190px 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .head {
+    padding: 0 22px 14px;
+  }
+  .head-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--rg-fg-1);
+  }
+  .head-sub {
+    font-size: 13px;
+    color: var(--rg-fg-3);
+    margin-top: 2px;
+  }
+
+  .body-frame {
+    position: relative;
+    border: 1px solid var(--rg-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .body-grid {
+    display: grid;
+    grid-template-columns: 190px 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 132px);
+    gap: 0;
+  }
+  .bl { border-left: 1px solid var(--rg-border); }
+  .bb { border-bottom: 1px solid var(--rg-border); }
+  .row-label {
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .row-label.rb { border-bottom: 1px solid var(--rg-border); }
+  .row-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--rg-fg-1);
+  }
+  .row-sub {
+    font-size: 12.5px;
+    color: var(--rg-fg-3);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .cell {
+    padding: 18px 22px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--rg-fg-2);
+    display: flex;
+    align-items: center;
+  }
+
+  .danger {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+  .danger-slop { background: oklch(0.948 0.045 53); }
+  .danger-sprawl { background: oklch(0.884 0.084 35); }
+  .danger-head {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .danger-icon { font-size: 14px; }
+  .danger-title {
+    font-size: 15.5px;
+    font-weight: 700;
+  }
+  .danger-sub {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .slop-icon { color: oklch(0.58 0.16 46); }
+  .slop-title { color: oklch(0.43 0.13 44); }
+  .slop-sub { color: oklch(0.47 0.07 50); }
+  .sprawl-icon { color: oklch(0.5 0.18 33); }
+  .sprawl-title { color: oklch(0.38 0.15 33); }
+  .sprawl-sub { color: oklch(0.4 0.1 34); }
+
+  .floor-row {
+    display: grid;
+    grid-template-columns: 190px 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 9px;
+  }
+  .floor-label {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 12px 8px 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--rg-fg-3);
+    text-align: right;
+  }
+  .floor-band {
+    grid-column: 2 / 5;
+    position: relative;
+    height: 74px;
+  }
+  .floor-shape {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 62%, 100% 2%, 100% 100%, 0 100%);
+    background: linear-gradient(
+      to right,
+      color-mix(in oklch, var(--rg-fg-1) 10%, transparent),
+      color-mix(in oklch, var(--rg-fg-1) 34%, transparent) 55%,
+      var(--rg-fg-1)
+    );
+    border-radius: 0 0 8px 8px;
+  }
+  .floor-note {
+    position: absolute;
+    right: 18px;
+    bottom: 11px;
+    text-align: right;
+    max-width: 62%;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+    color: #ffffff;
+  }
+
+  figcaption {
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--rg-fg-3);
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend-swatch {
+    width: 13px;
+    height: 13px;
+    border-radius: 3px;
+    background: oklch(0.884 0.084 35);
+  }
+  .legend-gradient {
+    width: 16px;
+    height: 11px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to right,
+      color-mix(in oklch, var(--rg-fg-1) 14%, transparent),
+      var(--rg-fg-1)
+    );
+  }
+
+  @media (max-width: 760px) {
+    .matrix-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+    .matrix-scroll > * {
+      min-width: 580px;
+    }
+  }
+</style>

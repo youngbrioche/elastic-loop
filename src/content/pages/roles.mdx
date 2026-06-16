@@ -1,0 +1,66 @@
+---
+title: "Roles"
+description: "Every role carries judgment about agent work that nobody else can supply. What engineers, product people, designers, domain experts, the people who run the process, and leaders each bring to the loop."
+kicker: "Part five"
+order: 5
+status: seed
+updated: 2026-06-12
+---
+
+import PageIntro from '../../components/PageIntro.astro';
+import Term from '../../components/Term.astro';
+
+<PageIntro kicker="Part five" title="Roles">
+Every role on a team carries judgment about agent work that nobody else can supply: what is worth building, which of several solutions is the right one, and whether the result actually holds up. Checking the output is only the last of those. It is the first thing that gets lost when companies roll out agents: engineering builds the [harness](/harness), dashboards fill up with velocity, and the people who actually know the product, the users, and the domain stand around wondering whether their job now requires learning Python. It does not. What the loop needs from them runs its whole length: the intent that opens it, the context that grounds it, the <Term id="backpressure">backpressure</Term> that keeps it honest, and the taste to tell a strong variant from a merely plausible one. The product and domain side of that judgment is also what keeps fast output from sliding into slop (the plausible, generic stuff that passes every technical check and dies quietly in the market). Treating non-engineering roles as smaller coders wastes them. Their leverage is the judgment no compiler or linter can provide, across the loop and not just at its end.
+</PageIntro>
+
+## The engineer: designer of the loop
+
+The shift here is an identity question. If your professional identity was "I type the implementation", agentic work feels brutal. If it was "I turn ambiguity into reliable systems", the canvas just got larger. The new disciplines have names by now: intent design, context engineering, harness engineering, backpressure design, verification and evaluation, outcome grading, variant generation and selection, production learning, and plain judgment about what deserves to exist. Nine is a lot, and nobody masters all of them. The shortest version I have: The developer becomes less like a manual fabricator and more like a designer of executable learning factories.
+
+## The product owner: one discipline, two outputs
+
+If you have ever written acceptance criteria, you have already produced product backpressure. You produced it for humans, late in the loop, as part of a handoff. The change is that this material becomes a steering instrument: agents will iterate against whatever definition of good you can make explicit, and they will iterate against the gaps in it too.
+
+POs are not replaced by AI. Their bottleneck moves to intent and verification.
+
+In practice that splits into seven jobs:
+
+1. Make intent explicit: problem, user, impact, assumptions, non-goals, which constraints are hard and which are negotiable.
+2. Curate product context in agent-legible form (scenarios, examples, decision history, business rules) instead of letting it evaporate in chat threads.
+3. Make options and trade-offs visible before committing.
+4. Test variants in real software, close to the actual architecture and data, because a variant far from the system is output rather than learning.
+5. Prevent backlog inflation, the sprawl pattern in product clothing, since an agent with an unclear mandate generates artifacts faster than any grooming session can absorb.
+6. Co-design evaluation with UX, engineering, QA, and the business side.
+7. Feed production learning back into the next loop: usage signals, rework, support pain.
+
+Notice what these seven have in common. They are one discipline with two outputs: the PO defines the search space (intent, context, non-goals) and supplies the grading material (acceptance scenarios, counterexamples, rubrics). That sits closer to machine learning engineering than to classic product management. Whether the role's name survives the shift is a question I cannot answer yet.
+
+## The designer
+
+Interaction vignettes can become rubrics an agent's output gets graded against. Evaluating generated variants is grading work, and designers have been doing the qualitative version of it for years. Brand and voice consistency is domain-specific backpressure of the purest kind, the "this is off" that no test suite produces. And the design system needs to become a constraint in the search space, walls the agent works within rather than guidelines it might read. Not a "use these Lego bricks and nothing else for building a UI." I am keeping this section deliberately short: this role is less mapped than the PO's, and I would rather leave it open than fake precision.
+
+## The domain expert
+
+Edge cases, professional rules, failure taxonomies, regulatory and operational limits, decision history, the war stories about why the obvious solution was wrong the last time someone tried it. <Term id="golden">Golden examples</Term> of known-good output, <Term id="counterexample">counterexamples</Term> of plausible-but-wrong output. This is the most valuable grading material in the whole loop, for a simple reason: it is the material agents are least able to generate themselves, which makes it the hardest part of the harness to bootstrap and the most valuable to supply.
+
+## The people who run the process
+
+Two anchors hold what I can say so far. First, the mirror logic: the loop reflects the team's rituals back at it, so whatever a scrum master or coach has built into how the team works, agents will amplify. Second, [Charity Majors' observation](https://charity.wtf/2026/06/02/ai-enthusiasts-are-in-a-race-against-time-ai-skeptics-are-in-a-race-against-entropy-xpost/) that AI wins and AI costs often land with different people, so "there is no natural feedback loop". The backpressure discipline I see emerging is organizational loop closure: making sure what individual loops learn lands with the team instead of staying private practice, and turning loop sizing (tight, elastic, loose: how much line the agent gets) into an explicit team decision rather than something each person quietly settles alone. What does a retrospective look like when half the iterations happened inside an agent run? I do not know yet. Anyone selling a finished framework for it this early is guessing. But if a team builds and evolves a factory (the harness) alongside the products the factory produces, there must be mechanisms in place to identify failures and harden the factory with every iteration.
+
+## The engineering leader
+
+The engineering leader carries four jobs in this model.
+
+- **Loop intelligence:** what are we actually learning from the real loops running in our teams, which ones close, which stay open, which decay?
+- **Backpressure maturity diagnosis:** which teams are stuck in tight supervision because the resistance layer is missing, not because the people are cautious?
+- **Deciding where backpressure investment goes**, because the resistance layer is built, not bought incidentally.
+- **Capability building over tool procurement:** the lever is rarely the next license, it is whether the team can encode its judgment into something a loop can use.
+
+## When handoffs stop making sense
+
+Here is the reframe I want to leave you with. Where people expect AI to dissolve silos by making everyone do everything, the actual mechanism is that AI materializes the intermediate steps. Spec drafts, prototypes, tests, review artifacts, the things that used to justify a handoff, now appear in hours inside the loop. The old sequence (PO formulates, UX designs, engineering builds, QA checks, operations learns about it later) assumed those steps were expensive enough to deserve their own stations. The loop model runs intent, context, variants, verification, decision, production learning, and the roles gather around it rather than queueing along it. The bottleneck moves to jointly sharpening context, assumptions, options, and quality criteria.
+
+Which brings this page back to where it started: every role carries judgment nobody else can supply. The question for your team is:
+
+> Whose judgment is still trapped in someone's head, where no loop can reach it?

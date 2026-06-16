@@ -1,0 +1,207 @@
+---
+// Three sizes of the same loop: tight, elastic, loose.
+// Pixel-faithful port of the hifi mockup loop sizes visual.
+---
+
+<figure class="wide loop-sizes">
+  <div class="loopviz">
+    <div class="panel">
+      <div class="panel-title">Tight</div>
+      <div class="circle circle-tight"></div>
+      <div class="dot dot-tight"></div>
+      <div class="you-label you-tight">you</div>
+      <div class="panel-caption">minutes &mdash; in the loop at every turn</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title title-elastic">Elastic</div>
+      <div class="circle circle-elastic"></div>
+      <div class="dot dot-elastic"></div>
+      <div class="you-label you-elastic">you</div>
+      <div class="checkpoint checkpoint-1"></div>
+      <div class="checkpoint checkpoint-2"></div>
+      <div class="panel-caption">hours &mdash; at checkpoints on the edge</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Loose</div>
+      <div class="circle circle-loose"></div>
+      <div class="gate"></div>
+      <div class="dot dot-loose"></div>
+      <div class="you-label you-loose">you, at the gate</div>
+      <div class="panel-caption">days &mdash; only at the outcome gate</div>
+    </div>
+  </div>
+  <figcaption>Three sizes of the same loop. A size question, never a maturity ladder.</figcaption>
+</figure>
+
+<style>
+  .loop-sizes {
+    padding: 0;
+  }
+  .loopviz {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rg-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .panel {
+    position: relative;
+    height: 280px;
+    padding: 24px;
+  }
+  .panel + .panel {
+    border-left: 1px solid var(--rg-border);
+  }
+  .panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--rg-fg-1);
+  }
+  .title-elastic {
+    color: var(--rg-accent);
+  }
+  .panel-caption {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 20px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--rg-fg-3);
+  }
+
+  /* Tight */
+  .circle-tight {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 92px;
+    height: 92px;
+    border: 2px solid var(--rg-fg-1);
+    border-radius: 50%;
+  }
+  .dot-tight {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--rg-fg-1);
+  }
+  .you-tight {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 18px);
+    transform: translateX(-50%);
+  }
+
+  /* Elastic */
+  .circle-elastic {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border: 2px solid var(--rg-accent);
+    border-radius: 50%;
+  }
+  .dot-elastic {
+    position: absolute;
+    left: calc(50% - 75px);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--rg-fg-1);
+  }
+  .you-elastic {
+    position: absolute;
+    left: calc(50% - 75px);
+    top: calc(50% + 16px);
+    transform: translateX(-50%);
+  }
+  .checkpoint {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rg-accent);
+  }
+  .checkpoint-1 {
+    left: calc(50% + 53px);
+    top: calc(50% - 53px);
+  }
+  .checkpoint-2 {
+    left: calc(50% + 53px);
+    top: calc(50% + 53px);
+  }
+
+  /* Loose */
+  .circle-loose {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--rg-border-strong);
+    border-radius: 50%;
+  }
+  .gate {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 75px);
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 14px;
+    background: var(--rg-bg-1);
+    border: 2px solid var(--rg-fg-1);
+    border-radius: 3px;
+  }
+  .dot-loose {
+    position: absolute;
+    left: calc(50% - 34px);
+    top: calc(50% + 75px);
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--rg-fg-1);
+  }
+  .you-loose {
+    position: absolute;
+    left: calc(50% + 22px);
+    top: calc(50% + 75px);
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+
+  .you-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--rg-fg-1);
+  }
+
+  figcaption {
+    font-size: 14px;
+    color: var(--rg-fg-3);
+    margin-top: 14px;
+  }
+
+  @media (max-width: 860px) {
+    .loopviz {
+      grid-template-columns: 1fr;
+    }
+    .panel + .panel {
+      border-left: none;
+      border-top: 1px solid var(--rg-border);
+    }
+  }
+</style>
