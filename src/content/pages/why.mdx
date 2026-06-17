@@ -49,13 +49,11 @@ That is the empirical version of the <Term id="backpressure">backpressure</Term>
 
 > The unit of agentic progress is <Term id="retained-feedback">retained feedback</Term>, not generated output.
 
-## The lever sits in the harness
+## The setup around the model beats the model
 
-Theory is nice, where is the measurement? [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, measures the combination that actually ships: harness plus config plus model, analyzed through traces rather than isolated model scores. One of their findings: swapping the plugin config moves scores ten times more than swapping the model.
+Chollet gives the theory; there is now a measurement to go with it. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination that actually ships, the model together with the loop and configuration around it rather than the model on its own. Its finding: swapping the configuration moves the result ten times more than swapping the model does.
 
-Ten times! While the industry refreshes leaderboards and debates which frontier model to standardize on, or whether SWE-Bench was fine with slop all along, the variable that dominates the result is the loop infrastructure around the model. Chollet supplies the theory (it is a search process, so the search setup matters), clawbench supplies the measurement. The lever sits in the harness, not in the model.
-
-If that has the ring of something you have heard before, it should. Long before software, factories learned that the output of a line depends less on any single machine than on the system around it: how the process is maintained, measured, and corrected as it runs. The Toyota Production System made a named discipline of it decades ago, and the agentic version is the same move on a new substrate. The full mapping, from statistical process control through to continuous improvement, lives on [Harness](/harness).
+Ten times! The whole of that setup has a name, the <Term id="harness">harness</Term>, and it is the variable that dominates the outcome, not the model the industry keeps arguing about. That claim, and the measurement under it, earns its own chapter: [Harness](/harness).
 
 ## The explosion and the slow collision
 
