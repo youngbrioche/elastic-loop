@@ -1,6 +1,7 @@
 ---
 title: "Why"
 description: "Why stretch a loop past tight at all, and is the risk worth it? The payoff comes down to how well you can judge what comes back. The economic and technical case, now with measurement behind it."
+socialDescription: "Why stretch a loop past tight at all? The payoff comes down to how well you can judge what comes back."
 kicker: "Part two"
 order: 2
 status: seed
@@ -11,7 +12,7 @@ import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
 
 <PageIntro kicker="Part two" title="Why">
-Here is the question I would put to anyone who just learned they can stretch a loop: why would you? Running an agent loose for hours means trading control you are used to for a payoff you have to take partly on trust. So is the trade worth it, and when? My honest answer is that it comes down to one thing: how well you can judge what comes back, and this page is the argument for why that became the thing it all rests on. Part of it is economic: build got cheap, and the cost moved to the ends of the loop. Part of it is technical: agentic engineering is a search you evaluate, not a spec you transcribe. The reason I trust it now and did not months ago is that both parts have measurement behind them.
+Here is the question I would ask anyone who just learned they can stretch a loop: why would you? Running an agent loose for hours means trading control you are used to for a payoff you have to take partly on trust. So is the trade worth it, and when? It comes down to one thing: how well you can judge what comes back. And this page is the argument for why that became the thing it all rests on. Part of it is economic: build got cheap, and the cost moved to the ends of the loop. Part of it is technical: agentic engineering is a search you evaluate, not a spec you transcribe. The reason I trust it now and did not months ago is that both parts have measurement behind them.
 </PageIntro>
 
 ## The middle shrinks, the ends get expensive
@@ -20,10 +21,10 @@ Build gets cheaper. Product intent and evaluation become the constraint.
 
 When AI accelerates analysis, specification, implementation, testing, and review, the bottlenecks migrate to the ends of the loop.
 
-- At the front: intent, problem understanding, the target picture, prioritization, product context.
+- At the front: intent, problem understanding, the target picture, prioritization, product context, intuition.
 - At the back: verification, evaluation, quality standards, impact, and what production teaches you.
 
-The middle of the loop, the part we spent many, many years optimizing with frameworks and ceremonies and career ladders, shrinks. The edges become the expensive part.
+The middle of the loop, the part we spent many, many years optimizing with frameworks and ceremonies and career ladders, shrinks. The edges become the expensive part. So jobs and roles will congregate around what's expensive.
 
 You have probably felt this already. An agent hands you a finished implementation in minutes, and you spend the next hour figuring out whether it is the thing you actually wanted. That hour was the work! The typing was never the constraint; we just could not see that clearly while typing was slow.
 
@@ -31,15 +32,19 @@ You have probably felt this already. An agent hands you a finished implementatio
 
 The technical half of the argument comes from François Chollet, in a [post on X](https://x.com/fchollet/status/2053234697392754701) from May 2026. His frame: agentic engineering is a form of machine learning. The engineer defines the goal, the constraints, and the <Term id="search-space">search space</Term>. An optimization process generates code. The result should be treated as a <Term id="blackbox-artifact">blackbox artifact</Term> whose behavior and <Term id="generalization">generalization</Term> you evaluate empirically.
 
-That quietly reclassifies the job. Classic spec-driven development treats software as deterministic translation: requirements in, code out, and if the output is wrong, the spec was wrong. Plenty of teams are retreating to that little waterfall right now, pinning their hopes on better specs with agents doing the typing. The reflex even has a Radar entry: ThoughtWorks lists [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) in Assess, caveats attached, and the full sorting of where specs help and where they harm lives on [Grading](/grading). Agentic engineering treats software as something else: an optimization problem with a defined search space, a search process, and an evaluation function. Those are two different professions. Many of us, myself included, come from the deterministic one, and the reflexes we built there do not transfer cleanly. What does transfer is judgment about whether a result is any good.
+That quietly reclassifies jobs. Classic spec-driven development treats software as deterministic translation: requirements in, code out, and if the output is wrong, the spec was wrong. Plenty of teams are retreating to that little waterfall right now, pinning their hopes on better specs with agents doing the typing. The reflex even has a Radar entry: ThoughtWorks lists [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) in Assess, caveats attached. The full sorting of where specs help and where they harm lives on [Grading](/grading). Agentic engineering treats software as something else: an optimization problem with a defined search space, a search process, and an <Term id="evaluation-function">evaluation function</Term>. Those are two different professions. Many of us, myself included, come from the deterministic one, and the reflexes we built there do not transfer cleanly. What does transfer is judgment about whether a result is any good.
 
-That reframing also moves the target you optimize for. The reflex with any productivity tool is to chase output: more pull requests, more velocity on the dashboard. But if building is a search process, throughput is the wrong objective function. You would never rate a machine-learning model by how many predictions it emits per second, only by how well its output holds up against an evaluation. Optimize agentic work for raw productivity and the search converges on more of everything, which is the exact shape of sprawl and slop. The objective worth optimizing is solution quality, and that is something you have to be able to measure, which brings me to the consequence.
+That reframing also moves the target you optimize for. The reflex with any productivity tool is to chase output: more pull requests, more velocity on the dashboard. But if building is a search process, throughput is the wrong objective function. You would never rate a machine-learning model by how many predictions it emits per second, only by how well its output holds up against an evaluation. 
+
+> Optimize agentic work for raw productivity and the search converges on more of everything, which is the exact shape of sprawl and slop. 
+
+The objective worth optimizing is solution quality, and that is something you have to be able to measure, which brings me to the consequence.
 
 ## Outcome Grading is the new specification
 
 If the build step is a search process, the leverage moves to whoever can grade what comes out of it. Grade the outcome precisely and you can let machines iterate against that grade, for hours, in parallel, while you do something else. Tests are the primitive form of this (they check known cases). The broader form covers classes of behavior: rubrics, scenarios, golden examples, counterexamples, LLM judges as adversarial reviewers, human review, production signals.
 
-One caveat I want to plant early, because the whole framework gets dangerous without it: a rubric is not automatically truth. Good outcome graders are engineering artifacts in their own right, calibrated with counterexamples, failure taxonomies, human review, and drift control. Skip that calibration and the agent will optimize toward output that sounds plausible to the grader, and the grader will applaud. You will have built a machine for generating confident mediocrity, with charts that say everything is fine.
+One caveat I want to plant early, because the whole framework gets dangerous without it: a rubric is not automatically truth. Good outcome graders are engineering artifacts in their own right, calibrated with counterexamples, failure taxonomies, human review, and drift control. Skip that calibration and the agent will optimize toward output that sounds plausible to the grader, and the grader will applaud. You will have built a machine for generating confident mediocrity.
 
 ## Only retained feedback counts
 
