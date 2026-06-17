@@ -6,6 +6,8 @@
 - if you need a dev server, check if one is already running
 - decide if you need a worktree to isolate your changes from other agents working in parallel
 - write commit messages in English, commit and push your work while you go
+- before committing, check `git status`: another agent may have uncommitted edits in the same files. Stage only the hunks you changed (`git add -p`), never `git add <file>` wholesale or `git commit -a`, and pass explicit paths so you never sweep in someone else's work
+- never force-push or rewrite already-pushed history on `main`; another agent may have committed on top of yours
 - when doing frontend work: iterate using the agent-browser cli, until the work is done
 
 ## Releasing
