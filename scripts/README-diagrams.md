@@ -24,21 +24,25 @@ The build runs `diagrams:check` and fails on drift, so after editing
 `TwoIterationLayers.astro` or `StationsVsLoop.astro` you must run `npm run diagrams`
 and commit the result.
 
-## Screenshot PNGs (manual)
+## Screenshot PNGs (one command, manual trigger)
 
 `squeeze.png` and `loop-sizes.png` are HTML-based: Squeeze layers HTML labels over
 an SVG, LoopSizes is a CSS grid of positioned `<div>`s. They can't be exported as
 standalone SVG, so they are captured as PNG screenshots of the live component and
-committed. They are **not** guarded — regenerate them by hand if the component
-changes. With the dev server running (`npm run dev`, port 4321) and `agent-browser`
-+ ImageMagick available:
+committed. They are **not** guarded against drift — regenerate them yourself after
+changing either component:
 
 ```bash
-# Squeeze — http://localhost:4321/ , selector "figure.squeeze .canvas"
-# LoopSizes — http://localhost:4321/loops , selector "figure.loop-sizes .loopviz"
-# For each: scroll into view, read getBoundingClientRect, screenshot the viewport,
-# then `magick shot.png -crop WxH+X+Y +repage public/diagrams/<name>.png`.
+npm run dev            # in one terminal (port 4321)
+npm run diagrams:shoot # in another — opens each page, crops the diagram, writes the PNGs
 ```
 
-(The element-clip mode of `agent-browser screenshot <selector>` renders these
-particular elements blank, hence the viewport-screenshot-then-crop approach.)
+`scripts/shoot-diagrams.mjs` opens each page, measures the diagram's bounding box,
+screenshots the viewport, and crops to the box. It needs the `agent-browser` CLI
+and ImageMagick (`magick`). The viewport-then-crop approach is deliberate: the
+element-clip mode of `agent-browser screenshot <selector>` renders these particular
+elements (aspect-ratio box / absolutely-positioned children) blank.
+
+Because screenshots are not pixel-deterministic across runs, expect a tiny diff
+even with no visual change; only commit the PNGs when the component actually
+changed.
