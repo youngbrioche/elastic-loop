@@ -1,5 +1,11 @@
 # Changelog
 
+## 17 Jun 2026 — New FAQ page on applying the framework
+
+[`a83561b`](https://github.com/youngbrioche/elastic-loop/commit/a83561b62cc88be9fd071fbbe6843922832aac7c)
+
+The FAQ leads with the question I get most, how do I apply this to my team, and answers it agent-first: prime your own agent with the book (every page has a .md mirror, plus llms.txt and llms-full.txt) and let it reason about your readiness, loop sizing, harness, and grading in the framework's terms, then argue with what it returns. Three shorter follow-ups handle the non-engineer, the spec-driven-development, and the which-model-to-standardize-on questions. The page joins the masthead nav and the end of the reading path, and flows into llms.txt, /faq.md, and llms-full.txt automatically.
+
 ## 17 Jun 2026 — Diagrams now render in the agent .md routes
 
 [`e60a439`](https://github.com/youngbrioche/elastic-loop/commit/e60a4399c9ff3d4fa68f7d2d3447519c7b474d11)
