@@ -3,8 +3,8 @@
     "date": "17 Jun 2026",
     "title": "New FAQ page on applying the framework",
     "commit": "a83561b62cc88be9fd071fbbe6843922832aac7c",
-    "text": "A new FAQ page answers how to apply the framework, starting with priming your own agent with the book and letting it work the framework against your situation.",
-    "body": "The FAQ leads with the question I get most, how do I apply this to my team, and answers it agent-first: prime your own agent with the book (every page has a .md mirror, plus llms.txt and llms-full.txt) and let it reason about your readiness, loop sizing, harness, and grading in the framework's terms, then argue with what it returns. Three shorter follow-ups handle the non-engineer, the spec-driven-development, and the which-model-to-standardize-on questions. The page joins the masthead nav and the end of the reading path, and flows into llms.txt, /faq.md, and llms-full.txt automatically."
+    "text": "A new FAQ page answers how to apply the framework: read the book, then put your own agent on it and let it work the framework against your situation.",
+    "body": "The FAQ leads with the question I get most, how do I apply this to my team. The book is written for human readers first, but it also anticipates that you will put your own agent on it, so it is built to be picked up by one: every page has a .md mirror, plus llms.txt and llms-full.txt. The answer is to read the pages yourself, then hand the same material to your agent and let it reason about your readiness, loop sizing, harness, and grading in the framework's terms before you argue with what it returns. Three shorter follow-ups handle the non-engineer, the spec-driven-development, and the which-model-to-standardize-on questions. The page joins the masthead nav and the end of the reading path, and flows into llms.txt, /faq.md, and llms-full.txt automatically."
   },
   {
     "date": "17 Jun 2026",
