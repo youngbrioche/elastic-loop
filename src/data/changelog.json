@@ -1,6 +1,13 @@
 [
   {
     "date": "17 Jun 2026",
+    "title": "Diagrams now render in the agent .md routes",
+    "commit": "e60a4399c9ff3d4fa68f7d2d3447519c7b474d11",
+    "text": "Every diagram now renders in the .md and llms.txt routes for agents, as an embedded image or a table, instead of only a text caption.",
+    "body": "The agent-facing .md and llms.txt renditions used to drop every visual to a one-line figure caption; they now embed the diagram too. The two pure-SVG figures are generated from their components into standalone files (guarded against drift), the two HTML-based ones ship as committed screenshots, and the master grid renders as a markdown table with an ascii context floor. Each image keeps its caption beneath it, so vision-capable and text-only agents are both served."
+  },
+  {
+    "date": "17 Jun 2026",
     "title": "Token budgets for agents in llms.txt and .md routes",
     "commit": "0598f5f84f15cf0596b23b694749a8ab6e512fcf",
     "text": "Every page link in llms.txt and every .md route now carries a ~token estimate, so an agent can size a fetch before making it.",

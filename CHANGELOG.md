@@ -1,5 +1,11 @@
 # Changelog
 
+## 17 Jun 2026 — Diagrams now render in the agent .md routes
+
+[`e60a439`](https://github.com/youngbrioche/elastic-loop/commit/e60a4399c9ff3d4fa68f7d2d3447519c7b474d11)
+
+The agent-facing .md and llms.txt renditions used to drop every visual to a one-line figure caption; they now embed the diagram too. The two pure-SVG figures are generated from their components into standalone files (guarded against drift), the two HTML-based ones ship as committed screenshots, and the master grid renders as a markdown table with an ascii context floor. Each image keeps its caption beneath it, so vision-capable and text-only agents are both served.
+
 ## 17 Jun 2026 — Token budgets for agents in llms.txt and .md routes
 
 [`0598f5f`](https://github.com/youngbrioche/elastic-loop/commit/0598f5f84f15cf0596b23b694749a8ab6e512fcf)
