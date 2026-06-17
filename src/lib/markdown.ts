@@ -1,6 +1,9 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { retext } from 'retext';
 import retextSmartypants from 'retext-smartypants';
 import { glossary } from '../data/glossary';
+import { startListCards } from '../data/startList';
 
 const SITE = 'https://elastic-loop.robert-glaser.de';
 
@@ -22,16 +25,13 @@ export interface MarkdownFrontmatter {
 }
 
 /**
- * Hardcoded replacement for the <StartList cards={[...]} /> component on the hub.
- * Parsing the cards prop out of MDX would be fragile; the five entries are stable.
+ * Markdown form of the <StartList> on the hub, generated from the same data the
+ * component renders (src/data/startList.ts) so the two cannot drift. The hrefs
+ * point at the .md siblings of each page.
  */
-const START_LIST_MARKDOWN = [
-  `- [Loops](${SITE}/loops.md): Tight, elastic, loose: three zones and how to size the loop for the task in front of you. None of the zones outranks the others, each just comes with different preconditions.`,
-  `- [Why](${SITE}/why.md): Why stretch a loop past tight at all, and is the risk worth it? The payoff comes down to how well you can judge what comes back. The economic and technical case, now with measurement behind it.`,
-  `- [Harness](${SITE}/harness.md): The backpressure layers in full: what holds agent output honest against the system, and what holds it honest against the product.`,
-  `- [Grading](${SITE}/grading.md): Outcome grading is the new specification. Tests, rubrics, scenarios, golden examples of known-good output, and why a rubric is not automatically truth.`,
-  `- [Roles](${SITE}/roles.md): Every role carries judgment about agent work that nobody else can supply. What engineers, product people, designers, domain experts, the people who run the process, and leaders each bring to the loop.`,
-].join('\n');
+const START_LIST_MARKDOWN = startListCards
+  .map((c) => `- [${c.title}](${SITE}${c.href}.md): ${c.text}`)
+  .join('\n');
 
 const DIAGRAMS = `${SITE}/diagrams`;
 
@@ -74,6 +74,29 @@ const MASTER_GRID_MARKDOWN = [
   '',
   'Loose only opens once the context can serve itself.',
 ].join('\n');
+
+/**
+ * The MASTER_GRID_MARKDOWN table above mirrors MasterGrid.astro by hand (the
+ * component is bespoke HTML/CSS, not data-driven, so generating the table from
+ * it would mean parsing nested markup). This guards the mirror cheaply: every
+ * cell / danger-sub text in the component must appear verbatim in the table, so
+ * editing a cell without updating the table fails the build. Short labels that
+ * the table deliberately rephrases (column timings, "Full backpressure" → "Full")
+ * live in <span>/head markup and are not matched here, avoiding false positives.
+ */
+function assertMasterGridMirror(): void {
+  const path = resolve(process.cwd(), 'src/components/visuals/MasterGrid.astro');
+  const src = readFileSync(path, 'utf8');
+  for (const m of src.matchAll(/<div class="(?:cell|danger-sub)[^"]*">([^<]+)<\/div>/g)) {
+    const text = m[1].trim();
+    if (text && !MASTER_GRID_MARKDOWN.includes(text)) {
+      throw new Error(
+        `mdxToMarkdown: MasterGrid cell "${text.slice(0, 48)}…" is missing from the hand-kept ` +
+          'MASTER_GRID_MARKDOWN table in src/lib/markdown.ts. Update the table to match MasterGrid.astro.',
+      );
+    }
+  }
+}
 
 /**
  * Self-closing visual components are replaced with an embedded figure (image +
@@ -143,9 +166,19 @@ export function mdxToMarkdown(rawMdx: string, fm: MarkdownFrontmatter): string {
   body = body.replace(/^import\s.*$/gm, '');
 
   // 3. Replace known self-closing components.
+  if (/<MasterGrid\b/.test(body)) assertMasterGridMirror();
   for (const [pattern, replacement] of COMPONENT_REPLACEMENTS) {
     body = body.replace(pattern, replacement);
   }
+
+  // 3a. The framework sentence is a styled raw <p> on the HTML side; convert it
+  // and its inline <strong> to markdown, so it doesn't leak as tag soup into the
+  // agent rendition — and so smartypants below doesn't mangle the class attribute
+  // into curly quotes. (The leftover-JSX guard only catches PascalCase tags.)
+  body = body.replace(
+    /<p class="framework-sentence">([\s\S]*?)<\/p>/g,
+    (_, inner) => inner.replace(/<\/?strong>/g, '**'),
+  );
 
   // 3b. Inline <Term id="x">label</Term>: keep the label inline, collect the
   // ids so we can append their definitions as a glossary section below.
