@@ -1,16 +1,38 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { mdxToMarkdown } from '../lib/markdown';
+import { tokenBudget } from '../lib/tokens';
+import changelog from '../data/changelog.json';
 
 const SITE = 'https://elastic-loop.robert-glaser.de';
+
+const rawPages = import.meta.glob('../content/pages/*.mdx', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
 
 export const GET: APIRoute = async () => {
   const pages = await getCollection('pages');
   pages.sort((a, b) => a.data.order - b.data.order);
 
-  const pageLines = pages.map((page) => {
+  // Render each page's markdown once so its token budget matches exactly what
+  // the .md route and llms-full.txt actually serve.
+  const rendered = pages.map((page) => ({
+    page,
+    md: mdxToMarkdown(rawPages[`../content/pages/${page.id}.mdx`] ?? '', page.data).trim(),
+  }));
+
+  const pageLines = rendered.map(({ page, md }) => {
     const path = page.id === 'index' ? '/index.md' : `/${page.id}.md`;
-    return `- [${page.data.title}](${SITE}${path}): ${page.data.description}`;
+    return `- [${page.data.title}](${SITE}${path}) (${tokenBudget(md)}): ${page.data.description}`;
   });
+
+  // Estimate the optional bundles from the same shapes their routes emit:
+  // llms-full.txt is the pages joined with separators; changelog.md is the
+  // entry list. Both stay budget-honest without re-importing the route logic.
+  const fullBody = rendered.map((r) => r.md).join('\n\n---\n\n');
+  const changelogBody = changelog.map((entry) => `- **${entry.date}**: ${entry.text}`).join('\n');
 
   const body = [
     '# The Elastic Loop',
@@ -21,8 +43,8 @@ export const GET: APIRoute = async () => {
     ...pageLines,
     '',
     '## Optional',
-    `- [llms-full.txt](${SITE}/llms-full.txt): all pages concatenated`,
-    `- [Changelog](${SITE}/changelog.md): recent notable changes, mirrors the site footer`,
+    `- [llms-full.txt](${SITE}/llms-full.txt) (${tokenBudget(fullBody)}): all pages concatenated`,
+    `- [Changelog](${SITE}/changelog.md) (${tokenBudget(changelogBody)}): recent notable changes, mirrors the site footer`,
     '',
     '## License',
     '© 2026 Robert Glaser. Code is licensed under Apache 2.0; site content is licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).',

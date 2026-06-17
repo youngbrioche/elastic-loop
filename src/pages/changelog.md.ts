@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import changelog from '../data/changelog.json';
+import { tokenBudget } from '../lib/tokens';
 
 const SITE = 'https://elastic-loop.robert-glaser.de';
 const FULL = 'https://github.com/youngbrioche/elastic-loop/blob/main/CHANGELOG.md';
@@ -25,7 +26,9 @@ export const GET: APIRoute = () => {
     '',
   ].join('\n');
 
-  return new Response(body, {
+  const withBudget = `<!-- ${tokenBudget(body)} -->\n${body}`;
+
+  return new Response(withBudget, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
   });
 };
