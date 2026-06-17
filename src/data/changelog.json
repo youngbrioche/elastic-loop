@@ -1,6 +1,13 @@
 [
   {
     "date": "17 Jun 2026",
+    "title": "New page for the readiness skill",
+    "commit": "f4398a1662d53fa045d78879851bcf3c4ef19d13",
+    "text": "A new page introduces the readiness skill: point your agent at the repo and let it diagnose how much loop your team can carry, with a few prompts to get going.",
+    "body": "The readiness skill is the companion you put to work after reading the book: it reads the live framework, then works through how much loop your team can carry, which loop sizes are available to you here, and the one constraint gating the next size up. The page shows the GitHub folder to hand any capable agent, a few starter prompts, and the native Claude Code plugin install for those who want it. It joins the masthead nav and the end of the reading path, and flows into llms.txt, /skill.md, and llms-full.txt automatically."
+  },
+  {
+    "date": "17 Jun 2026",
     "title": "New FAQ page on applying the framework",
     "commit": "a83561b62cc88be9fd071fbbe6843922832aac7c",
     "text": "A new FAQ page answers how to apply the framework: read the book, then put your own agent on it and let it work the framework against your situation.",

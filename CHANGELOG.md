@@ -1,5 +1,11 @@
 # Changelog
 
+## 17 Jun 2026 — New page for the readiness skill
+
+[`f4398a1`](https://github.com/youngbrioche/elastic-loop/commit/f4398a1662d53fa045d78879851bcf3c4ef19d13)
+
+The readiness skill is the companion you put to work after reading the book: it reads the live framework, then works through how much loop your team can carry, which loop sizes are available to you here, and the one constraint gating the next size up. The page shows the GitHub folder to hand any capable agent, a few starter prompts, and the native Claude Code plugin install for those who want it. It joins the masthead nav and the end of the reading path, and flows into llms.txt, /skill.md, and llms-full.txt automatically.
+
 ## 17 Jun 2026 — New FAQ page on applying the framework
 
 [`a83561b`](https://github.com/youngbrioche/elastic-loop/commit/a83561b62cc88be9fd071fbbe6843922832aac7c)
