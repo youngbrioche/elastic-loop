@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import whyImg from '../assets/why.webp';
+---
+
+{/*
+  Key visual for the Why page, in the hero's rendered-3D pool-noodle style: a
+  single mint loop whose two ends bulge fat while the connecting arcs taper to
+  threads — the middle shrinks, the ends get expensive. Miniature figures crowd
+  the two heavy ends; the thin middle is deserted. Floated so the opening
+  paragraphs of "The middle shrinks, the ends get expensive" wrap around it. The
+  .md / llms.txt rendition drops it (see COMPONENT_REPLACEMENTS in
+  src/lib/markdown.ts): the surrounding prose already states the same point.
+*/}
+<figure class="why-scene">
+  <Image
+    src={whyImg}
+    alt="A single mint loop whose left and right ends swell fat while the top and bottom arcs taper to threads, with miniature figures clustered at the two heavy ends and none on the thin middle"
+    widths={[360, 540, 720]}
+    sizes="(max-width: 600px) 100vw, 360px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  /* On mobile the figure is a plain full-width block above the prose. From the
+     tablet breakpoint up it floats at the left edge of the 740px reading column
+     (the .reading wrapper in the MDX gives it that containing block), so the
+     opening paragraphs wrap around it. */
+  .why-scene {
+    margin: 0 0 4px;
+  }
+
+  .why-scene :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 601px) {
+    .why-scene {
+      float: left;
+      width: 360px;
+      margin: 0 28px 4px 0;
+      shape-outside: margin-box;
+    }
+  }
+</style>

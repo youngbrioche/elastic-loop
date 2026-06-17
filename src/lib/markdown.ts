@@ -142,6 +142,9 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
   // LoopsScene is a decorative key visual; the LoopSizes figure right below it
   // carries the same three-zones idea in an agent-legible form.
   [/<LoopsScene[\s\S]*?\/>/g, ''],
+  // WhyScene is a decorative key visual; the surrounding prose already states
+  // the same point (the middle shrinks, the ends get expensive).
+  [/<WhyScene[\s\S]*?\/>/g, ''],
   // StartList: hardcoded markdown list, see above.
   [/<StartList[\s\S]*?\/>/g, START_LIST_MARKDOWN],
 ];

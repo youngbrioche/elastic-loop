@@ -32,9 +32,10 @@ img { height: auto; }
 
 .reading { max-width: 740px; margin-left: auto; margin-right: auto; }
 
-/* The Loops intro floats its key visual inside the reading column; flow-root
+/* The Loops / Why intros float a key visual inside the reading column; flow-root
    contains the float so the next section heading clears it. */
-.loops-intro { display: flow-root; }
+.loops-intro,
+.why-intro { display: flow-root; }
 .wide    { max-width: 980px; margin-left: auto; margin-right: auto; }
 .wider   { max-width: 1080px; margin-left: auto; margin-right: auto; }
 
