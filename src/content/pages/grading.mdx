@@ -10,6 +10,7 @@ updated: 2026-06-12
 
 import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
+import GradingScene from '../../components/GradingScene.astro';
 import TwoIterationLayers from '../../components/visuals/TwoIterationLayers.astro';
 
 <PageIntro kicker="Part four" title="Grading">
@@ -46,9 +47,15 @@ Read the spec column top to bottom and you can watch the artifact change charact
 
 **The spec is useful when it structures the <Term id="search-space">search space</Term>. It becomes harmful when it replaces the search space.**
 
+<div class="reading grading-intro">
+
+<GradingScene />
+
 The spec can and should never be the beginning of a waterfall, but rather a living artifact humans (and agents) iterate on. Zero-shotting is not a sport! Well, most times it's not. And yet the pendulum is swinging back toward exactly that little waterfall right now: write everything down first, let the agent execute, and treat anyone who wants to feed learning back mid-run as undisciplined. Organizations rehearsed this movement for twenty years of doing agile without becoming agile, adopting the ceremony and dropping the feedback loop.
 
 A spec that pins down every implementation detail has quietly turned the agent back into a typist, and you paid for a search process you never ran.
+
+</div>
 
 The reflex has a name by now. ThoughtWorks tracks [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) on the Radar, notably no further than Assess, warning that teams might "relearn a bitter lesson, that handcrafted detailed rules for AI ultimately do not scale". Birgitta Böckeler [sorts the practice](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) into three levels of rigor: spec-first writes the spec up front and archives it once the code exists, spec-anchored keeps it in the repo, maintained with every change and validated against the implementation, and spec-as-source treats code as mere generated output of the spec, a future no tool delivers in production today. Spec-anchored is the close relative of this framework: a living, versioned artifact instead of one-way planning.
 

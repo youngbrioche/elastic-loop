@@ -148,6 +148,9 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
   // HarnessScene is a decorative key visual; the surrounding prose already
   // states the same point (the setup around the model beats the model).
   [/<HarnessScene[\s\S]*?\/>/g, ''],
+  // GradingScene is a decorative key visual; the surrounding prose already
+  // states the same point (the spec is a living artifact, not a waterfall).
+  [/<GradingScene[\s\S]*?\/>/g, ''],
   // StartList: hardcoded markdown list, see above.
   [/<StartList[\s\S]*?\/>/g, START_LIST_MARKDOWN],
 ];

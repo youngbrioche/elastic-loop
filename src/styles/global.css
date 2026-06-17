@@ -32,11 +32,12 @@ img { height: auto; }
 
 .reading { max-width: 740px; margin-left: auto; margin-right: auto; }
 
-/* The Loops / Why / Harness intros float a key visual inside the reading column;
-   flow-root contains the float so the next section heading clears it. */
+/* The Loops / Why / Harness / Grading intros float a key visual inside the
+   reading column; flow-root contains the float so the next block clears it. */
 .loops-intro,
 .why-intro,
-.harness-intro { display: flow-root; }
+.harness-intro,
+.grading-intro { display: flow-root; }
 .wide    { max-width: 980px; margin-left: auto; margin-right: auto; }
 .wider   { max-width: 1080px; margin-left: auto; margin-right: auto; }
 

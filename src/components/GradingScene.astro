@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import gradingImg from '../assets/grading.webp';
+---
+
+{/*
+  Key visual for the Grading page, in the hero's rendered-3D pool-noodle style: a
+  mint loop whose descending side is a stepped waterfall cascade (the little
+  waterfall) and whose ascending side is a smooth return arc that closes it into
+  a loop (the feedback path) — the spec as a living artifact humans and agents
+  iterate on, not the beginning of a waterfall. Floated beside the "the spec can
+  and should never be the beginning of a waterfall" paragraph. The .md /
+  llms.txt rendition drops it (see COMPONENT_REPLACEMENTS in src/lib/markdown.ts):
+  the surrounding prose already makes the same point.
+*/}
+<figure class="grading-scene">
+  <Image
+    src={gradingImg}
+    alt="A mint loop whose descending side is a stepped waterfall cascade and whose ascending side is a smooth return arc closing it into a loop, with miniature figures iterating around it"
+    widths={[300, 450, 600]}
+    sizes="(max-width: 600px) 100vw, 300px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  /* On mobile the figure is a plain full-width block above the prose. From the
+     tablet breakpoint up it floats at the left edge of the 740px reading column
+     (the .reading wrapper in the MDX gives it that containing block), so the
+     paragraph wraps around it. */
+  .grading-scene {
+    margin: 0 0 4px;
+  }
+
+  .grading-scene :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 601px) {
+    .grading-scene {
+      float: left;
+      width: 300px;
+      margin: 2px 30px 2px 0;
+      shape-outside: margin-box;
+    }
+  }
+</style>
