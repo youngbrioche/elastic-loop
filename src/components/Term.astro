@@ -66,8 +66,20 @@ const popId = `term-${id}`;
       visibility var(--rg-dur);
   }
 
-  .term:hover .term-pop,
-  .term:focus-within .term-pop {
+  /* Only open on hover where hovering actually exists. On touch (iOS), the
+     emulated :hover sticks to the element after a tap, which would keep the
+     popover open with no way to dismiss it. There, tap-toggling via the script
+     below (.is-open) and :focus-within drive visibility instead. */
+  @media (hover: hover) {
+    .term:hover .term-pop {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  .term:focus-within .term-pop,
+  .term.is-open .term-pop {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -90,8 +102,8 @@ const popId = `term-${id}`;
       max-width: none;
       transform: translateY(8px);
     }
-    .term:hover .term-pop,
-    .term:focus-within .term-pop {
+    .term:focus-within .term-pop,
+    .term.is-open .term-pop {
       transform: translateY(0);
     }
   }
@@ -120,4 +132,41 @@ const popId = `term-${id}`;
     padding-top: 7px;
     border-top: 1px solid var(--rg-border);
   }
-</style>
+</style><script>
+  // Touch devices have no real hover and don't reliably blur a focused button
+  // when you tap elsewhere, so the CSS-only popover could get stuck open on
+  // iOS. Drive it explicitly: tap a trigger to toggle, tap anywhere else (or
+  // scroll, or Escape) to dismiss. Delegated once for all terms on the page.
+  function closeAllTerms(except) {
+    document.querySelectorAll('.term.is-open').forEach((term) => {
+      if (term === except) return;
+      term.classList.remove('is-open');
+      const btn = term.querySelector('.term-trigger');
+      if (btn instanceof HTMLElement) btn.blur();
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    const trigger = target?.closest?.('.term-trigger');
+    if (trigger) {
+      const term = trigger.closest('.term');
+      const willOpen = !term?.classList.contains('is-open');
+      closeAllTerms(term);
+      if (term && willOpen) {
+        term.classList.add('is-open');
+      } else if (term) {
+        term.classList.remove('is-open');
+        if (trigger instanceof HTMLElement) trigger.blur();
+      }
+      return;
+    }
+    closeAllTerms(null);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeAllTerms(null);
+  });
+
+  window.addEventListener('scroll', () => closeAllTerms(null), { passive: true });
+</script>
