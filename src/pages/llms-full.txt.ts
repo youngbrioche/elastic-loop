@@ -20,7 +20,10 @@ export const GET: APIRoute = async () => {
     })
     .filter((part): part is string => part !== null);
 
-  const body = parts.join('\n\n---\n\n') + '\n';
+  const license =
+    '## License\n\n© 2026 Robert Glaser. Code is licensed under Apache 2.0; site content is licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).';
+
+  const body = parts.join('\n\n---\n\n') + '\n\n---\n\n' + license + '\n';
 
   return new Response(body, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },

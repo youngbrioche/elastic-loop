@@ -38,12 +38,12 @@ Built with [Astro](https://astro.build), deployed to GitHub Pages on every push 
 
 ## Contributing
 
-Issues and PRs are welcome. The prose lives in `src/content/pages/*.mdx`, one file per page. The site speaks in Robert's first-person voice, in English — keep contributions in that voice. Small corrections (typos, broken links, factual slips) are easiest as a direct PR.
+Issues and PRs are welcome. The prose lives in `src/content/pages/*.mdx`, one file per page. Keep contributions in English for now. Small corrections (typos, broken links, factual slips) are easiest as a direct PR.
 
 ## Provenance
 
-The Elastic Loop grew out of [How Does Truffle Taste?](https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/), the canonical write-up of the talk that introduced the framework.
+The Elastic Loop grew out of [How Does Truffle Taste?](https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/), the canonical write-up of my talk that introduced the framework.
 
 ## License
 
-Code is licensed under [MIT](LICENSE). Site content (the prose in `src/content`) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Code is licensed under [Apache 2.0](LICENSE). Site content (the prose in `src/content`) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
