@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import harnessImg from '../assets/harness.webp';
+---
+
+{/*
+  Key visual for the Harness page, in the hero's rendered-3D pool-noodle style: a
+  small mint loop (the model) braced inside a much larger scaffold ring-cage of
+  black and silver struts (the harness), with miniature figures building the
+  frame — the setup around the model beats the model. Floated so the opening
+  paragraph wraps around it. The .md / llms.txt rendition drops it (see
+  COMPONENT_REPLACEMENTS in src/lib/markdown.ts): the surrounding prose already
+  makes the same point.
+*/}
+<figure class="harness-scene">
+  <Image
+    src={harnessImg}
+    alt="A small mint loop braced at the center of a much larger scaffold ring-cage of black and silver struts, with miniature figures building and tightening the surrounding frame"
+    widths={[300, 450, 600]}
+    sizes="(max-width: 600px) 100vw, 300px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  /* On mobile the figure is a plain full-width block above the prose. From the
+     tablet breakpoint up it floats at the left edge of the 740px reading column
+     (the .reading wrapper in the MDX gives it that containing block), so the
+     opening paragraph wraps around it. */
+  .harness-scene {
+    margin: 0 0 4px;
+  }
+
+  .harness-scene :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 601px) {
+    .harness-scene {
+      float: left;
+      width: 300px;
+      margin: 2px 30px 2px 0;
+      shape-outside: margin-box;
+    }
+  }
+</style>

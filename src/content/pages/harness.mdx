@@ -9,13 +9,20 @@ updated: 2026-06-12
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
+import HarnessScene from '../../components/HarnessScene.astro';
 import Term from '../../components/Term.astro';
 
 <PageIntro kicker="Part three" title="Harness">
 A <Term id="harness">harness</Term> is the scaffold that turns a model into an agent, assembled from many parts. Among those: the loop it works in, the tools it can reach, how its context is kept manageable as a run grows long, the hooks that fire on what it does, subagents, and guardrails. A raw model answers once. A harness is what lets it take a hundred turns on a task while you look away. It is also where you start attaching resistance. A hook can block a bad commit, an AGENTS.md can carry rules the agent is meant to follow but can still quietly ignore, and plenty of resistance lives outside the harness too, in a git hook, in CI, in a human reviewer. <Term id="backpressure">Backpressure</Term> is the name for all of it, and the more of it you can encode, the more line you can pay out, from tight to elastic to loose. On the [master grid](/#where-does-your-next-task-belong), the vertical axis is exactly this: no automated checks, then technical ones, then full backpressure that adds product and domain judgment on top. This page is about that top level. What actually goes into it, and what does it cost the human to keep running?
 </PageIntro>
 
+<div class="reading harness-intro">
+
+<HarnessScene />
+
 Before the parts, it helps to know why they are worth the trouble at all. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination that actually ships, harness and configuration and model together, and finds that the configuration around the model moves the result about ten times more than the model choice does. While the industry refreshes leaderboards and debates which frontier model to standardize on, or whether SWE-Bench was fine with slop all along, the variable that dominates is the loop infrastructure around the model. Chollet supplies the theory on [Why](/why), that building is a search process and so the setup around the search matters, and clawbench supplies the measurement. The lever sits here, in the harness, not in the model. Which makes it worth knowing exactly what goes into one.
+
+</div>
 
 I work with four clusters, and each one owns a different question about the same piece of agent output:
 
