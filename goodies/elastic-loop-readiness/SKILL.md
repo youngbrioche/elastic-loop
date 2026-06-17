@@ -66,6 +66,21 @@ plain-language anchors. Do not restate them from here, and do not invent your ow
 
 State the conditions above in two or three sentences. Say it once, and mean it.
 
+Run this with the team, not for the team. Get the people who see different
+stretches of the loop into one conversation: an engineer, a product owner, a
+domain expert, anyone who owns a piece of it. Where they disagree about how far
+to let go is itself part of the diagnosis: it locates the framework's third
+strategic question, where trust actually lives. Convening those views rather than
+collecting one is the framework's organizational loop closure (the Roles page)
+turned on the diagnosis itself, so what each person's loop has learned lands with
+the team instead of staying private practice. One person quietly filling it in
+for everyone else produces a tidy answer and skips the exchange that was the
+point.
+If only one person is in the room, run it anyway, but say in the verdict that it
+is one seat's view, and name whose perspective is still missing. The one
+deliberate exception is the individual-reflection doorway below, where someone
+reads their own team in private and no one else receives the answers.
+
 Then settle, before any grilling:
 
 - Who will see this output. Get the candor contract straight first.

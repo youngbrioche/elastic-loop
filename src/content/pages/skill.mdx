@@ -1,7 +1,7 @@
 ---
 title: "The readiness skill"
-description: "A companion skill that turns the framework on your own team. Point your agent at the repo, and it reads the live book, then grills you about how much loop you can carry, which loop sizes are available to you here, and the one constraint gating the next."
-socialDescription: "A skill that turns the framework on your own team: point your agent at the repo and let it diagnose how much loop you can carry."
+description: "A companion skill that turns the framework on your own team. Point your agent at your project, and it reads the live book, then grills you about how much loop you can carry, which loop sizes are available to you here, and the one constraint gating the next."
+socialDescription: "A skill that turns the framework on your own team: point your agent at your project and let it diagnose how much loop you can carry."
 kicker: "Goodie"
 order: 7
 status: seed
@@ -19,7 +19,7 @@ The book is written for you to read first. This is the companion you put to work
 The skill lives in the project's GitHub repository, in its own folder. Hand any capable agent that folder and ask it to install the skill it finds there. It works in any harness that can read a URL.
 
 ```
-https://github.com/youngbrioche/elastic-loop/tree/main/goodies/elastic-loop-readiness
+Install this skill: https://github.com/youngbrioche/elastic-loop/tree/main/goodies/elastic-loop-readiness
 ```
 
 ## A few prompts to get going
@@ -48,6 +48,6 @@ If you are in Claude Code, there is a native path. Add the marketplace, install 
 
 Then ask for a loop-readiness diagnosis and Claude picks it up, or run it directly with `/elastic-loop-readiness:elastic-loop-readiness`. That is not a typo: the command reads `plugin:skill`, and here the plugin and the skill carry the same name.
 
-Run it with the team, not for the team. The honest version needs more than one person in the room: an engineer, a product owner, and a domain expert each see a different stretch of the loop, and where they disagree about how far to let go is half of what you came for. One person quietly filling it in for everyone else gets a tidy answer and skips the conversation that was the point.
+Run it with the team, not for the team. Get the people who see different stretches of the loop into one room: an engineer, a product owner, a domain expert. Where they disagree about how far to let go is half of what you came for, because that disagreement is where the team's trust actually sits. One person quietly filling it in for everyone else gets a tidy answer and skips the conversation that was the point. A single seat's view is still worth having; it just sees one stretch of the loop, not the whole of it.
 
 One thing to keep in mind, because the framework turns on it: the skill running on your team is itself a loop, and its read is a strong first draft to argue with, not a verdict to adopt. The judgment about whether the diagnosis holds is still yours. That is the whole point.
