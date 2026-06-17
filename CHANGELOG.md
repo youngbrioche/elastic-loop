@@ -2,7 +2,7 @@
 
 ## 17 Jun 2026 — Agent rendition kept in sync with the site
 
-[`95aa3f2`](https://github.com/youngbrioche/elastic-loop/commit/95aa3f2)
+[`95aa3f2`](https://github.com/youngbrioche/elastic-loop/commit/95aa3f2174351157608e1183498c479d3993ddf0)
 
 The `.md` and `llms.txt` renditions now carry figure descriptions for the two new diagrams instead of leaking their raw component tags, so agents reading grading.md, roles.md, and llms-full.txt see the same figures human readers do. The Markdown conversion now fails the build if any component, wrapper, or glossary term ever drifts out of it again, rather than silently shipping a degraded rendition.
 
@@ -17,3 +17,15 @@ Grading gains a two-iteration-layers diagram showing the inner agent loop iterat
 [`5df3e0c`](https://github.com/youngbrioche/elastic-loop/commit/5df3e0cfe11f17acd40b8f9c420f57e423bb0c84)
 
 The loop zones now read minutes to hours for elastic and multiple hours for loose, replacing the earlier "hours" and "days" framing. This follows METR's time-horizon data, which puts the current upper limit of unattended agent work at around 16 hours rather than days. The change touches the master grid, the loop-sizes visual, and the prose on the index, loops, and harness pages.
+
+## 12 Jun 2026 — Verification cost added to Harness and Loops
+
+Verification cost: how many loops can one person close? Added to Harness and Loops.
+
+## 12 Jun 2026 — A fourth verb in the one-sentence formula
+
+The one-sentence formula gains its fourth verb: verification closes the loop.
+
+## 11 Jun 2026 — First public draft
+
+First public draft: the hub and all five sections, seeded.

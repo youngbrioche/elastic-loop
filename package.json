@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "changelog": "node scripts/gen-changelog.mjs",
+    "changelog:check": "node scripts/gen-changelog.mjs --check"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",

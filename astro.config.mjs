@@ -1,8 +1,31 @@
 // @ts-check
+import { readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import remarkSmartypants from 'remark-smartypants';
+import { renderChangelog, readEntries } from './scripts/gen-changelog.mjs';
+
+// Fail the build if CHANGELOG.md drifts from its source (src/data/changelog.json,
+// which the footer and /changelog.md also render). Keeps the human changelog,
+// the footer, and the agent rendition in sync from one source. Run
+// `npm run changelog` to regenerate after editing the JSON.
+function changelogSyncGuard() {
+  return {
+    name: 'changelog-sync-guard',
+    hooks: {
+      'astro:build:start': () => {
+        const generated = renderChangelog(readEntries());
+        const current = readFileSync(new URL('./CHANGELOG.md', import.meta.url), 'utf8');
+        if (current !== generated) {
+          throw new Error(
+            'CHANGELOG.md is out of sync with src/data/changelog.json. Run `npm run changelog` and commit the result.',
+          );
+        }
+      },
+    },
+  };
+}
 
 export default defineConfig({
   site: 'https://elastic-loop.robert-glaser.de',
@@ -16,5 +39,5 @@ export default defineConfig({
     // dashes:false so we never auto-introduce em/en dashes from `--`.
     remarkPlugins: [[remarkSmartypants, { dashes: false, backticks: false }]],
   },
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), changelogSyncGuard()],
 });
