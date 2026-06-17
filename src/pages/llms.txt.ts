@@ -22,6 +22,7 @@ export const GET: APIRoute = async () => {
     '',
     '## Optional',
     `- [llms-full.txt](${SITE}/llms-full.txt): all pages concatenated`,
+    `- [Changelog](${SITE}/changelog.md): recent notable changes, mirrors the site footer`,
     '',
     '## License',
     '© 2026 Robert Glaser. Code is licensed under Apache 2.0; site content is licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).',
