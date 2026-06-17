@@ -19,7 +19,9 @@ import changelog from '../data/changelog.json';
       <div class="footer-heading">Changelog</div>
       <div class="changelog">
         {
-          changelog.map((entry) => (
+          /* Footer shows the 3 most recent only; the full list lives in
+             CHANGELOG.md and at /changelog.md. */
+          changelog.slice(0, 3).map((entry) => (
             <div class="changelog-entry">
               <span class="changelog-date">{entry.date}</span>
               <span class="changelog-text">{entry.text}</span>
