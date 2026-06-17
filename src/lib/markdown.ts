@@ -50,6 +50,14 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     /<LoopSizes[\s\S]*?\/>/g,
     '*[Figure: Three sizes of the same loop. Tight: minutes, in the loop at every turn. Elastic: minutes to hours, at checkpoints on the edge. Loose: multiple hours, only at the outcome gate.]*',
   ],
+  [
+    /<TwoIterationLayers[\s\S]*?\/>/g,
+    '*[Figure: Two iteration layers, drawn as two concentric loops. The inner agent loop runs fast over the output; the outer human loop runs slowly over the grading material: spec, rubrics, scenarios, goldens, counterexamples. Output flows outward to evaluation; sharpened graders flow back inward. Patch the output and the loop reproduces it; sharpen the grader and it learns.]*',
+  ],
+  [
+    /<StationsVsLoop[\s\S]*?\/>/g,
+    '*[Figure: Stations versus loop. Before: the old sequence of roles as a handoff line, PO to UX to Engineering to QA to Ops, each step expensive enough to deserve its own station. After: the same people gathered around a central loop of six uniform steps (intent, context, variants, verification, decision, production and learning), each role labelled with the backpressure it supplies. AI materializes the intermediate steps; each role brings judgment no one else can.]*',
+  ],
   // Hero carries no prose of its own (title comes from the header block).
   [/<Hero[\s\S]*?\/>/g, ''],
   // StartList: hardcoded markdown list, see above.
@@ -96,6 +104,23 @@ export function mdxToMarkdown(rawMdx: string, fm: MarkdownFrontmatter): string {
     body = body.replace(new RegExp(`</${tag}>`, 'g'), '');
   }
 
+  // 4b. Nothing JSX-shaped should survive the strips above. A surviving
+  // PascalCase tag means a component, wrapper, or <Term> spelling (single
+  // quotes, self-closing, extra props) slipped past the rules above. MDX would
+  // still render it on the HTML side, so the build stays green while the raw
+  // tag leaks into the agent output — the exact silent drift this rendition
+  // exists to prevent. Fail the build so the rule gets added instead. (MDX
+  // requires every literal `<Uppercase…>` to be a real component, so this never
+  // false-positives on prose.)
+  const leftover = body.match(/<\/?[A-Z][A-Za-z0-9]*/);
+  if (leftover) {
+    throw new Error(
+      `mdxToMarkdown: unhandled JSX tag "${leftover[0]}…>" survived conversion. ` +
+        'Add a COMPONENT_REPLACEMENTS or WRAPPER_TAGS rule in src/lib/markdown.ts ' +
+        'so the .md / llms.txt rendition stays in sync with the HTML.',
+    );
+  }
+
   // 5. Collapse runs of blank lines.
   body = body.replace(/\n{3,}/g, '\n\n').trim();
 
@@ -120,14 +145,24 @@ export function mdxToMarkdown(rawMdx: string, fm: MarkdownFrontmatter): string {
   // llms.txt rendition keeps the definitions the tooltips carry on the site.
   let glossarySection = '';
   if (termIds.size > 0) {
+    // Mirror the build-time guard in Term.astro: an id with no glossary entry
+    // is an error, not something to drop silently. Term.astro already fails the
+    // HTML build on an orphan id today, so this is defense in depth — it keeps
+    // the .md path honest on its own if it is ever generated without the HTML
+    // build (a script or test calling mdxToMarkdown directly).
     const lines = [...termIds]
-      .map((id) => glossary[id])
-      .filter((e): e is NonNullable<typeof e> => Boolean(e))
+      .map((id) => {
+        const entry = glossary[id];
+        if (!entry) {
+          throw new Error(
+            `<Term id="${id}"> has no entry in src/data/glossary.ts. Add it there or fix the id.`,
+          );
+        }
+        return entry;
+      })
       .sort((a, b) => a.term.localeCompare(b.term))
       .map((e) => `- **${e.term}**: ${e.def}${e.anchor ? ` ${e.anchor}` : ''}`);
-    if (lines.length > 0) {
-      glossarySection = `\n## Glossary\n\n${lines.join('\n')}\n`;
-    }
+    glossarySection = `\n## Glossary\n\n${lines.join('\n')}\n`;
   }
 
   return `${header}${body}\n${glossarySection}`;
