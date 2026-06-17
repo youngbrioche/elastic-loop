@@ -9,6 +9,7 @@ updated: 2026-06-12
 
 import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
+import StationsVsLoop from '../../components/visuals/StationsVsLoop.astro';
 
 <PageIntro kicker="Part five" title="Roles">
 Every role on a team carries judgment about agent work that nobody else can supply: what is worth building, which of several solutions is the right one, and whether the result actually holds up. Checking the output is only the last of those. It is the first thing that gets lost when companies roll out agents: engineering builds the [harness](/harness), dashboards fill up with velocity, and the people who actually know the product, the users, and the domain stand around wondering whether their job now requires learning Python. It does not. What the loop needs from them runs its whole length: the intent that opens it, the context that grounds it, the <Term id="backpressure">backpressure</Term> that keeps it honest, and the taste to tell a strong variant from a merely plausible one. The product and domain side of that judgment is also what keeps fast output from sliding into slop (the plausible, generic stuff that passes every technical check and dies quietly in the market). Treating non-engineering roles as smaller coders wastes them. Their leverage is the judgment no compiler or linter can provide, across the loop and not just at its end.
@@ -60,6 +61,8 @@ The engineering leader carries four jobs in this model.
 ## When handoffs stop making sense
 
 Here is the reframe I want to leave you with. Where people expect AI to dissolve silos by making everyone do everything, the actual mechanism is that AI materializes the intermediate steps. Spec drafts, prototypes, tests, review artifacts, the things that used to justify a handoff, now appear in hours inside the loop. The old sequence (PO formulates, UX designs, engineering builds, QA checks, operations learns about it later) assumed those steps were expensive enough to deserve their own stations. The loop model runs intent, context, variants, verification, decision, production learning, and the roles gather around it rather than queueing along it. The bottleneck moves to jointly sharpening context, assumptions, options, and quality criteria.
+
+<StationsVsLoop />
 
 Which brings this page back to where it started: every role carries judgment nobody else can supply. The question for your team is:
 

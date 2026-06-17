@@ -1,0 +1,110 @@
+---
+// Two iteration layers: the inner agent loop iterates fast over the output;
+// the outer human loop iterates slowly over the grading material.
+// Final agreed layout (v4), ported to project tokens.
+---
+
+<figure class="two-iteration-layers">
+  <svg viewBox="0 0 720 640" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="til-title til-desc">
+    <title id="til-title">Two iteration layers</title>
+    <desc id="til-desc">Two concentric loops. The inner agent loop iterates fast over the output; the outer human loop iterates slowly over the grading material — spec, rubrics, scenarios, goldens, counterexamples. Output flows outward to evaluation; sharpened graders flow back inward.</desc>
+    <defs>
+      <marker id="til-openMint" markerWidth="12" markerHeight="12" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M2,2 L8,5 L2,8" fill="none" stroke="var(--rg-accent-hover)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="til-openGrey" markerWidth="12" markerHeight="12" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M2,2 L8,5 L2,8" fill="none" stroke="var(--rg-fg-2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="til-openInk" markerWidth="11" markerHeight="11" refX="7" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M2,2 L7,4.5 L2,7" fill="none" stroke="var(--rg-fg-1)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <rect class="til-frame" x="1" y="1" width="718" height="638" rx="8"/>
+    <text class="til-h" x="40" y="52">Two iteration layers</text>
+    <text class="til-sub" x="40" y="76">The agent iterates over the output. You iterate over the grading material.</text>
+    <circle class="til-outer-ring" cx="360" cy="330" r="185"/>
+    <path class="til-outer-arc" d="M 202 273 A 168 168 0 0 1 303 172" marker-end="url(#til-openMint)"/>
+    <path class="til-outer-arc" d="M 518 388 A 168 168 0 0 1 417 488" marker-end="url(#til-openMint)"/>
+    <circle class="til-node" cx="360" cy="145" r="6.5"/>
+    <rect class="til-chip" x="328" y="118" width="64" height="20" rx="4"/>
+    <text class="til-chip-text" x="360" y="132" text-anchor="middle">Spec</text>
+    <circle class="til-node" cx="536" cy="273" r="6.5"/>
+    <rect class="til-chip" x="556" y="263" width="72" height="20" rx="4"/>
+    <text class="til-chip-text" x="592" y="277" text-anchor="middle">Rubrics</text>
+    <circle class="til-node" cx="469" cy="480" r="6.5"/>
+    <rect class="til-chip" x="489" y="494" width="86" height="20" rx="4"/>
+    <text class="til-chip-text" x="532" y="508" text-anchor="middle">Scenarios</text>
+    <circle class="til-node" cx="251" cy="480" r="6.5"/>
+    <rect class="til-chip" x="145" y="494" width="80" height="20" rx="4"/>
+    <text class="til-chip-text" x="185" y="508" text-anchor="middle">Goldens</text>
+    <circle class="til-node" cx="184" cy="273" r="6.5"/>
+    <rect class="til-chip" x="40" y="263" width="124" height="20" rx="4"/>
+    <text class="til-chip-text" x="102" y="277" text-anchor="middle">Counterexamples</text>
+    <text class="til-kicker-mint" x="360" y="552" text-anchor="middle">HUMAN LOOP</text>
+    <text class="til-loop-sub til-loop-sub-lg" x="360" y="570" text-anchor="middle">slow · iterates over the grading material</text>
+    <circle class="til-inner-ring" cx="360" cy="330" r="92"/>
+    <path class="til-inner-arc" d="M 360 238 A 92 92 0 0 1 425 265" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 425 265 A 92 92 0 0 1 452 330" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 452 330 A 92 92 0 0 1 425 395" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 425 395 A 92 92 0 0 1 360 422" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 360 422 A 92 92 0 0 1 295 395" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 295 395 A 92 92 0 0 1 268 330" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 268 330 A 92 92 0 0 1 295 265" marker-end="url(#til-openInk)"/>
+    <path class="til-inner-arc" d="M 295 265 A 92 92 0 0 1 360 238" marker-end="url(#til-openInk)"/>
+    <circle class="til-center" cx="360" cy="330" r="7"/>
+    <text class="til-output" x="360" y="312" text-anchor="middle">Output</text>
+    <text class="til-kicker-ink" x="360" y="353" text-anchor="middle">AGENT LOOP</text>
+    <text class="til-loop-sub" x="360" y="370" text-anchor="middle">fast · iterates over output</text>
+    <line class="til-flow-grey" x1="439" y1="251" x2="477" y2="213" marker-end="url(#til-openGrey)"/>
+    <text class="til-flow-label-grey" x="498" y="204" text-anchor="start">output → evaluation</text>
+    <line class="til-flow-mint" x1="243" y1="447" x2="281" y2="409" marker-end="url(#til-openMint)"/>
+    <text class="til-flow-label-mint" x="112" y="466" text-anchor="start">sharpened graders → back in</text>
+    <line class="til-divider" x1="40" y1="596" x2="680" y2="596"/>
+    <text class="til-foot" x="40" y="620">Patch the output and the loop reproduces it. Sharpen the grader and it learns.</text>
+  </svg>
+  <figcaption>Two iteration layers: the agent loops fast over the output, you loop slowly over the grading material.</figcaption>
+</figure>
+
+<style>
+  .two-iteration-layers {
+    padding: 0;
+  }
+  .two-iteration-layers svg {
+    display: block;
+    font-family: var(--rg-font-sans);
+  }
+
+  .til-frame { fill: var(--rg-bg-1); stroke: var(--rg-border); stroke-width: 1; }
+  .til-h { font-size: 20px; font-weight: 700; fill: var(--rg-fg-1); }
+  .til-sub { font-size: 13.5px; fill: var(--rg-fg-2); }
+
+  .til-outer-ring { fill: none; stroke: var(--rg-accent); stroke-width: 2; }
+  .til-outer-arc { fill: none; stroke: var(--rg-accent-hover); stroke-width: 2; }
+  .til-node { fill: var(--rg-bg-1); stroke: var(--rg-accent); stroke-width: 2.5; }
+  .til-chip { fill: var(--rg-accent-soft); }
+  .til-chip-text { font-size: 12.5px; font-weight: 700; fill: var(--rg-accent-hover); }
+
+  .til-inner-ring { fill: none; stroke: var(--rg-fg-1); stroke-width: 2; }
+  .til-inner-arc { fill: none; stroke: var(--rg-fg-1); stroke-width: 2; }
+  .til-center { fill: var(--rg-fg-1); }
+  .til-output { font-size: 13px; font-weight: 700; fill: var(--rg-fg-1); }
+
+  .til-kicker-mint { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; fill: var(--rg-accent-hover); }
+  .til-kicker-ink { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; fill: var(--rg-fg-1); }
+  .til-loop-sub { font-size: 11.5px; fill: var(--rg-fg-2); }
+  .til-loop-sub-lg { font-size: 12.5px; }
+
+  .til-flow-grey { stroke: var(--rg-fg-2); stroke-width: 2; stroke-dasharray: 6 5; }
+  .til-flow-label-grey { font-size: 11.5px; font-weight: 600; fill: var(--rg-fg-2); }
+  .til-flow-mint { stroke: var(--rg-accent-hover); stroke-width: 2.5; }
+  .til-flow-label-mint { font-size: 11.5px; font-weight: 700; fill: var(--rg-accent-hover); }
+
+  .til-divider { stroke: var(--rg-border); stroke-width: 1; }
+  .til-foot { font-size: 13.5px; fill: var(--rg-fg-3); }
+
+  figcaption {
+    font-size: 14px;
+    color: var(--rg-fg-3);
+    margin-top: 14px;
+  }
+</style>
