@@ -1,0 +1,51 @@
+---
+title: "The readiness skill"
+description: "A companion skill that turns the framework on your own team. Point your agent at the repo, and it reads the live book, then grills you about how much loop you can carry, which loop sizes are available to you here, and the one constraint gating the next."
+socialDescription: "A skill that turns the framework on your own team: point your agent at the repo and let it diagnose how much loop you can carry."
+kicker: "Goodie"
+order: 7
+status: seed
+updated: 2026-06-17
+---
+
+import PageIntro from '../../components/PageIntro.astro';
+
+<PageIntro kicker="Goodie" title="The readiness skill">
+The book is written for you to read first. This is the companion you put to work afterwards: a skill that turns the framework on your own team instead of on a single task. It reads the live book, then sits you down and works through how much loop you can actually carry here, which [loop sizes](/loops) are available to you in this codebase, and the one constraint gating the next size up. You get a readiness verdict, including a plain "loose is not available to you here yet" when that is the honest read, and never a score, a level, or a maturity badge.
+</PageIntro>
+
+## Point your agent at the repo
+
+The skill lives in the project's GitHub repository, in its own folder. Hand any capable agent that folder and ask it to install the skill it finds there. It works in any harness that can read a URL.
+
+```
+https://github.com/youngbrioche/elastic-loop/tree/main/goodies/elastic-loop-readiness
+```
+
+## A few prompts to get going
+
+Install it. Point your agent at the folder and let it take the skill from there:
+
+> Read https://github.com/youngbrioche/elastic-loop/tree/main/goodies/elastic-loop-readiness and install the skill you find there.
+
+Then run the diagnosis, and say who you are so it grills the part of the loop you can actually speak to:
+
+> Run an elastic-loop readiness diagnosis with me. I am a product owner on a team that has started letting agents touch our codebase.
+
+Or aim it straight at a doubt you already carry:
+
+> We let agents do the work but never merge without reading every line. Where are our loop sizes a choice, and where are they an accident?
+
+## Or install it as a Claude Code plugin
+
+If you are in Claude Code, there is a native path. Add the marketplace, install the plugin, reload:
+
+```
+/plugin marketplace add youngbrioche/elastic-loop
+/plugin install elastic-loop-readiness@elastic-loop
+/reload-plugins
+```
+
+Then ask for a loop-readiness diagnosis and Claude picks it up, or run it directly with `/elastic-loop-readiness:elastic-loop-readiness`.
+
+One thing to keep in mind, because the framework turns on it: the skill running on your team is itself a loop, and its read is a strong first draft to argue with, not a verdict to adopt. The judgment about whether the diagnosis holds is still yours. That is the whole point.
