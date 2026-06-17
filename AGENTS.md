@@ -26,3 +26,22 @@ For public, notable changes:
 - run `npm run changelog` to regenerate CHANGELOG.md, then commit it together
   with the JSON.
 - the changelog teaser in the footer should only show 3 items max, never more.
+
+## Visuals and the agent .md routes
+
+The visual components live in `src/components/visuals/*.astro`. HTML pages render
+them live; the `.md` / `llms.txt` agent routes embed image (or table) versions via
+`COMPONENT_REPLACEMENTS` in `src/lib/markdown.ts`, each with a textual caption
+beneath. Keep these in sync — details in `scripts/README-diagrams.md`:
+
+- **Added a visual?** The build fails (`unhandled JSX tag` guard in
+  `markdown.ts`) until you add a `COMPONENT_REPLACEMENTS` rule, so it can't leak
+  silently. Decide per visual: embed an image, or render it as a table / text.
+- **Changed a pure-SVG visual** (TwoIterationLayers, StationsVsLoop)? Run
+  `npm run diagrams` to regenerate `public/diagrams/*.svg` and commit it. The
+  build runs `npm run diagrams:check` and fails on drift.
+- **Changed an HTML-based visual** (Squeeze, LoopSizes)? These are PNG
+  screenshots, NOT guarded. With the dev server up, run `npm run diagrams:shoot`
+  to recapture them, then commit. Nothing reminds you, so don't forget.
+- **Changed the MasterGrid content?** Its `.md` form is a hand-kept markdown
+  table in `markdown.ts` (not an image). Update it there by hand.
