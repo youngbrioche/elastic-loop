@@ -15,13 +15,17 @@ import loopsImg from '../assets/loops.webp';
   <Image
     src={loopsImg}
     alt="Three pool-noodle loops growing from a small tight black ring to a wide loose silver one, with miniature figures at shrinking degrees of involvement"
-    widths={[320, 480, 640]}
-    sizes="(max-width: 600px) 100vw, 340px"
+    widths={[300, 450, 600]}
+    sizes="(max-width: 600px) 100vw, 300px"
     draggable="false"
   />
 </figure>
 
 <style>
+  /* On mobile the figure is a plain full-width block above the prose. From the
+     tablet breakpoint up it floats at the left edge of the 740px reading column
+     (the .reading wrapper in the MDX gives it that containing block), so the
+     opening paragraphs wrap around it. */
   .loops-scene {
     margin: 0 0 4px;
   }
@@ -34,9 +38,8 @@ import loopsImg from '../assets/loops.webp';
   @media (min-width: 601px) {
     .loops-scene {
       float: left;
-      width: 340px;
-      max-width: 46%;
-      margin: -8px 28px 8px -16px;
+      width: 300px;
+      margin: 2px 30px 2px 0;
       shape-outside: margin-box;
     }
   }
