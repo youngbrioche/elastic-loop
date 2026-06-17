@@ -7,10 +7,10 @@
 // @font-face). Run `npm run diagrams` after editing one of these components.
 //
 // Only TwoIterationLayers and StationsVsLoop are handled here: their text and
-// geometry live entirely inside the <svg>. Squeeze and LoopSizes carry HTML
-// labels / CSS-grid layout on top, so they are captured as PNG screenshots
-// instead (see scripts/README-diagrams.md), and MasterGrid renders as a markdown
-// table in src/lib/markdown.ts.
+// geometry live entirely inside the component's <svg>. Squeeze and LoopSizes
+// carry HTML labels / CSS-grid layout on top, so they are captured as PNG
+// screenshots instead (see scripts/README-diagrams.md), and MasterGrid renders
+// as a markdown table in src/lib/markdown.ts.
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -20,14 +20,18 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
 const COMPONENTS = [
-  { file: 'src/components/visuals/TwoIterationLayers.astro', out: 'public/diagrams/two-iteration-layers.svg', size: [720, 640] },
-  { file: 'src/components/visuals/StationsVsLoop.astro', out: 'public/diagrams/stations-vs-loop.svg', size: [960, 560] },
+  { file: 'src/components/visuals/TwoIterationLayers.astro', out: 'public/diagrams/two-iteration-layers.svg' },
+  { file: 'src/components/visuals/StationsVsLoop.astro', out: 'public/diagrams/stations-vs-loop.svg' },
 ];
+
+// Matches both var(--rg-x) and var(--rg-x, fallback). We resolve from tokens, so
+// the fallback is intentionally dropped.
+const VAR_RE = /var\(\s*(--rg-[\w-]+)\s*(?:,[^()]*)?\)/g;
 
 // Parse design tokens (single source for the colour/font values).
 function readTokens() {
   const css = readFileSync(resolve(root, 'src/styles/tokens.css'), 'utf8');
-  const rootBlock = css.match(/:root\s*\{([\s\S]*?)\n\}/);
+  const rootBlock = css.match(/:root\s*\{([\s\S]*?)\n\s*\}/);
   if (!rootBlock) throw new Error('gen-diagrams: could not find :root block in tokens.css');
   const tokens = {};
   for (const m of rootBlock[1].matchAll(/(--rg-[\w-]+):\s*([^;]+);/g)) {
@@ -36,33 +40,53 @@ function readTokens() {
   return tokens;
 }
 
-// Replace every var(--rg-*) reference with its resolved value. Fails loud on an
+// Replace every var(--rg-*) reference with its resolved value, iterating so a
+// token that itself references another token resolves fully. Fails loud on an
 // unknown token so a renamed variable never leaks a literal var() into output.
 function resolveVars(text, tokens) {
-  return text.replace(/var\((--rg-[\w-]+)\)/g, (_, name) => {
-    if (!(name in tokens)) {
-      throw new Error(`gen-diagrams: ${name} referenced in a visual but missing from tokens.css`);
-    }
-    return tokens[name];
-  });
+  let out = text;
+  for (let i = 0; i < 10; i++) {
+    const next = out.replace(VAR_RE, (_, name) => {
+      if (!(name in tokens)) {
+        throw new Error(`gen-diagrams: ${name} referenced in a visual but missing from tokens.css`);
+      }
+      return tokens[name];
+    });
+    if (next === out) break;
+    out = next;
+  }
+  return out;
+}
+
+// Pull exactly one match of `re` out of `src`, failing loud on zero or many — a
+// second <svg>/<style> would otherwise be silently dropped or mis-extracted.
+function exactlyOne(src, re, what, file) {
+  const matches = src.match(re);
+  if (!matches || matches.length !== 1) {
+    throw new Error(`gen-diagrams: expected exactly one ${what} in ${file}, found ${matches ? matches.length : 0}`);
+  }
+  return matches[0];
 }
 
 // Build the standalone SVG string for one component (no I/O).
-function buildSvg({ file, size }, tokens) {
+function buildSvg({ file }, tokens) {
   const src = readFileSync(resolve(root, file), 'utf8');
 
-  const svgMatch = src.match(/<svg\b[\s\S]*?<\/svg>/);
-  if (!svgMatch) throw new Error(`gen-diagrams: no <svg> found in ${file}`);
-  const styleMatch = src.match(/<style>([\s\S]*?)<\/style>/);
-  if (!styleMatch) throw new Error(`gen-diagrams: no <style> found in ${file}`);
+  let svg = exactlyOne(src, /<svg\b[\s\S]*?<\/svg>/g, '<svg> block', file);
+  const styleBlock = exactlyOne(src, /<style>[\s\S]*?<\/style>/g, '<style> block', file);
+  const css = resolveVars(styleBlock.replace(/^<style>/, '').replace(/<\/style>$/, ''), tokens);
 
-  let svg = resolveVars(svgMatch[0], tokens);
-  const css = resolveVars(styleMatch[1], tokens);
-  const [w, h] = size;
+  // Pin the intrinsic size from the component's own viewBox, so a viewBox edit
+  // can never drift from a separately-maintained size constant.
+  const vb = svg.match(/viewBox="\s*[\d.-]+\s+[\d.-]+\s+([\d.-]+)\s+([\d.-]+)\s*"/);
+  if (!vb) throw new Error(`gen-diagrams: no parseable viewBox in the <svg> of ${file}`);
+  const [w, h] = [vb[1], vb[2]];
   const font = resolveVars('var(--rg-font-sans)', tokens).replace(/"/g, "'");
 
-  // Normalise the root tag for standalone use: add xmlns, pin the intrinsic size
-  // from the viewBox, set the font directly (the `.wrapper svg` rule no longer
+  svg = resolveVars(svg, tokens);
+
+  // Normalise the root tag for standalone use: add xmlns, set width/height from
+  // the viewBox, set the font directly (the `.wrapper svg` rule no longer
   // matches without the wrapper element), and inject the resolved stylesheet.
   svg = svg.replace(/<svg\b([^>]*)>/, (_, attrs) => {
     const a = attrs.replace(/\swidth="[^"]*"/, '').replace(/\sheight="[^"]*"/, '');

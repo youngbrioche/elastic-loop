@@ -72,7 +72,14 @@ function shoot({ path, selector, out }) {
     `(() => { const r = document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
       return Math.round(r.left) + ' ' + Math.round(r.top) + ' ' + Math.round(r.width) + ' ' + Math.round(r.height); })()`,
   ]);
-  const [x, y, w, h] = raw.replace(/"/g, '').trim().split(/\s+/).map(Number);
+  // Expect exactly "x y w h", all non-negative integers. Anything else (a log
+  // line, a JSON wrapper from a future agent-browser, an off-screen element with
+  // a negative offset) is a hard error rather than a silently mis-cropped image.
+  const cleaned = raw.replace(/"/g, '').trim();
+  if (!/^\d+ \d+ \d+ \d+$/.test(cleaned)) {
+    throw new Error(`shoot-diagrams: unexpected box output for ${selector} on ${path}: ${JSON.stringify(raw)}`);
+  }
+  const [x, y, w, h] = cleaned.split(/\s+/).map(Number);
   if (!w || !h) throw new Error(`shoot-diagrams: could not measure ${selector} on ${path}`);
   if (w < MIN_WIDTH) {
     throw new Error(
@@ -87,5 +94,9 @@ function shoot({ path, selector, out }) {
 
 requireTools();
 requireServer();
-for (const target of TARGETS) shoot(target);
-ab(['close']);
+try {
+  for (const target of TARGETS) shoot(target);
+} finally {
+  // Always close the browser, even if a shoot threw, so no headless process leaks.
+  ab(['close']);
+}

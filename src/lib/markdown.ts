@@ -111,7 +111,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     imageFigure(
       'stations-vs-loop.svg',
       'Stations versus loop',
-      '*[Figure: Stations versus loop. Before: the old sequence of roles as a handoff line, PO to UX to Engineering to QA to Ops, each step expensive enough to deserve its own station. After: the same people gathered around a central loop of six uniform steps (intent, context, variants, verification, decision, production and learning), each role labelled with the backpressure it supplies. AI materializes the intermediate steps; each role brings judgment no one else can.]*',
+      '*[Figure: Stations versus loop. Before: the old sequence of roles as a handoff line, PO to UX to Engineering to QA to Ops, each step expensive enough to deserve its own station. After: the same people gathered around a central loop of six uniform steps (intent, context, variants, verification, decision, production learning), each role labelled with the backpressure it supplies. AI materializes the intermediate steps; each role brings judgment no one else can.]*',
     ),
   ],
   // Hero carries no prose of its own (title comes from the header block).
