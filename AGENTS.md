@@ -12,7 +12,15 @@
 
 This site is hosted using GitHub pages. You are responsible for releases.
 
+The changelog has one source: `src/data/changelog.json`. It feeds the site
+footer, the `/changelog.md` agent route, and the human `CHANGELOG.md`, so all
+three stay in sync. Do NOT hand-edit `CHANGELOG.md` — the build fails if it
+drifts from the JSON.
+
 For public, notable changes:
-- add an entry to CHANGELOG.md with a date, 
-  a link to the github commit and a concise summary (3 sentences max.) of what changed
-- keep the changelog teaser in the footer of the website in sync (1 sentence max per change)
+- add an entry at the top of `src/data/changelog.json`. Required: `date`,
+  `title`, and a one-sentence `text` teaser. For committed changes also add the
+  full `commit` hash and a richer `body` (3 sentences max) for CHANGELOG.md.
+- run `npm run changelog` to regenerate CHANGELOG.md, then commit it together
+  with the JSON.
+- the changelog teaser in the footer should only show 3 items max, never more.
