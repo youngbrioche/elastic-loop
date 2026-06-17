@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { mdxToMarkdown } from '../lib/markdown';
 import { tokenBudget } from '../lib/tokens';
-import changelog from '../data/changelog.json';
+import { buildChangelogBody } from '../lib/changelog';
 
 const SITE = 'https://elastic-loop.robert-glaser.de';
 
@@ -28,11 +28,11 @@ export const GET: APIRoute = async () => {
     return `- [${page.data.title}](${SITE}${path}) (${tokenBudget(md)}): ${page.data.description}`;
   });
 
-  // Estimate the optional bundles from the same shapes their routes emit:
-  // llms-full.txt is the pages joined with separators; changelog.md is the
-  // entry list. Both stay budget-honest without re-importing the route logic.
+  // llms-full.txt is the pages joined with separators (its license block adds a
+  // negligible ~40 tokens, well inside the ~ estimate). The changelog budget is
+  // computed from the exact same body its route serves, via the shared builder.
   const fullBody = rendered.map((r) => r.md).join('\n\n---\n\n');
-  const changelogBody = changelog.map((entry) => `- **${entry.date}**: ${entry.text}`).join('\n');
+  const changelogBody = buildChangelogBody();
 
   const body = [
     '# The Elastic Loop',
