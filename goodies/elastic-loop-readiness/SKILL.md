@@ -100,17 +100,19 @@ couple of exchanges each, and let the whole thing land in one sitting. If
 evidence is not forthcoming after one good follow-up, record the state and move
 on rather than grinding.
 
-What counts as evidence: an artifact you can be shown, not one you are told
-about. A pasted CI config, the real onboarding doc, an actual rubric, a rejected
-agent pull request. If your harness can read the team's repository directly,
-inspect it rather than asking. Evidence that is described but not shown is
-unsubstantiated, and say why: an interview cannot verify a loop, it can only
-locate where the team cannot produce the artifact. Concede to artifacts, never to
-fluent vocabulary. Anyone who read the framework in Step 1 can narrate a loop
-they do not have.
+Ask for the concrete thing, not the reassuring summary. Have them walk you
+through one real case, point to the actual rubric, open the onboarding doc, show
+a rejected agent pull request. If your harness can read the team's repository,
+look rather than only asking. This is not fraud detection: a team that feeds you
+lies only fools its own diagnosis, and no interview can stop that. The reason to
+reach for the concrete example is that it surfaces the gap for a team acting in
+good faith. The rubric they thought was calibrated, the context they thought was
+written down, turns out thinner than they believed, and they see it the moment
+they go to point at it.
 
-Stay skeptical by default, but stay on their side. You are doubting the claim,
-not the people. When they show you the artifact, concede it out loud and move on.
+Stay skeptical of the vague self-report, but stay on their side. You are doubting
+the claim, not the people. When they show you the real thing, concede it out loud
+and move on.
 
 Walk the framework's four strategic diagnostic questions, the ones the loops page
 uses to tell whether a team's loop sizes are choices or accidents:
@@ -175,4 +177,3 @@ judgment of anyone on the team.
   "not ready", so a seller must not be the one driving it.
 - It will not rate an individual.
 - It will not run without loading and verifying the framework first.
-- It will not concede an axis to evidence that is described but not shown.
