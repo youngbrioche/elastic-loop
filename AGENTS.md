@@ -8,7 +8,7 @@
 - write commit messages in English, commit and push your work while you go
 - before committing, check git status: another agent may have uncommitted edits in the same files. Stage only the hunks you changed, never git add <file> wholesale, and pass explicit paths so you never sweep in someone else's work
 - never force-push or rewrite already-pushed history on `main`; another agent may have committed on top of yours
-- when doing frontend work: iterate using the agent-browser cli, until the work is done
+- when doing frontend work: iterate using the `agent-browser` cli in all common viewports, until the work is done
 
 ## Releasing
 
