@@ -1,5 +1,9 @@
 [
   {
+    "date": "17 Jun 2026",
+    "text": "Two new diagrams: the agent/grader iteration layers on Grading, and stations-versus-loop on Roles."
+  },
+  {
     "date": "16 Jun 2026",
     "text": "Loop time horizons retuned to METR's evidence: elastic spans minutes to hours, loose runs multiple hours, not days."
   },
