@@ -1,5 +1,11 @@
 # Changelog
 
+## 17 Jun 2026 — Agent rendition kept in sync with the site
+
+[`95aa3f2`](https://github.com/youngbrioche/elastic-loop/commit/95aa3f2)
+
+The `.md` and `llms.txt` renditions now carry figure descriptions for the two new diagrams instead of leaking their raw component tags, so agents reading grading.md, roles.md, and llms-full.txt see the same figures human readers do. The Markdown conversion now fails the build if any component, wrapper, or glossary term ever drifts out of it again, rather than silently shipping a degraded rendition.
+
 ## 17 Jun 2026 — Two new diagrams on Grading and Roles
 
 [`9fd3e9a`](https://github.com/youngbrioche/elastic-loop/commit/9fd3e9a09c46bed8d2c0b50eb7ad0108b2f55218)

@@ -1,6 +1,10 @@
 [
   {
     "date": "17 Jun 2026",
+    "text": "The Markdown/llms.txt rendition for agents now carries the diagram descriptions too, guarded by a build check against future drift."
+  },
+  {
+    "date": "17 Jun 2026",
     "text": "Two new diagrams: the agent/grader iteration layers on Grading, and stations-versus-loop on Roles."
   },
   {
