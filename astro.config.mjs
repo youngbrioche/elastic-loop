@@ -73,6 +73,10 @@ export default defineConfig({
     // apostrophes, ellipses. Code spans are left untouched by the plugin.
     // dashes:false so we never auto-introduce em/en dashes from `--`.
     remarkPlugins: [[remarkSmartypants, { dashes: false, backticks: false }]],
+    // No syntax highlighting: code blocks here are plain shell commands and URLs.
+    // Shiki's default theme also paints an inline dark background on <pre> that
+    // clashes with the site's light code styling (see the pre rules in global.css).
+    syntaxHighlight: false,
   },
   integrations: [mdx(), sitemap(), changelogSyncGuard(), diagramsSyncGuard(), screenshotDiagrams()],
 });
