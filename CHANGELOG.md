@@ -1,5 +1,11 @@
 # Changelog
 
+## 17 Jun 2026 — Token budgets for agents in llms.txt and .md routes
+
+[`0598f5f`](https://github.com/youngbrioche/elastic-loop/commit/0598f5f84f15cf0596b23b694749a8ab6e512fcf)
+
+llms.txt annotates each page link, plus the llms-full.txt and changelog bundles, with a rough token estimate, and each .md route opens with a <!-- ~Nk tokens --> comment. The numbers use a chars/4 heuristic and are always marked with a leading ~, since no JavaScript tokenizer matches Claude's tokenizer exactly. The idea is borrowed from Cloudflare's x-markdown-tokens header, adapted to a static host that cannot set response headers or negotiate on the Accept header.
+
 ## 17 Jun 2026 — Agent rendition kept in sync with the site
 
 [`95aa3f2`](https://github.com/youngbrioche/elastic-loop/commit/95aa3f2174351157608e1183498c479d3993ddf0)
