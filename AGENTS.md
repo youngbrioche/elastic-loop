@@ -40,8 +40,10 @@ beneath. Keep these in sync — details in `scripts/README-diagrams.md`:
 - **Changed a pure-SVG visual** (TwoIterationLayers, StationsVsLoop)? Run
   `npm run diagrams` to regenerate `public/diagrams/*.svg` and commit it. The
   build runs `npm run diagrams:check` and fails on drift.
-- **Changed an HTML-based visual** (Squeeze, LoopSizes)? These are PNG
-  screenshots, NOT guarded. With the dev server up, run `npm run diagrams:shoot`
-  to recapture them, then commit. Nothing reminds you, so don't forget.
+- **Changed an HTML-based visual** (Squeeze, LoopSizes)? Nothing to do — the
+  build screenshots them with Playwright into `dist/diagrams/*.png` on every
+  run (`astro:build:done` hook), so they can't drift. This needs a browser in
+  the build: locally `npx playwright install chromium` once; CI installs it in
+  `deploy.yml`.
 - **Changed the MasterGrid content?** Its `.md` form is a hand-kept markdown
   table in `markdown.ts` (not an image). Update it there by hand.

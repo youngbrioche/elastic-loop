@@ -1,102 +1,97 @@
 #!/usr/bin/env node
-// Regenerate the PNG screenshots of the HTML-based visual components for the
-// .md / agent route. Squeeze layers HTML labels over an SVG and LoopSizes is a
-// CSS grid of positioned <div>s, so neither can be exported as standalone SVG
-// (unlike the pure-SVG visuals — see gen-diagrams.mjs). They are captured as
-// screenshots of the live component instead.
+// Render the HTML-based visual components (Squeeze, LoopSizes) to PNG, straight
+// from the built site. Run automatically as an `astro:build:done` integration
+// (see astro.config.mjs), so the screenshots are regenerated from the live
+// component on every build and can never drift — unlike the committed approach
+// they replace, there is nothing to forget.
 //
-// Usage: start the dev server (`npm run dev`, port 4321), then `npm run
-// diagrams:shoot`. Requires the `agent-browser` CLI and ImageMagick (`magick`).
+// Squeeze layers HTML labels over an SVG and LoopSizes is a CSS grid of
+// positioned <div>s, so neither can be exported as standalone SVG (the pure-SVG
+// visuals are handled by gen-diagrams.mjs). Here Playwright loads the actual
+// built page — real Inter font, real layout — and screenshots the diagram
+// element. The pure-SVG files are shipped from public/diagrams and the master
+// grid renders as a markdown table; see scripts/README-diagrams.md.
 //
-// Why screenshot the viewport and crop, instead of agent-browser's element-clip
-// mode (`screenshot <selector>`)? That mode renders these particular elements
-// (aspect-ratio box / absolutely-positioned children) blank. Measuring the
-// bounding box and cropping a full viewport screenshot is reliable.
+// CLI: `node scripts/shoot-diagrams.mjs [distDir=dist]` (needs a prior build).
 
-import { execFileSync } from 'node:child_process';
+import { createServer } from 'node:http';
+import { readFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { dirname, resolve, join, extname } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
-const PORT = process.env.PORT || '4321';
-const BASE = `http://localhost:${PORT}`;
-const TMP = '/tmp/_elastic-loop-shot.png';
-
-// The diagram element to capture per page. We clip to the inner diagram (not the
-// <figure>) so the figcaption is left out — the .md caption already carries it,
+// The diagram element to capture per built page. Clip to the inner diagram (not
+// the <figure>) so the figcaption is left out — the .md caption carries it,
 // matching the framing of the generated SVGs.
 const TARGETS = [
-  { path: '/', selector: 'figure.squeeze .canvas', out: 'public/diagrams/squeeze.png' },
-  { path: '/loops', selector: 'figure.loop-sizes .loopviz', out: 'public/diagrams/loop-sizes.png' },
+  { page: 'index.html', selector: 'figure.squeeze .canvas', out: 'diagrams/squeeze.png' },
+  { page: 'loops.html', selector: 'figure.loop-sizes .loopviz', out: 'diagrams/loop-sizes.png' },
 ];
 
-// Below these widths the components reflow to their mobile layout; capturing
-// then would ship a stacked screenshot. The default headless viewport (1280) is
-// safely above both, but guard in case it is ever narrower.
-const MIN_WIDTH = 700;
+const MIME = {
+  '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
+  '.woff2': 'font/woff2', '.woff': 'font/woff', '.svg': 'image/svg+xml',
+  '.png': 'image/png', '.webp': 'image/webp', '.json': 'application/json',
+  '.xml': 'application/xml', '.txt': 'text/plain', '.ico': 'image/x-icon',
+};
 
-function ab(args) {
-  return execFileSync('agent-browser', args, { encoding: 'utf8' });
+function startServer(rootDir) {
+  return new Promise((resolvePromise) => {
+    const server = createServer(async (req, res) => {
+      try {
+        let p = decodeURIComponent(req.url.split('?')[0]);
+        if (p.endsWith('/')) p += 'index.html';
+        const body = await readFile(join(rootDir, p));
+        res.writeHead(200, { 'content-type': MIME[extname(p)] || 'application/octet-stream' });
+        res.end(body);
+      } catch {
+        res.writeHead(404);
+        res.end('not found');
+      }
+    });
+    server.listen(0, '127.0.0.1', () => resolvePromise(server));
+  });
 }
 
-function requireServer() {
+// Screenshot every TARGET from the built site in distDir into distDir/diagrams.
+export async function shootDiagrams(distDir) {
+  const { chromium } = await import('playwright');
+  await mkdir(join(distDir, 'diagrams'), { recursive: true });
+
+  const server = await startServer(distDir);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  // --no-sandbox is required on the GitHub Actions Ubuntu runner.
+  const browser = await chromium.launch({ args: ['--no-sandbox'] });
   try {
-    execFileSync('curl', ['-sf', '-o', '/dev/null', BASE], { stdio: 'ignore' });
-  } catch {
-    console.error(`shoot-diagrams: no dev server on ${BASE}. Start it with \`npm run dev\` first.`);
-    process.exit(1);
-  }
-}
-
-function requireTools() {
-  for (const [bin, hint] of [['agent-browser', 'brew install agent-browser'], ['magick', 'brew install imagemagick']]) {
-    try {
-      execFileSync('which', [bin], { stdio: 'ignore' });
-    } catch {
-      console.error(`shoot-diagrams: \`${bin}\` not found (${hint}).`);
-      process.exit(1);
+    const page = await browser.newPage({
+      viewport: { width: 1280, height: 900 },
+      deviceScaleFactor: 2, // crisp on retina / when scaled up in a viewer
+    });
+    for (const t of TARGETS) {
+      await page.goto(`${base}/${t.page}`, { waitUntil: 'load' });
+      await page.evaluate(() => document.fonts.ready);
+      const el = page.locator(t.selector);
+      await el.waitFor({ state: 'visible' });
+      await el.screenshot({ path: join(distDir, t.out) });
+      console.log(`shot ${t.out}`);
     }
+    await page.close();
+  } finally {
+    await browser.close();
+    server.close();
   }
 }
 
-function shoot({ path, selector, out }) {
-  ab(['open', `${BASE}${path}`]);
-  ab(['wait', selector]);
-  ab(['scrollintoview', selector]);
-  ab(['wait', '500']);
-
-  const raw = ab([
-    'eval',
-    `(() => { const r = document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
-      return Math.round(r.left) + ' ' + Math.round(r.top) + ' ' + Math.round(r.width) + ' ' + Math.round(r.height); })()`,
-  ]);
-  // Expect exactly "x y w h", all non-negative integers. Anything else (a log
-  // line, a JSON wrapper from a future agent-browser, an off-screen element with
-  // a negative offset) is a hard error rather than a silently mis-cropped image.
-  const cleaned = raw.replace(/"/g, '').trim();
-  if (!/^\d+ \d+ \d+ \d+$/.test(cleaned)) {
-    throw new Error(`shoot-diagrams: unexpected box output for ${selector} on ${path}: ${JSON.stringify(raw)}`);
-  }
-  const [x, y, w, h] = cleaned.split(/\s+/).map(Number);
-  if (!w || !h) throw new Error(`shoot-diagrams: could not measure ${selector} on ${path}`);
-  if (w < MIN_WIDTH) {
-    throw new Error(
-      `shoot-diagrams: ${selector} measured ${w}px wide — the viewport is in the mobile layout. Widen it and retry.`,
-    );
-  }
-
-  ab(['screenshot', TMP]);
-  execFileSync('magick', [TMP, '-crop', `${w}x${h}+${x}+${y}`, '+repage', resolve(root, out)]);
-  console.log(`wrote ${out} (${w}×${h})`);
-}
-
-requireTools();
-requireServer();
-try {
-  for (const target of TARGETS) shoot(target);
-} finally {
-  // Always close the browser, even if a shoot threw, so no headless process leaks.
-  ab(['close']);
+// CLI entry: shoot against an already-built dist directory.
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const distDir = resolve(root, process.argv[2] || 'dist');
+  shootDiagrams(distDir).then(
+    () => console.log('done'),
+    (err) => {
+      console.error(err);
+      process.exit(1);
+    },
+  );
 }

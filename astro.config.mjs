@@ -1,6 +1,7 @@
 // @ts-check
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -44,6 +45,23 @@ function diagramsSyncGuard() {
   };
 }
 
+// Render the HTML-based visuals (Squeeze, LoopSizes) to PNG from the built site,
+// after the build, into dist/diagrams. The .md / agent route embeds these. Doing
+// it at build time means they regenerate from the live component every time and
+// can never drift — no committed PNGs, nothing to forget. Needs a browser
+// (Playwright/Chromium) in the build environment.
+function screenshotDiagrams() {
+  return {
+    name: 'screenshot-diagrams',
+    hooks: {
+      'astro:build:done': async ({ dir }) => {
+        const { shootDiagrams } = await import('./scripts/shoot-diagrams.mjs');
+        await shootDiagrams(fileURLToPath(dir));
+      },
+    },
+  };
+}
+
 export default defineConfig({
   site: 'https://elastic-loop.robert-glaser.de',
   trailingSlash: 'never',
@@ -56,5 +74,5 @@ export default defineConfig({
     // dashes:false so we never auto-introduce em/en dashes from `--`.
     remarkPlugins: [[remarkSmartypants, { dashes: false, backticks: false }]],
   },
-  integrations: [mdx(), sitemap(), changelogSyncGuard(), diagramsSyncGuard()],
+  integrations: [mdx(), sitemap(), changelogSyncGuard(), diagramsSyncGuard(), screenshotDiagrams()],
 });

@@ -18,6 +18,7 @@
     "astro": "^5.0.0"
   },
   "devDependencies": {
+    "playwright": "^1.61.0",
     "remark-smartypants": "^3.0.2"
   }
 }

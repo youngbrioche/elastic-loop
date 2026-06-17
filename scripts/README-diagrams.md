@@ -2,10 +2,11 @@
 
 The HTML pages render the visual components live (`src/components/visuals/*.astro`).
 The `.md` renditions in `src/lib/markdown.ts` embed image versions of them so the
-agent-facing output carries the figures too. The assets live in `public/diagrams/`
-and are served at `/diagrams/…`.
+agent-facing output carries the figures too. The assets are served at `/diagrams/…`.
 
-Two kinds of asset, two ways to regenerate:
+Two kinds of asset, both regenerated from their component so they cannot drift:
+the SVGs are committed in `public/diagrams/` (guarded), the PNGs are produced at
+build time into `dist/diagrams/` (never committed).
 
 ## Generated SVGs (automatic, guarded)
 
@@ -24,25 +25,26 @@ The build runs `diagrams:check` and fails on drift, so after editing
 `TwoIterationLayers.astro` or `StationsVsLoop.astro` you must run `npm run diagrams`
 and commit the result.
 
-## Screenshot PNGs (one command, manual trigger)
+## Screenshot PNGs (automatic at build time)
 
 `squeeze.png` and `loop-sizes.png` are HTML-based: Squeeze layers HTML labels over
 an SVG, LoopSizes is a CSS grid of positioned `<div>`s. They can't be exported as
-standalone SVG, so they are captured as PNG screenshots of the live component and
-committed. They are **not** guarded against drift — regenerate them yourself after
-changing either component:
+standalone SVG, so `scripts/shoot-diagrams.mjs` screenshots the live component with
+Playwright instead. It runs as an `astro:build:done` integration (wired in
+`astro.config.mjs`): after the build, it serves `dist/`, loads the real page (real
+Inter font, real layout), and writes `dist/diagrams/*.png` straight from the
+component.
+
+This means the PNGs regenerate from the component on **every** build and can never
+drift — there is nothing committed and nothing to remember. The cost is a browser
+in the build environment: locally that is a one-time `npx playwright install
+chromium`; in CI, `.github/workflows/deploy.yml` runs `npx playwright install
+--with-deps chromium` before the build.
+
+To regenerate them on their own after a build (rarely needed):
 
 ```bash
-npm run dev            # in one terminal (port 4321)
-npm run diagrams:shoot # in another — opens each page, crops the diagram, writes the PNGs
+npm run build           # builds + shoots in one go
+# or, against an existing dist/:
+npm run diagrams:shoot
 ```
-
-`scripts/shoot-diagrams.mjs` opens each page, measures the diagram's bounding box,
-screenshots the viewport, and crops to the box. It needs the `agent-browser` CLI
-and ImageMagick (`magick`). The viewport-then-crop approach is deliberate: the
-element-clip mode of `agent-browser screenshot <selector>` renders these particular
-elements (aspect-ratio box / absolutely-positioned children) blank.
-
-Because screenshots are not pixel-deterministic across runs, expect a tiny diff
-even with no visual change; only commit the PNGs when the component actually
-changed.
