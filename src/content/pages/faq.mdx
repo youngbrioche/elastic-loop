@@ -38,6 +38,14 @@ No, and treating the framework as an engineering-exclusive topic would make me h
 
 No, though the two get confused right now, because the industry is mid-swing back toward writing everything down before the agent moves. A spec is useful when it structures the <Term id="search-space">search space</Term> and harmful when it replaces it. Pin down every implementation detail and you have turned the agent back into a typist and paid for a search you never ran. [Grading](/grading) sorts out where specs help and where they hurt, and why it's important that you move from the spec you write up front to the grading material you keep iterating on. The spec alone is just context.
 
+## Is Scrum dead?
+
+Yes, but it matters which part dies. Scrum is risk containment, and the two-week sprint bundles two different risks under one cadence. The first is building the thing wrong: the wrong implementation, the wrong technical path. That was expensive to undo when a person typed it slowly by hand, so capping the damage at two weeks was a sound economic bet. Agents collapse that bet, because redoing the implementation is cheap now.
+
+The second risk is building the wrong thing: the wrong feature, the wrong read of what the work was even for. The sprint review caught that one through stakeholder and PO feedback, and it never had anything to do with typing speed. Agents arguably make it worse, because building the wrong thing fast is how you end up with sprawl and slop. So this half of the bet does not collapse. It gets sharper, and the check Scrum ran every two weeks now has to run closer to continuously.
+
+What dies, then, is the calendar: the fixed ceremony that paced both risks at one rhythm. What survives is the judgment the review carried, and it moves into [Grading](/grading) and product backpressure instead of a recurring slot. [Loops](/loops) lets you set that cadence per task, where the sprint used to set one rhythm for everything at once. Loop sizing is a per-task dial, so it answers the cadence question and not the separate one of coordinating several people who each drive their own agents, which Scrum also handled.
+
 ## We are debating which model to standardize on. Where does that fit?
 
 Lower on the list. The measurement on [Why](/why) and [Harness](/harness) (clawbench) finds that the setup around the model, the <Term id="harness">harness</Term>, moves the result about ten times more than the model choice does. Pick a capable frontier model, then put the argument where the leverage sits: the loop, the backpressure, and the grading around it.
