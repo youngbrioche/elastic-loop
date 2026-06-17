@@ -7,17 +7,24 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description: string;
+  socialDescription?: string;
   slug: string;
   updated?: Date;
 }
 
-const { title, description, slug, updated } = Astro.props;
+const { title, description, socialDescription, slug, updated } = Astro.props;
 
 const SITE_URL = 'https://elastic-loop.robert-glaser.de';
 const SITE_NAME = 'The Elastic Loop';
+const SITE_TAGLINE = 'A framework for delegating work to machines';
 const isIndex = slug === 'index';
 
+// og:title stays short and brand-first; the <title> uses the extra SERP space.
 const pageTitle = isIndex ? SITE_NAME : `${title} · ${SITE_NAME}`;
+const seoTitle = isIndex ? `${SITE_NAME} · ${SITE_TAGLINE}` : pageTitle;
+// og:/twitter: descriptions can be shorter than the SEO meta description so
+// social previews do not truncate; fall back to the full description.
+const ogDescription = socialDescription ?? description;
 const canonical = SITE_URL + (isIndex ? '/' : `/${slug}`);
 const markdownHref = isIndex ? '/index.md' : `/${slug}.md`;
 const ogImage = `${SITE_URL}/og-image.png`;
@@ -57,11 +64,11 @@ const jsonLd = isIndex
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{pageTitle}</title>
+    <title>{seoTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={ogDescription} />
     <meta property="og:type" content={isIndex ? 'website' : 'article'} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={SITE_NAME} />
@@ -72,7 +79,7 @@ const jsonLd = isIndex
     <meta property="og:image:alt" content="The Elastic Loop — a framework for everyone delegating work to machines" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content="The Elastic Loop — a framework for everyone delegating work to machines" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

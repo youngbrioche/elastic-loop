@@ -6,6 +6,7 @@ const pages = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    socialDescription: z.string().optional(),
     kicker: z.string(),
     order: z.number(),
     status: z.enum(['seed', 'final']),
