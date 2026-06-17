@@ -1,0 +1,43 @@
+---
+title: "FAQ"
+description: "How to apply the framework, starting with the question I get most: prime your own agent with the book and let it work the framework against your team, your readiness, and your real tasks."
+socialDescription: "How to apply the framework: prime your own agent with the book and let it work the framework against your team and your real tasks."
+kicker: "Questions"
+order: 6
+status: seed
+updated: 2026-06-17
+---
+
+import PageIntro from '../../components/PageIntro.astro';
+import Term from '../../components/Term.astro';
+
+<PageIntro kicker="Questions" title="FAQ">
+This page answers the practical questions that come up once the framework clicks, starting with the one I get most: how do I actually apply this to my team? The short answer runs against the grain of a normal FAQ, because you are not the only reader of this site. The pages are written to be handed to an agent, and the most direct way to apply the framework is to let one apply it with you.
+</PageIntro>
+
+## How do I apply this framework?
+
+Start with something built into the site that is easy to miss. Every page here has a plain-markdown twin (`/loops.md`, `/grading.md`, and so on for each page), the whole thing is concatenated at [`/llms-full.txt`](/llms-full.txt), and there is a map at [`/llms.txt`](/llms.txt). That was deliberate. The most direct way to apply the framework is to prime your own agent with it and let it reason about your situation in these terms.
+
+I have started calling the book a *context trajectory* rather than a text: a body of context you hand to an agent so that the questions it asks, the diagnoses it offers, and the artifacts it drafts come back shaped by the framework instead of the <Term id="statistical-middle">statistical middle</Term> of everything ever written about AI and teams. Reading it yourself is the slow path to the same place. Both matter, but the agent-native one is the part most people miss.
+
+What that looks like in practice, roughly in the order the book moves:
+
+- **Organizational readiness.** Hand the agent [Loops](/loops) and its four strategic questions, then your real context (architecture docs, a handful of recent pull requests, how decisions actually get made), and ask it where your current loop sizes are choices and where they are accidents.
+- **Loop sizing.** Give it a specific task off your board and the seven sizing criteria, and make it argue for a size and a set of gates instead of reaching for "loose" because that feels like progress.
+- **Harness inventory.** Walk it through the [harness](/harness) clusters and the two backpressure layers against what you actually have wired up, so the gaps in product and domain <Term id="backpressure">backpressure</Term> stop being invisible.
+- **Grading material.** Point it at [Grading](/grading) and a slice of your domain, and have it draft the unglamorous artifacts (rubrics, scenarios, and especially counterexamples) a loose loop needs before it can run.
+
+One caveat, because the framework turns on it. An agent applying this to your org is itself a loop, and its read of your situation is a starting grip, not truth, in exactly the way a rubric is not automatically truth. It will sound confident about a trust problem it cannot actually see, or wave through a loop size your blast radius does not support. The judgment about whether its diagnosis is any good is still yours, and supplying that judgment is the whole skill this framework is about. So treat the output as a strong first draft to argue with, rather than a verdict to adopt.
+
+## Do I need to be an engineer to apply it?
+
+No, and treating the framework as an engineering topic is the most common way to waste it. Half of it is judgment about results rather than code: whether the thing was worth building, which of several variants is the right one, whether the output is the real thing or the plausible-generic version of it. [Roles](/roles) is the long version. The short version is that product people, designers, and domain experts supply resistance no compiler can produce, and they supply it across the whole loop, not just at the review at the end.
+
+## Isn't this just spec-driven development?
+
+No, though the two get confused right now, because the industry is mid-swing back toward writing everything down before the agent moves. A spec is useful when it structures the <Term id="search-space">search space</Term> and harmful when it replaces it. Pin down every implementation detail and you have turned the agent back into a typist and paid for a search you never ran. [Grading](/grading) sorts out where specs help and where they hurt, and why the leverage moved from the spec you write up front to the grading material you keep iterating on.
+
+## We are debating which model to standardize on. Where does that fit?
+
+Lower on the list than the debate suggests. The measurement on [Why](/why) and [Harness](/harness) (clawbench) finds that the setup around the model, the <Term id="harness">harness</Term>, moves the result about ten times more than the model choice does. Pick a capable frontier model, then put the argument where the leverage actually sits: the loop, the backpressure, and the grading around it.
