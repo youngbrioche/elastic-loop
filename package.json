@@ -7,7 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "changelog": "node scripts/gen-changelog.mjs",
-    "changelog:check": "node scripts/gen-changelog.mjs --check"
+    "changelog:check": "node scripts/gen-changelog.mjs --check",
+    "diagrams": "node scripts/gen-diagrams.mjs",
+    "diagrams:check": "node scripts/gen-diagrams.mjs --check"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",

@@ -1,4 +1,5 @@
 // @ts-check
+import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
@@ -27,6 +28,22 @@ function changelogSyncGuard() {
   };
 }
 
+// Fail the build if a generated diagram SVG (public/diagrams/*.svg) drifts from
+// its .astro source. The .md / agent route embeds these as images, so they must
+// stay in sync. Run `npm run diagrams` to regenerate after editing a visual.
+function diagramsSyncGuard() {
+  return {
+    name: 'diagrams-sync-guard',
+    hooks: {
+      'astro:build:start': () => {
+        execFileSync('node', ['scripts/gen-diagrams.mjs', '--check'], {
+          stdio: 'inherit',
+        });
+      },
+    },
+  };
+}
+
 export default defineConfig({
   site: 'https://elastic-loop.robert-glaser.de',
   trailingSlash: 'never',
@@ -39,5 +56,5 @@ export default defineConfig({
     // dashes:false so we never auto-introduce em/en dashes from `--`.
     remarkPlugins: [[remarkSmartypants, { dashes: false, backticks: false }]],
   },
-  integrations: [mdx(), sitemap(), changelogSyncGuard()],
+  integrations: [mdx(), sitemap(), changelogSyncGuard(), diagramsSyncGuard()],
 });
