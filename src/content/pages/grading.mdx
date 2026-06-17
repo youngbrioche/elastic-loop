@@ -35,15 +35,14 @@ Notice who can contribute to this ladder. Tests belong to engineers (remember pr
 
 So where does that leave the specification? I keep meeting two camps: one that wants to write everything down before the agent moves, and one that has declared specs dead. Both are answering a sizing question with a doctrine. The spec changes its job as the loop stretches:
 
-| Loop mode | Role of the spec | Harness focus | Grading focus |
+| Loop zone | Role of the spec | Harness focus | Grading focus |
 |---|---|---|---|
-| Tight / Exploratory | Starter grip: intent, examples, non-goals | IDE, tests, UI, logs | Human judgment, small tests, diff feedback |
-| Task / Implementation | Steering artifact: boundaries, acceptance, context | Reproducible setup, CI, PR review | Tests, acceptance criteria, review checklist |
-| Feature / Delegation | Delegation contract: goal, constraints, risks, search space | Worktree, sandbox, traces, checkpoints | Outcome rubric, scenarios, counterexamples, human review |
-| <Term id="dark-factory">Dark Factory</Term> | Executable spec in the production system | Isolated runtime, permissions, audit, rollback, observability | Automated graders, goldens, abort criteria, regression gates |
-| Learning Loop | Feedback distillate for the next piece of work | Stored traces, error classes, skills, docs | Rework, production signals, drift, pattern learning |
+| Tight | Starter grip: intent, examples, non-goals | IDE, tests, UI, logs | Human judgment, small tests, diff feedback |
+| Elastic | Steering contract: boundaries, acceptance, constraints, risks, search space | Reproducible setup, CI, PR review, reviewer subagents, checkpoints | Tests, acceptance criteria, rubrics, review checklist |
+| Loose / <Term id="dark-factory">Dark Factory</Term> | Executable spec in the production system | Sandbox, worktrees, isolated runtime, permissions, audit, rollback, observability | Outcome rubrics, scenarios, goldens, counterexamples, automated graders, abort criteria, regression gates |
+| *Learning loop (wraps every zone)* | Feedback distillate for the next piece of work | Stored traces, error classes, skills, docs | Rework, production signals, drift, pattern learning |
 
-Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering artifact to a contract to something executable, and finally to distilled feedback for the next round. Keep in mind, though:
+Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering contract to something executable, and finally, in the learning loop that wraps every zone, to distilled feedback for the next round. Keep in mind, though:
 
 **The spec is useful when it structures the <Term id="search-space">search space</Term>. It becomes harmful when it replaces the search space.**
 
