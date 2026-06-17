@@ -151,7 +151,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
   // GradingScene is a decorative key visual; the surrounding prose already
   // states the same point (the spec is a living artifact, not a waterfall).
   [/<GradingScene[\s\S]*?\/>/g, ''],
-  // StartList: hardcoded markdown list, see above.
+  // StartList: markdown list generated from startListCards, see above.
   [/<StartList[\s\S]*?\/>/g, START_LIST_MARKDOWN],
 ];
 
