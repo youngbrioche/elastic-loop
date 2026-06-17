@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import loopsImg from '../assets/loops.webp';
+---
+
+{/*
+  Decorative key visual for the Loops page, in the same rendered-3D style as the
+  hero: three pool-noodle loops of increasing size with miniature figures at
+  shrinking degrees of involvement (tight / elastic / loose). Floated so the
+  opening paragraph wraps around it. The .md / llms.txt rendition drops it (see
+  COMPONENT_REPLACEMENTS in src/lib/markdown.ts): the LoopSizes diagram right
+  below carries the same idea in an agent-legible form.
+*/}
+<figure class="loops-scene">
+  <Image
+    src={loopsImg}
+    alt="Three pool-noodle loops growing from a small tight black ring to a wide loose silver one, with miniature figures at shrinking degrees of involvement"
+    widths={[320, 480, 640]}
+    sizes="(max-width: 600px) 100vw, 340px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  .loops-scene {
+    margin: 0 0 4px;
+  }
+
+  .loops-scene :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 601px) {
+    .loops-scene {
+      float: left;
+      width: 340px;
+      max-width: 46%;
+      margin: -8px 28px 8px -16px;
+      shape-outside: margin-box;
+    }
+  }
+</style>
