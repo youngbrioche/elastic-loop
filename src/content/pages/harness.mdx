@@ -13,7 +13,7 @@ import HarnessScene from '../../components/HarnessScene.astro';
 import Term from '../../components/Term.astro';
 
 <PageIntro kicker="Part three" title="Harness">
-A <Term id="harness">harness</Term> is the scaffold that turns a model into an agent, assembled from many parts. Among those: the loop it works in, the tools it can reach, how its context is kept manageable as a run grows long, the hooks that fire on what it does, subagents, and guardrails. A raw model answers once. A harness is what lets it take a hundred turns on a task while you look away. It is also where you start attaching resistance. A hook can block a bad commit, an AGENTS.md can carry rules the agent is meant to follow but can still quietly ignore, and plenty of resistance lives outside the harness too, in a git hook, in CI, in a human reviewer. <Term id="backpressure">Backpressure</Term> is the name for all of it, and the more of it you can encode, the more line you can pay out, from tight to elastic to loose. On the [master grid](/#where-does-your-next-task-belong), the vertical axis is exactly this: no automated checks, then technical ones, then full backpressure that adds product and domain judgment on top. This page is about that top level. What actually goes into it, and what does it cost the human to keep running?
+A <Term id="harness">harness</Term> is the scaffold that turns a model into an agent, assembled from many parts. Among those: the loop it works in, the tools it can reach, how its context is kept manageable as a run grows long, the hooks that fire on what it does, subagents, and guardrails. A raw model answers once. A harness is what lets it take a hundred turns on a task while you look away. It is also where you start attaching resistance. A hook can block a bad commit, an AGENTS.md can carry rules the agent is meant to follow but can still quietly ignore, and plenty of resistance lives outside the harness too, in a git hook, in CI, in a human reviewer. <Term id="backpressure">Backpressure</Term> is the name for all of it, and the more of it you can encode, the more leash you can pay out, from tight to elastic to loose. On the [master grid](/#where-does-your-next-task-belong), the vertical axis is exactly this: no automated checks, then technical ones, then full backpressure that adds product and domain judgment on top. This page is about that top level. What actually goes into it, and what does it cost the human to keep running?
 </PageIntro>
 
 <div class="reading harness-intro">
@@ -37,10 +37,10 @@ Correct and right are different questions! A change can pass every test, satisfy
 
 The technical layer is the one you have probably seen versions of already, because it is where the public harness debate lives. Its building blocks:
 
-- repo rules, AGENTS.md, skills and runbooks
+- repo rules, AGENTS.md, skills and documentation (actually, this is context the agent uses as backpressure to hold on itself)
 - language servers, compilers, linters
 - tests in all their forms
-- CI and security checks
+- CI, trial runs in ephemeral containers, security checks
 - PR diffs and reviewer subagents
 - logs, traces, and UI checks
 - sandbox boundaries, approval gates, rollback paths
@@ -99,7 +99,7 @@ The trap deserves its own paragraph. A polished demo can hide slop, and verifica
 
 ## Does any of this exist outside slide decks?
 
-OpenClaw is the closest thing we have to a running reference in the wild: a 375k-star project with roughly 7,000 open issues and PRs, operated deep in the loose zone. What strikes me is the ring of [metatools](https://openclaw.ai/ecosystem/) the team built around the agent. Almost none of it is the harness itself. It is what has to surround a harness before you can let an agent run loose for hours and trust what comes back, and it does two jobs at once: supply backpressure, and give the agent enough infrastructure to reach its own verdict.
+OpenClaw is the closest thing we have to a running reference in the wild: a 375k-star project with roughly 7,000 open issues and PRs, operated deep in the loose zone. There is a fascinating ring of [metatools](https://openclaw.ai/ecosystem/) the team built around the agent. Almost none of it is the harness itself. It is what has to surround a harness before you can let an agent run loose for hours and trust what comes back, and it does two jobs at once: supply backpressure, and give the agent enough infrastructure to reach its own verdict.
 
 - Context tooling like the crawl family that externalizes scattered knowledge into searchable stores, so the agent can ground itself instead of guessing
 - Execution machinery like crabbox, fanning tests across operating systems and clouds in reproducible containers, so the agent can answer what no prompt can answer for it: does this bug actually reproduce?
@@ -108,7 +108,7 @@ OpenClaw is the closest thing we have to a running reference in the wild: a 375k
 
 The price of that autonomy was an explosion of infrastructure around a comparatively small harness.
 
-My favorite vignette is Vincent Koc running 24 tmux panes of agent sessions from a Mac Mini, reading failures, deciding what runs next. Rather than leaving the loop, the human steps one level up, and his judgment moves to the orchestration layer. Those 24 panes are also the verification cost ceiling from the section above: what caps him is the cost per human judgment at the gate rather than any lack of containment, and every mechanism that lowers that cost lets the same attention orchestrate more panes.
+My favorite vignette is Vincent Koc [running 24 tmux panes](https://x.com/vincent_koc/status/2059996577561755684) of agent sessions from a Mac Mini, reading failures, deciding what runs next. Rather than leaving the loop, the human steps one level up, and his judgment moves to the orchestration layer. Those 24 panes are also the verification cost ceiling from the section above: what caps him is the cost per human judgment at the gate rather than any lack of containment, and every mechanism that lowers that cost lets the same attention orchestrate more panes.
 
 ## An old discipline on a new substrate
 
@@ -116,7 +116,7 @@ None of this is unprecedented, and it helps to know that. Long before anyone wir
 
 | Factory floor | Harness equivalent |
 |---|---|
-| <Term id="tpm">Total productive maintenance</Term> | Keeping the agent-legible environment in repair: AGENTS.md, skills, runbooks, reproducible setup |
+| <Term id="tpm">Total productive maintenance</Term> | Keeping the agent-legible environment in repair: AGENTS.md, skills, reproducible setup |
 | <Term id="spc">Statistical process control</Term> | Watching loops for drift and rework signals instead of inspecting every output |
 | <Term id="kaizen">Kaizen</Term> | The learning loop: production signals distilled back into skills, tests, and docs |
 | <Term id="andon">Andon</Term> | Backpressure that stays silent on success and speaks only on failure |
@@ -124,6 +124,6 @@ None of this is unprecedented, and it helps to know that. Long before anyone wir
 | <Term id="jidoka">Jidoka</Term> | Human-in-the-loop gates: the line stops and escalates to a person on a real anomaly |
 | <Term id="oee">Overall equipment effectiveness</Term> | Loop metrics: validated loops per month, loop closure rate |
 
-The parallel is worth more than a clever table, for two reasons. The reassurance: these are not hypotheses. Manufacturing has run on statistical process control and continuous improvement for decades, so the shape of the answer is known even where the agentic details still are not. And it is an orthogonal lineage. Most of the harness debate argues from the software tradition of Agile, DevOps, and CI/CD, while this one comes in from the factory floor, which is exactly why it tends to land with people who have run a real process.
+The parallel is fascinating. We're looking at the industrialization of software product development. The reassurance: these are not hypotheses. Manufacturing has run on statistical process control and continuous improvement for decades, so the shape of the answer is known even where the agentic details still are not. And it is an orthogonal lineage. Most of the harness debate argues from the software tradition of Agile, DevOps, and CI/CD, while this one comes in from the factory floor, which is exactly why it tends to land with people who have run a real process.
 
 The warning is the one the lean tradition keeps relearning. None of these mechanisms is a tool you install once. They are practices a team keeps alive, or they quietly rot, and a rotting harness is worse than none, because it still looks like it is working. Which is the same thing the [roles](/roles) page says from the other direction: you build and evolve the factory alongside the products it turns out, or you do not really have one.
