@@ -1,0 +1,21 @@
+{
+  "name": "elastic-loop",
+  "owner": {
+    "name": "Robert Glaser",
+    "url": "https://elastic-loop.robert-glaser.de"
+  },
+  "metadata": {
+    "description": "Goodies for The Elastic Loop, a framework for delegating software work to AI agents.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "elastic-loop-readiness",
+      "source": {
+        "source": "local",
+        "path": "goodies/elastic-loop-readiness"
+      },
+      "description": "Diagnose a team's elastic loop readiness: which loop sizes they can carry and the one constraint gating the next. Reads the live framework, then grills. A verdict, never a score."
+    }
+  ]
+}

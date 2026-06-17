@@ -1,0 +1,19 @@
+{
+  "name": "elastic-loop-readiness",
+  "version": "0.1.0",
+  "description": "Diagnose a team's elastic loop readiness: how much loop they can carry, which loop sizes are available to them, and the one constraint gating the next. A launch goodie for The Elastic Loop. Reads the live framework first, then grills. Gives a readiness verdict, never a score or maturity title.",
+  "author": {
+    "name": "Robert Glaser",
+    "url": "https://www.robert-glaser.de"
+  },
+  "homepage": "https://elastic-loop.robert-glaser.de",
+  "repository": "https://github.com/youngbrioche/elastic-loop.git",
+  "license": "Apache-2.0",
+  "keywords": [
+    "elastic-loop",
+    "agentic-engineering",
+    "ai-delivery",
+    "loop-readiness",
+    "team-diagnosis"
+  ]
+}
