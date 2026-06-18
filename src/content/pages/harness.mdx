@@ -31,7 +31,7 @@ I work with four clusters, and each one owns a different question about the same
 - **Security + Compliance** asks: is it allowed?
 - **Operations** asks: does it hold up in production?
 
-Correct and right are different questions! A change can pass every test, satisfy every type checker, and still solve a problem no user has. It can be correct and right and still touch data it had no business touching. And it can clear all three and quietly fall over under real load three weeks later. Four clusters, four ways for plausible output to be wrong, four kinds of resistance the output has to survive before it counts.
+Correct and right are not the same question. A change can pass every test, satisfy every type checker, and still solve a problem no user has. Say it clears that bar too. It might still touch data it had no business touching, or clear all three of those and quietly fall over under real load three weeks later. Four clusters, then. That is four ways for plausible output to be wrong, and the work has to survive all four before it counts.
 
 ## One layer compiles, the other one doesn't
 
@@ -61,9 +61,9 @@ Notice how much of this list is knowledge that lives in someone's head until som
 
 ## Your test suite will not catch slop
 
-Here is the function assignment that makes the two layers more than a tidy taxonomy. The technical layer primarily prevents sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". The product and domain layer primarily prevents slop, the slow collision: scenarios, counterexamples, and domain rubrics (written grading criteria) pull the output away from the <Term id="statistical-middle">statistical middle</Term> and into the specific solution space of this product, this domain, this user. That is the back half of the squeeze: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.
+Here is the job each layer actually does, which is what makes the two more than a tidy taxonomy. The technical layer mostly fights sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". Slop is the other layer's problem. Scenarios, counterexamples, and domain rubrics (written grading criteria) pull the output away from the <Term id="statistical-middle">statistical middle</Term> and into the specific solution space of this product, this domain, this user. That is the back half of the squeeze: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.
 
-> Technical backpressure makes agent work correct against the system. Product-specific backpressure makes it useful against the product.
+> Technical backpressure holds agent work correct against the system. Whether it is any use to the product is a different question, and that is what product-specific backpressure is for.
 
 You need both, and they are not interchangeable. A perfect test suite will wave through onboarding copy that sounds like every onboarding copy ever written, because nothing in it knows what your product is for.
 
@@ -71,13 +71,13 @@ You need both, and they are not interchangeable. A perfect test suite will wave 
 
 Both layers grow while you pay out leash, and neither grows forever. They also age differently, which is the part worth planning for. Anthropic's own [harness write-up](https://www.anthropic.com/engineering/harness-design-long-running-apps) argues for shrinking the scaffold as the model improves: every piece you bolt on encodes an assumption about what the model cannot do yet, and those assumptions expire. Between two model generations they tore out their task decomposition and folded a per-stage evaluator back into a single pass at the end, because the newer model held coherence for hours on its own.
 
-The line that decides what you can remove cuts across both layers rather than between them. On one side sits scaffolding that compensates for a capability gap: planning horizon, coherence over a long run, context-window juggling. A better model closes those gaps, so the crutches built for them are the first thing to strip out. On the other side sits backpressure that encodes a target the model had no way to know, and that stays however capable the model gets.
+The line that decides what you can remove cuts across both layers, not between them. Some of the scaffold only compensates for a capability gap: planning horizon, coherence over a long run, context-window juggling. A better model closes those gaps, so the crutches built for them are the first thing to strip out. The rest is backpressure that encodes a target the model had no way to know. That part stays, however capable the model gets.
 
 The trap is reading the whole technical layer as the disposable side. Judgment lives inside it too. Whether a change fits your architecture, respects your bounded contexts, cuts the seam where you wanted it: a fitness function catches the mechanical part of that question, no cycles in the dependency graph, and stops there. The rest is a call graded by a rubric, an LLM judge, or a human, and a stronger model does not retire it, because it was never a capability gap to begin with. Architecture conformance lives in the technical layer and ages like a domain rule, not like a crutch. So "simplify as the model improves" holds with one correction: strip the scaffolding, keep the judgment, wherever in the harness it happens to sit.
 
 ## Backpressure only counts if it sticks
 
-There is a condition both layers share: backpressure is only effective once the signal changes a later decision. A failing test that gets retried into silence is noise. A rejected variant that teaches nobody anything is wasted compute. The signal has to land somewhere: a changed plan, an updated memory, a better test, a more precise rubric, a new counterexample. <Term id="retained-feedback">Retained feedback</Term> is what connects the two layers, because retention works the same way whether the signal came from a compiler or from a domain expert.
+There is a condition both layers share: backpressure is only effective once the signal changes a later decision. A failing test that gets retried into silence is noise. So is a rejected variant nobody learns anything from, however much compute it burned to produce. The signal has to land somewhere it changes the next run: a changed plan, a sharper rubric, a new counterexample. <Term id="retained-feedback">Retained feedback</Term> is what connects the two layers, because retention works the same way whether the signal came from a compiler or from a domain expert.
 
 **Example: Agent skills**
 
@@ -85,7 +85,7 @@ Agent skills are the most tangible retention site I know. A skill is procedural 
 
 ## The quiet layer
 
-Why does the product and domain layer get so little attention? Because its failure mode is quiet. Sprawl shows up in CI logs and PR volume; you can see it and pull people back. Slop shows up in the market, quarters later, or in some people's stomachs, the longer they look at it. The engineering mainstream of the harness debate (OpenAI's [harness engineering](https://openai.com/index/harness-engineering/) write-up, Addy Osmani's [work on agent harnesses](https://addyosmani.com/blog/agent-harness-engineering/)) covers the technical layer well. But the other layer needs different disciplines and different roles: product people, designers, domain experts, the people whose "this is off" never touches a compiler. Their judgment is the backpressure itself, the thing the output has to clear while it is being made, well before any review step at the end.
+Why does the product and domain layer get so little attention? Because its failure mode is quiet. Sprawl shows up in CI logs and PR volume; you can see it and pull people back. Slop surfaces in the market, quarters later, or in some people's stomachs, the longer they look at it. The engineering mainstream of the harness debate (OpenAI's [harness engineering](https://openai.com/index/harness-engineering/) write-up, Addy Osmani's [work on agent harnesses](https://addyosmani.com/blog/agent-harness-engineering/)) covers the technical layer well. But the other layer needs different disciplines and different roles: product people, designers, domain experts, the people whose "this is off" never touches a compiler. Their judgment is the backpressure itself, the thing the output has to clear while it is being made, well before any review step at the end.
 
 ## The wins and the costs land on different desks
 
@@ -116,7 +116,7 @@ OpenClaw is the closest thing we have to a running reference in the wild: a 375k
 
 The price of that autonomy was an explosion of infrastructure around a comparatively small harness.
 
-My favorite vignette is Vincent Koc [running 24 tmux panes](https://x.com/vincent_koc/status/2059996577561755684) of agent sessions from a Mac Mini, reading failures, deciding what runs next. Rather than leaving the loop, the human steps one level up, and his judgment moves to the orchestration layer. Those 24 panes are also the verification cost ceiling from the section above: what caps him is the cost per human judgment at the gate rather than any lack of containment, and every mechanism that lowers that cost lets the same attention orchestrate more panes.
+My favorite vignette is Vincent Koc [running 24 tmux panes](https://x.com/vincent_koc/status/2059996577561755684) of agent sessions from a Mac Mini, reading failures, deciding what runs next. Rather than leaving the loop, the human steps one level up, and his judgment moves to the orchestration layer. Those 24 panes are also the verification cost ceiling from the section above. Containment is not what caps him. The cost per human judgment at the gate is, and every mechanism that lowers that cost lets the same attention orchestrate more panes.
 
 ## An old discipline on a new substrate
 
