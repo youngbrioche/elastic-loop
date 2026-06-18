@@ -64,16 +64,18 @@ main[class] > pre {
 }
 
 /* Fenced code blocks: a light surface matching the inline-code pill, with real
-   padding and horizontal scroll for long lines (URLs, commands). The inline
-   `code` rule in tokens.css paints a pill background + padding on every <code>;
-   reset it for code inside a <pre> so the block reads as one clean panel. */
+   padding. Long lines (prompts, URLs, commands) wrap instead of scrolling, so
+   the whole text stays visible and easy to copy. The inline `code` rule in
+   tokens.css paints a pill background + padding on every <code>; reset it for
+   code inside a <pre> so the block reads as one clean panel. */
 pre {
   background: var(--rg-bg-3);
   border: 1px solid var(--rg-border);
   border-radius: var(--rg-radius-md);
   padding: 16px 18px;
   margin: 24px auto;
-  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   font-family: var(--rg-font-mono);
   font-size: 14px;
   line-height: 1.65;
