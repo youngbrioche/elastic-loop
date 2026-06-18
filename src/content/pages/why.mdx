@@ -13,74 +13,72 @@ import WhyScene from '../../components/WhyScene.astro';
 import Term from '../../components/Term.astro';
 
 <PageIntro kicker="Part two" title="Why">
-Here is the question I would ask anyone who just learned they can stretch a loop: why would you? Running an agent loose for hours means trading control you are used to for a payoff you have to take partly on trust. So is the trade worth it, and when? It comes down to one thing: how well you can judge what comes back. And this page is the argument for why that became the thing it all rests on. Part of it is economic: build got cheap, and the cost moved to the ends of the loop. Part of it is technical: agentic engineering is a search you evaluate, not a spec you transcribe. The reason I trust it now and did not months ago is that both parts have measurement behind them.
+Here is the question I would ask anyone who just learned they can stretch a loop: why would you? You give up control you are used to. The payoff comes back hours later, and part of it you have to take on trust. So why do it, and when? The whole thing rests on one ability: judging what comes back. Half of it is about money. Building got cheap, so the cost slid to the two ends of the loop. The other half is stranger. The work itself changed shape, closer to training a model than to writing a spec. Months ago I would not have trusted any of this. What changed is that both halves now have measurement under them.
 </PageIntro>
 
 ## The middle shrinks, the ends get expensive
 
-Build gets cheaper. Product intent and evaluation become the constraint.
+When AI speeds up the whole middle, analysis through review, the work does not vanish. It moves to the two ends.
 
-When AI accelerates analysis, specification, implementation, testing, and review, the bottlenecks migrate to the ends of the loop.
-
-- At the front: intent, problem understanding, the target picture, prioritization, product context, intuition.
-- At the back: verification, evaluation, quality standards, impact, and what production teaches you.
+- At the front: what is worth building, who it is for, what good would look like.
+- At the back: whether what came back is any good, and what production teaches you once it ships.
 
 <div class="reading why-intro">
 
 <WhyScene />
 
-The middle of the loop, the part we spent many, many years optimizing with frameworks and ceremonies and career ladders, shrinks. The edges become the expensive part. So jobs and roles will congregate around what's expensive.
+The middle is the part we spent twenty years optimizing. Frameworks, ceremonies, career ladders, all of it aimed at the stretch that just got cheap. So the jobs move to where the cost went.
 
-You have probably felt this already. An agent hands you a finished implementation in minutes, and you spend the next hour figuring out whether it is the thing you actually wanted. That hour was the work! The typing was never the constraint; we just could not see that clearly while typing was slow.
+You have probably felt this already. An agent hands you a finished feature in minutes. Then you spend an hour working out whether it is the thing you actually wanted. That hour was the work. The typing was never the constraint. We just could not see that while typing was slow.
 
 </div>
 
 ## Agentic engineering is machine learning
 
-The technical half of the argument comes from François Chollet, in a [post on X](https://x.com/fchollet/status/2053234697392754701) from May 2026. His frame: agentic engineering is a form of machine learning. The engineer defines the goal, the constraints, and the <Term id="search-space">search space</Term>. An optimization process generates code. The result should be treated as a <Term id="blackbox-artifact">blackbox artifact</Term> whose behavior and <Term id="generalization">generalization</Term> you evaluate empirically.
+The technical half of the argument comes from François Chollet, in a [post on X](https://x.com/fchollet/status/2053234697392754701) from May 2026. His frame: agentic engineering is a form of machine learning. The engineer defines the goal, the constraints, and the <Term id="search-space">search space</Term>. An optimization process generates the code. You then treat the result as a <Term id="blackbox-artifact">blackbox artifact</Term> whose behavior and <Term id="generalization">generalization</Term> you check empirically, the way you would with any model.
 
-That quietly reclassifies jobs. Classic spec-driven development treats software as deterministic translation: requirements in, code out, and if the output is wrong, the spec was wrong. Plenty of teams are retreating to that little waterfall right now, pinning their hopes on better specs with agents doing the typing. The reflex even has a Radar entry: ThoughtWorks lists [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) in Assess, caveats attached. The full sorting of where specs help and where they harm lives on [Grading](/grading). Agentic engineering treats software as something else: an optimization problem with a defined search space, a search process, and an <Term id="evaluation-function">evaluation function</Term>. Those are two different professions. Many of us, myself included, come from the deterministic one, and the reflexes we built there do not transfer cleanly. What does transfer is judgment about whether a result is any good.
+That quietly reclassifies jobs. Classic spec-driven development treats software as deterministic translation: requirements in, code out, and if the output is wrong, the spec was wrong. Plenty of teams are retreating to that little waterfall right now, pinning their hopes on better specs with agents doing the typing. The reflex even has a Radar entry: ThoughtWorks lists [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) in Assess, caveats attached. The full sorting of where specs help and where they harm lives on [Grading](/grading). Agentic engineering treats software as an optimization problem instead: a defined search space, a search process, an <Term id="evaluation-function">evaluation function</Term>. Those are two different professions. Many of us, myself included, come from the deterministic one. Most of those reflexes do not survive the move. The one that does is judgment about whether a result is any good.
 
-That reframing also moves the target you optimize for. The reflex with any productivity tool is to chase output: more pull requests, more velocity on the dashboard. But if building is a search process, throughput is the wrong objective function. You would never rate a machine-learning model by how many predictions it emits per second, only by how well its output holds up against an evaluation. 
+That reframing also moves the target you optimize for. The reflex with any productivity tool is to chase output: more pull requests, more green on the dashboard. I find that framing boring, and worse, wrong. If building is a search, throughput is the wrong thing to measure. You would never rate a machine-learning model by how many predictions it emits per second. You rate it on whether the output holds up. 
 
-> Optimize agentic work for raw productivity and the search converges on more of everything, which is the exact shape of sprawl and slop. 
+> Chase raw productivity and the search just hands you more of everything. That is the exact shape of sprawl and slop. 
 
-The objective worth optimizing is solution quality, and that is something you have to be able to measure, which brings me to the consequence.
+The objective worth optimizing is solution quality, and the field evidence backs that. In an experiment at Procter & Gamble, [Dell'Acqua, Mollick et al. (2025)](https://www.hbs.edu/faculty/Pages/item.aspx?num=67197) ran 776 professionals through real product work. One person with AI matched a team of two without it. And the gain was better solutions, not faster ones. But solution quality only counts if you can measure it, which is the harder problem.
 
 ## Outcome Grading is the new specification
 
-If the build step is a search process, the leverage moves to whoever can grade what comes out of it. Grade the outcome precisely and you can let machines iterate against that grade, for hours, in parallel, while you do something else. Tests are the primitive form of this (they check known cases). The broader form covers classes of behavior: rubrics, scenarios, golden examples, counterexamples, LLM judges as adversarial reviewers, human review, production signals.
+If the build step is a search process, the leverage moves to whoever can grade what comes out of it. Grade the outcome precisely and you can let machines iterate against that grade, for hours, in parallel, while you do something else. Tests are the primitive form of this: this input, this expected output. The broader forms cover whole classes of behavior: rubrics and scenarios, the golden and counter examples that calibrate them, an LLM judge playing adversary, a human where the call is genuinely a judgment call, and production itself, grading whatever slipped through.
 
-One caveat I want to plant early, because the whole framework gets dangerous without it: a rubric is not automatically truth. Good outcome graders are engineering artifacts in their own right, calibrated with counterexamples, failure taxonomies, human review, and drift control. Skip that calibration and the agent will optimize toward output that sounds plausible to the grader, and the grader will applaud. You will have built a machine for generating confident mediocrity.
+One caveat I want to plant early, because the whole framework gets dangerous without it: a rubric is not automatically truth. Good outcome graders are engineering artifacts in their own right, calibrated against counterexamples, failure taxonomies, the occasional human read. Skip that calibration and the agent will optimize toward output that sounds plausible to the grader, and the grader will applaud. You will have built a machine for generating confident mediocrity.
 
 ## Only retained feedback counts
 
-There is now a precise measurement language for this shift. [Zhang et al. (2026)](https://arxiv.org/html/2605.29682v1) propose **Effective Feedback Compute**, which counts neither raw tokens nor tool calls nor wall time. It counts only feedback that is informative, valid, non-redundant, and retained in the agent's state for later decisions. Feedback that changes nothing downstream is noise, however expensive it was to produce.
+There is now a precise measurement language for this shift. [Zhang et al. (2026)](https://arxiv.org/html/2605.29682v1) propose **Effective Feedback Compute**, which counts neither raw tokens nor tool calls nor wall time. It counts only feedback that is informative, valid, and actually retained in the agent's state for later decisions. Feedback that changes nothing downstream is noise, however expensive it was to produce.
 
-That is the empirical version of the <Term id="backpressure">backpressure</Term> thesis. Bad loops burn compute; good loops store useful pressure as changed plans, updated memory, better tests, sharper rubrics, and rejected variants that stay rejected. The line I would put on a wall:
+That is the empirical version of the <Term id="backpressure">backpressure</Term> thesis. A bad loop burns compute and keeps nothing. A good loop stores the pressure: a changed plan, a sharper rubric, a rejected variant that stays rejected. Which is the whole point:
 
 > The unit of agentic progress is <Term id="retained-feedback">retained feedback</Term>, not generated output.
 
 ## The setup around the model beats the model
 
-Chollet gives the theory; there is now a measurement to go with it. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination that actually ships, the model together with the loop and configuration around it rather than the model on its own. Its finding: swapping the configuration moves the result ten times more than swapping the model does.
+Chollet gives the theory; there is now a measurement to go with it. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination you ship: the model together with the loop and configuration around it, not the model alone. Its finding: swapping the configuration moves the result ten times more than swapping the model does.
 
 Ten times! The whole of that setup has a name, the <Term id="harness">harness</Term>, and it is the variable that dominates the outcome, not the model the industry keeps arguing about. That claim, and the measurement under it, earns its own chapter: [Harness](/harness).
 
 ## The explosion and the slow collision
 
-The short version: sprawl is the explosion, slop is the slow collision, both are what a search process does without backpressure. Here is the deeper anatomy.
+Sprawl is the explosion, slop is the slow collision. Both are what a search process does with nothing pushing back. The anatomy of each is worth a look.
 
-For sprawl, the pressure reactor image holds up surprisingly well when you push on it. Agents generate pressure: output, speed, options. The harness is the containment wall, and the wall is what makes a productive reaction possible at all, rather than fear of the explosion. Outcome grading is the pressure sensors, telling you what is happening inside. Approval gates are the safety valves. Rollback is the emergency shutdown. Observability is the cooling. None of these components is interesting alone; a reactor is the whole assembly or it is a crater.
+For sprawl, the pressure-reactor image holds up the more you push on it. Agents generate pressure — output, speed, options — and the harness is the containment wall that makes a productive reaction possible instead of just an explosion to fear. The rest of the assembly maps over too: grading is the sensors that tell you what is happening inside, approval gates are the safety valves, rollback is the emergency shutdown. None of it is interesting on its own. A reactor is the whole assembly, or it is a crater.
 
-Slop needs the front of the loop to explain, which surprised me when I first worked through it. Slop is sampling from the <Term id="statistical-middle">statistical middle</Term> of everything the model has ever read, and the agent lands there because it lacks the specific context that would pull it out: your customers, your constraints, your domain's edge cases. Which means slop gets squeezed from both sides. Context at the front keeps the agent from starting in the middle at all (the grounding step in the formula), product and domain backpressure at the back pulls the output out of it.
+Slop needs the front of the loop to explain, which surprised me when I first worked through it. Slop is sampling from the <Term id="statistical-middle">statistical middle</Term> of everything the model has ever read, and the agent lands there because it lacks the specific context that would pull it out: your customers, your constraints, the edge cases your domain knows by heart. So slop gets squeezed from two sides. Context at the front keeps the agent from starting in the middle at all (the grounding step in the formula), and product and domain backpressure at the back pulls whatever comes out the rest of the way toward your product.
 
-And here is the uncomfortable dependency between the two: backpressure without context is a filter without signal. Your graders either reject endlessly, which looks exactly like sprawl, or they wave plausible-generic output through because they were calibrated on the middle themselves. You cannot buy your way out of missing context with more gates.
+And the two depend on each other: backpressure without context is a filter with no signal. Your graders either reject endlessly, which looks exactly like sprawl, or they wave plausible-generic output through because they were calibrated on the middle themselves. You cannot buy your way out of missing context with more gates.
 
 I closed the original talk that gave birth to this book with a line I still believe: 
 
 > Build things that would not exist otherwise.
 
-Slop gives that line its negative, and honestly its urgency. Slop is precisely what would exist otherwise, the statistical middle arriving on schedule, with or without you. But slop is also the feature that makes creativity and variants possible in the first place. So the question this whole page boils down to is a simple one to ask and an expensive one to answer:
+Slop gives that line its negative, and honestly its urgency. Slop is precisely what would exist otherwise, the statistical middle arriving on schedule, with or without you. But slop is also the raw material that makes variants and creativity possible at all. So this whole page comes down to one question, easy to ask and expensive to answer:
 
 > What, in your loop, would pull the output anywhere else?
