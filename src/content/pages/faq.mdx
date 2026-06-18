@@ -12,7 +12,7 @@ import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
 
 <PageIntro kicker="Questions" title="FAQ">
-This page answers the practical questions that come up once the framework clicks, starting with: how do I  apply this to my team? The book is written for you, a human reader, first. But it also assumes you will put your own agent to work on it, and it is built so an agent can pick it up and carry the framework straight into your situation.
+This page answers the practical questions that come up once the framework clicks, starting with: how do I apply this to my team? The book is written for you, a human reader, first. But it also assumes you will put your own agent to work on it, and it is built so an agent can pick it up and carry the framework straight into your situation.
 </PageIntro>
 
 ## How do I apply this framework?
@@ -23,12 +23,12 @@ I think of the book as a *context trajectory* as much as a text: the same pages 
 
 What that looks like in practice, roughly in the order the book moves:
 
-- **Organizational readiness.** Hand the agent [Loops](/loops) and its four strategic questions, then your real context (architecture docs, a handful of recent pull requests, how decisions actually get made, codebases, storys, …), as well as your recent agent sessions and ask it where your current loop sizes are choices and where they are accidents.
+- **Organizational readiness.** Hand the agent [Loops](/loops) and its four strategic questions, then your real context: the artifacts (architecture docs, codebases, a handful of recent pull requests), the work in flight (open stories, your recent agent sessions), and the thing none of those show, how decisions actually get made. Then ask it where your current loop sizes are choices and where they are accidents.
 - **Loop sizing.** Give it a specific task off your board and the seven sizing criteria, and make it argue for a size and a set of gates instead of reaching for "loose" because that feels like progress.
 - **Harness inventory.** Walk it through the [harness](/harness) clusters and the two backpressure layers against what you actually have wired up, so the gaps in product and domain <Term id="backpressure">backpressure</Term> stop being invisible. Why not let your agent propose extensions for the harness you're using right now?
 - **Grading material.** Point it at [Grading](/grading) and a slice of your domain, and have it draft the boring artifacts (rubrics, scenarios, and especially counterexamples) a loose loop needs before it can run.
 
-One caveat, because the framework turns on it: An agent applying this to your org is itself a loop, and its read of your situation is a starting grip, not truth, in the way a rubric is not automatically truth. It will sound confident about a trust problem it cannot actually see, or wave through a loop size your blast radius does not support. The judgment about whether its diagnosis is any good is still yours, and supplying that judgment is the whole skill this framework is about. So treat the output as a strong first draft to argue with, rather than a verdict to adopt.
+One caveat, because the framework turns on it: an agent applying this to your org is itself a loop, and its read of your situation is a starting grip, not truth, in the way a rubric is not automatically truth. It will sound confident about a trust problem it cannot actually see, or wave through a loop size your blast radius does not support. The judgment about whether its diagnosis is any good is still yours, and supplying that judgment is the whole skill this framework is about. So treat the output as a strong first draft to argue with, rather than a verdict to adopt.
 
 ## Do I need to be an engineer to apply it?
 
@@ -42,9 +42,9 @@ No, though the two get confused right now, because the industry is mid-swing bac
 
 Yes, but it matters which part dies. Scrum is risk containment, and the two-week sprint bundles two different risks under one cadence. The first is building the thing wrong: the wrong implementation, the wrong technical path. That was expensive to undo when a person typed it slowly by hand, so capping the damage at two weeks was a sound economic bet. Agents collapse that bet, because redoing the implementation is cheap now.
 
-The second risk is building the wrong thing: the wrong feature, the wrong read of what the work was even for. The sprint review caught that one through stakeholder and PO feedback, and it never had anything to do with typing speed. Agents arguably make it worse, because building the wrong thing fast is how you end up with sprawl and slop. So this half of the bet does not collapse. It gets sharper, and the check Scrum ran every two weeks now has to run closer to continuously.
+The second risk is building the wrong thing entirely: the wrong feature, a wrong read of what the work was even for. The sprint review caught that one through stakeholder and PO feedback. It never had anything to do with typing speed. Agents arguably make it worse, because building the wrong thing fast is how you end up with sprawl and slop. So this half of the bet does not collapse. It gets sharper, and the check Scrum ran every two weeks now has to run closer to continuously.
 
-What dies, then, is the calendar: the fixed ceremony that paced both risks at one rhythm. What survives is the judgment the review carried, and it moves into [Grading](/grading) and product backpressure instead of a recurring slot. [Loops](/loops) lets you set that cadence per task, where the sprint used to set one rhythm for everything at once. Loop sizing is a per-task dial, so it answers the cadence question and not the separate one of coordinating several people who each drive their own agents, which Scrum also handled.
+What dies, then, is the calendar: the fixed ceremony that paced both risks at one rhythm. The judgment the review carried survives. It just moves into [Grading](/grading) and product backpressure instead of a recurring slot. [Loops](/loops) lets you set that cadence per task, where the sprint used to set one rhythm for everything at once. Loop sizing is a per-task dial, so it answers the cadence question and not the separate one of coordinating several people who each drive their own agents, which Scrum also handled.
 
 In a sense, you can say that agentic engineering is the biggest lever to finally work truly agile. [Iteration is all we need](https://www.robert-glaser.de/what-if-iteration-is-all-we-need/).
 
