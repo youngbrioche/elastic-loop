@@ -43,8 +43,9 @@ It is a deterministic text check, no LLM.
   glossary entry — the glossary stays the single source of truth.
 - **Out of scope** (never flagged): frontmatter, imports, fenced/inline code,
   URLs and markdown links, headings, blockquotes, table rows, JSX tags and their
-  attributes, and the inside of an existing `<Term>`. Only first use is checked;
-  later mentions may stay plain.
+  attributes, the stylized one-sentence framework summary
+  (`<p class="framework-sentence">`), and the inside of an existing `<Term>`.
+  Only first use is checked; later mentions may stay plain.
 - A page that uses a term only in those excluded spots needs no wrapper. If you
   add the first `<Term>` to a page that had none, remember its
   `import Term from '../../components/Term.astro';`.

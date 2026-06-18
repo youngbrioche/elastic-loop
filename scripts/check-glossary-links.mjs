@@ -12,7 +12,8 @@
 // What counts as "prose": body paragraphs and lists. Excluded, because wrapping a
 // term there would be wrong or noisy: frontmatter, imports, fenced/inline code,
 // URLs and markdown links, headings, markdown table rows, JSX tags and their
-// attributes, and the inside of an existing <Term> (that IS the good case).
+// attributes, the stylized one-sentence framework summary (<p class="framework-
+// sentence">), and the inside of an existing <Term> (that IS the good case).
 //
 // Run `npm run glossary:check`. The build runs it too (see astro.config.mjs) and
 // fails on any violation.
@@ -72,6 +73,7 @@ export function toProse(raw) {
   strip(/^import .*$/gm); // import lines
   strip(/```[\s\S]*?```/g); // fenced code
   strip(/<Term\s+id="[a-z0-9-]+"[^>]*>[\s\S]*?<\/Term>/g); // existing links (the good case)
+  strip(/<p class="framework-sentence">[\s\S]*?<\/p>/g); // the one-sentence framework summary (stylized, not running prose)
   strip(/`[^`]*`/g); // inline code
   strip(/\[[^\]]*\]\([^)]*\)/g); // markdown links (text + url)
   strip(/https?:\/\/[^\s)]+/g); // bare URLs
