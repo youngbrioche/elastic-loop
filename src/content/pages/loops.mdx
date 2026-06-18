@@ -21,7 +21,7 @@ Let me start with the word itself, because everything in this framework, and age
 
 <LoopsScene />
 
-None of this is new, and I would rather say so myself than have someone say it for me. The feedback loop is the beating heart of every iterative method we have practiced since the [Agile Manifesto](https://agilemanifesto.org/) put it in writing in 2001: build something small, look at it, adjust, go again. A sprint is a loop. Continuous delivery is the same loop run tighter. Build, measure, learn is the same shape with a different label. The loop is old. What changed is who works inside it and how fast one person can open one. When the worker is a machine you summon on demand, you choose loop size per task, where your team's calendar used to decide it for you. The far end of that range, many hours of unattended agent work, is the part most of us genuinely have not done before.
+None of this is new, and I would rather say so myself than have someone say it for me. The feedback loop is the beating heart of every iterative method we have practiced since the [Agile Manifesto](https://agilemanifesto.org/) put it in writing in 2001: build something small, look at it, adjust, go again. A sprint is a loop. Continuous delivery runs the same loop tighter, and build-measure-learn is that shape again under a different name. The loop is old. What changed is who works inside it and how fast one person can open one. When the worker is a machine you summon on demand, you choose loop size per task, where your team's calendar used to decide it for you. The far end of that range, many hours of unattended agent work, is the part most of us genuinely have not done before.
 
 The question worth taking seriously here is the one this whole framework circles: if the tight loop you probably ran this morning (ask, read, wince, rephrase) works so well, how far can it stretch? Tight is the one mode everyone knows from their own hands. The other two zones are the same loop with more leash paid out, and every extra meter changes what has to be in place around the work.
 
@@ -31,13 +31,13 @@ The question worth taking seriously here is the one this whole framework circles
 
 ## Three zones, none of them a ladder
 
-**Tight** runs in minutes. You are embedded in the cycle, reviewing every turn, checking hypotheses as they form, working in something close to pair-coding mode. The cognitive load is high and the control is maximal. That trade is exactly right for a whole class of work: high ambiguity, high risk, strategizing, legacy brownfield where the documentation lies, problems nobody has seen before, and situations where you are the one who needs to learn something from the contact with the material.
+**Tight** runs in minutes. You are embedded in the cycle, reviewing every turn, checking hypotheses as they form, working in something close to pair-coding mode. The cognitive load is high and the control is maximal. That trade is exactly right for a whole class of work. Anything high in ambiguity or risk, where a wrong turn is expensive and the path is not clear yet. Legacy brownfield where the documentation lies and problems nobody has seen before, the ground you have to feel your way across. And anything where you are the one who needs to learn something from contact with the material, because handing that off hands off the learning too.
 
 **Elastic** runs in minutes to hours. You hand over a bounded chunk of work, structured delegation with guardrails and checkpoints, and you come back at agreed points instead of every turn. The work that belongs here is understood enough to hand over, but not safe enough to ignore. (This carries more weight than it looks; most delegation failures I see come from misjudging one of its two halves.)
 
 **Loose** runs in multiple hours. A single agent or fleets of agents work asynchronously under policy constraints, and the human reviews outcomes rather than turns. You may have heard of the term *dark factory* for these kinds of loops.
 
-I want to be blunt about a misreading the three zones invite: tight is not a beginner mode you graduate out of, and loose is not a badge of being advanced. An engineer who keeps a highly regulated change in a tight loop with almost no <Term id="backpressure">backpressure</Term> at hand is sizing correctly! A team that pushes everything loose because it feels like progress is about to discover why the criteria below exist. The only question the zones answer is how much loop this particular task can carry.
+I want to be blunt about a misreading the three zones invite: tight is not a beginner mode you graduate out of, and loose is not a badge of being advanced. An engineer who keeps a highly regulated change in a tight loop with almost no <Term id="backpressure">backpressure</Term> at hand is sizing correctly. A team that pushes everything loose because it feels like progress is about to discover why the criteria below exist. The only question the zones answer is how much loop this particular task can carry.
 
 ## Are your loop sizes choices or accidents?
 
@@ -48,7 +48,7 @@ People keep collapsing two questions into one, so let us keep them apart.
 Four strategic questions get at it:
 
 1. How volatile is the domain?
-2. Is the amound of context in place for agents to work from?
+2. Is the context in place for agents to work from?
 3. Where does trust actually live in the organization?
 4. And which metrics would catch drift fast enough to matter?
 
@@ -66,17 +66,17 @@ For that I use seven sizing criteria.
 6. **Learning goal:** if a human needs to understand this deeply afterward (comprehension, or cognitive debt [is a thing](https://arxiv.org/abs/2603.22106)), do not over-delegate it away from them.
 7. **Agent capability:** [long task horizons](https://metr.org/time-horizons/) only pay off when the closure infrastructure can keep up with them.
 
-Diagnosis tells you where you stand, sizing tells you what to do with the next task, and mixing them is how teams end up arguing about maturity when they should be arguing about a specific blast radius.
+Diagnosis tells you where you stand. Sizing is about the next task, and what to do with it. Mix the two and a team ends up arguing about its maturity, when the fight should be over one task's blast radius.
 
 ## Every zone has to close the loop
 
 Whatever size you pick, the loop has to close: the outcome gets checked, and what was learned survives. What changes per zone is the machinery doing the closing.
 
-**In the tight loop**, you are the iteration mechanism. Hypothesis, attempt, check, correction, over and over, backed by LSP, compiler, linter, formatter, and diff feedback, with direct material contact through an interactive agent harness like Claude Code, Codex, or Pi, and through tests, UI, and logs.
+**In the tight loop**, you are the iteration mechanism. Hypothesis, attempt, check, correction, over and over, backed by the instant signals you get for free while you sit there: the LSP and compiler, the linter and formatter, the diff in front of you. Direct material contact runs through an interactive agent harness like Claude Code, Codex, or Pi, and through tests, UI, and logs.
 
-**In the elastic loop**, intent-carrying artifacts like specs and user stories become the steering artifacts, carrying boundaries, constraints, and risks. Around it: reproducible setup, CI, acceptance criteria, PR review, reviewer subagents, and checkpoint inspections at the agreed points.
+**In the elastic loop**, intent-carrying artifacts like specs and user stories become the steering artifacts, carrying boundaries, constraints, and risks. Around it: a reproducible setup with CI, acceptance criteria the work is held to, and review at the checkpoints, by a human and by reviewer subagents.
 
-**In the loose loop**, the machinery has to stand in for your absence: sandboxes and worktrees, <Term id="outcome-grading">outcome graders</Term> (rubrics, scenarios, golden examples, counterexamples), fix-loops, adversarial agent reviews with approval gates in their own loops, drift monitoring, automated regression gates, rollback paths, and legibility artifacts like screenshots, screen recordings, and trace summaries that make the final human check cheaper. That last item matters more than it sounds: how many loose loops one person can run in parallel is capped less by containment and more by the cost of verifying each one at the gate (the [Harness](/harness) page takes this apart).
+**In the loose loop**, the machinery has to stand in for your absence, and there is a lot of it. Containment first, so a bad run cannot escape: sandboxes and worktrees, rollback paths. Then the judgment you would have applied by hand, now encoded: <Term id="outcome-grading">outcome graders</Term> (rubrics, scenarios, golden examples, counterexamples), fix-loops, adversarial agent reviews with their own approval gates, drift monitoring, automated regression gates. And finally the legibility artifacts that make the final human check cheap: screenshots, screen recordings, trace summaries. That last item matters more than it sounds: how many loose loops one person can run in parallel is capped less by containment and more by the cost of verifying each one at the gate (the [Harness](/harness) page takes this apart).
 
 And here is the sharpening that took me a while to see. In the tight loop you supply the micro-iterations implicitly, just by sitting there. In the loose loop nobody supplies them. So the harness, the machinery around the agent described above, has to encode those cycles in advance, decompose, parallelize, verify, iterate, as explicit architecture rather than an emergent property of human presence. [Cursor's First Proof](https://1stproof.org/), [OpenAI's harness engineering](https://openai.com/index/harness-engineering/), and [Anthropic's harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) all arrived at exactly this shape independently.
 
