@@ -31,7 +31,7 @@ I work with four clusters, and each one owns a different question about the same
 - **Security + Compliance** asks: is it allowed?
 - **Operations** asks: does it hold up in production?
 
-Correct and right are not the same question. A change can pass every test, satisfy every type checker, and still solve a problem no user has. Say it clears that bar too. It might still touch data it had no business touching, or clear all three of those and quietly fall over under real load three weeks later. Four clusters, then. That is four ways for plausible output to be wrong, and the work has to survive all four before it counts.
+Correct and right are not the same question. A change can pass every test, satisfy every type checker, and still solve a problem no user has. Say it is right, too. It can still touch data it had no business touching, or clear all three and quietly fall over under real load three weeks later. Four clusters, then. Four ways for plausible output to be wrong, and the work has to survive all four before it counts.
 
 ## One layer compiles, the other one doesn't
 
