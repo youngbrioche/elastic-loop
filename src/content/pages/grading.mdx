@@ -44,13 +44,13 @@ So where does that leave the specification? I keep meeting two camps: one that w
 
 Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering contract to something executable, and finally, in the learning loop that wraps every zone, to distilled feedback for the next round. Keep in mind, though:
 
-**The spec is useful when it structures the <Term id="search-space">search space</Term>. It becomes harmful when it replaces the search space.**
+**A spec earns its keep when it structures the <Term id="search-space">search space</Term>. The moment it stands in for that space, it has turned back into a waterfall.**
 
 <div class="reading grading-intro">
 
 <GradingScene />
 
-The spec can and should never be the beginning of a waterfall, but rather a living artifact humans (and agents) iterate on. Zero-shotting is not a sport! Well, most times it's not. And yet the pendulum is swinging back toward exactly that little waterfall right now: write everything down first, let the agent execute, and treat anyone who wants to feed learning back mid-run as undisciplined. Organizations rehearsed this movement for twenty years of doing agile without becoming agile, adopting the ceremony and dropping the feedback loop.
+The spec can and should never be the beginning of a waterfall, but rather a living artifact humans (and agents) iterate on. Zero-shotting is not a sport. Well, most times it's not. And yet the pendulum is swinging back toward exactly that little waterfall right now: write everything down first, let the agent execute, and treat anyone who wants to feed learning back mid-run as undisciplined. Organizations rehearsed this movement for twenty years of doing agile without becoming agile, adopting the ceremony and dropping the feedback loop.
 
 A spec that pins down every implementation detail has quietly turned the agent back into a typist, and you paid for a search process you never ran.
 
@@ -58,13 +58,13 @@ A spec that pins down every implementation detail has quietly turned the agent b
 
 The reflex has a name by now. ThoughtWorks tracks [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) on the Radar, notably no further than Assess, warning that teams might "relearn a bitter lesson, that handcrafted detailed rules for AI ultimately do not scale". Birgitta Böckeler [sorts the practice](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) into three levels of rigor: spec-first writes the spec up front and archives it once the code exists, spec-anchored keeps it in the repo, maintained with every change and validated against the implementation, and spec-as-source treats code as mere generated output of the spec, a future no tool delivers in production today. Spec-anchored is the close relative of this framework: a living, versioned artifact instead of one-way planning.
 
-What this framework adds is a shift of attention from the input layer to the evaluation layer. Whichever rigor level you run, the artifacts humans iterate on in wide loops are the spec, the rubrics, the scenarios, the goldens, and the counterexamples, in short the grading material, while the agents iterate on the output itself. When you catch yourself patching the output instead of sharpening the grader, you are working on the wrong layer, and the loop will keep producing the thing you just fixed.
+What this framework adds is a shift of attention from the input layer to the evaluation layer. Whichever rigor level you run, the artifacts humans iterate on in wide loops are the grading material, the spec and everything that calibrates it, while the agents iterate on the output itself. When you catch yourself patching the output instead of sharpening the grader, you are working on the wrong layer, and the loop will keep producing the thing you just fixed.
 
 <TwoIterationLayers />
 
 ## A rubric is not automatically truth
 
-Here is the caveat I want printed in bold on every eval dashboard: writing a rubric does not make the rubric true. Good graders are engineering artifacts themselves, calibrated with counterexamples, error taxonomies, human review, and <Term id="drift">drift</Term> control. Skip that work and the agent will optimize against the grader you actually built, which usually means output that sounds plausible rather than output that is right. An LLM judge calibrated on nothing will happily wave through the <Term id="statistical-middle">statistical middle</Term>, and slop walks in wearing a passing grade! A polished demo of the agent's own work deserves the same skepticism: it makes your judgment cheaper to apply, while the grading substance still has to come from goldens, counterexamples, and scenarios.
+Here is the caveat I want printed in bold on every eval dashboard: writing a rubric does not make the rubric true. Good graders are engineering artifacts themselves, calibrated against counterexamples and failure taxonomies, with the occasional human read and <Term id="drift">drift</Term> control. Skip that work and the agent will optimize against the grader you actually built, which usually rewards whatever sounds plausible long before anything that holds up. An LLM judge calibrated on nothing will happily wave through the <Term id="statistical-middle">statistical middle</Term>, and slop walks in wearing a passing grade. A polished demo of the agent's own work deserves the same skepticism: it makes your judgment cheaper to apply, while the grading substance still has to come from goldens, counterexamples, and scenarios.
 
 One failure mode hides inside the word grader: the thing that grades cannot be the thing that made the work. Models reliably praise their own output, and the leniency deepens when the work under review was itself machine-made. Anthropic had to tune their evaluator over several rounds because early versions talked themselves into approving bugs they had just flagged. Whatever closes the loop, a separate reviewer agent, a held-out judge, a human, has to sit outside the run that produced the work, or you have automated self-congratulation.
 
@@ -78,7 +78,7 @@ which is too radical for most organizations I work with, but the design vocabula
 
 Once grading works, the economics get interesting. When search gets cheap, the move is to generate several variants and select, rather than pushing one ticket through faster. <Term id="best-of-n">Best-of-n</Term> becomes a delivery discipline. Basically, what digital product development has always preached, except that building variants with the actual material (code) was slow and expensive. That's why the Design Sprint exists.
 
-But (and this is the part I see teams get wrong in the first month) variants are only valuable when they are born close to the decision and close to the system: near the target architecture, inside the design system, against real APIs and data structures, checkable through the same tests and scenarios that grade everything else. The anti-pattern is the gorgeous prototype with no system contact, a demo that nobody can merge and nobody learns from. A variant only becomes learning once a decision rides on it; without that, it is just more output.
+But (and this is the part I see teams get wrong in the first month) variants are only valuable when they are born close to the decision and close to the system. That means built inside the real material: the target architecture, the design system, the actual APIs and data structures, and checkable through the same tests and scenarios that grade everything else. The anti-pattern is the gorgeous prototype with no system contact, a demo that nobody can merge and nobody learns from. A variant only becomes learning once a decision rides on it; without that, it is just more output.
 
 Which leaves the question I would ask your team before any tooling discussion:
 
