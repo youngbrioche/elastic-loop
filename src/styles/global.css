@@ -203,7 +203,7 @@ main blockquote::before {
   content: "\201C"; /* “ */
   position: absolute;
   left: -2px;
-  top: 0.18em;
+  top: -0.28em;
   font-size: 56px;
   line-height: 1;
   font-weight: 800;
