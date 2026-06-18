@@ -21,6 +21,14 @@ export interface GlossaryEntry {
   def: string;
   /** "You already do this as ..." bridge for a dev or PO. Optional. */
   anchor?: string;
+  /**
+   * Extra surface forms the glossary-link linter should treat as this term, on
+   * top of the canonical `term` (plurals, hyphen/space variants, and any
+   * "(parenthetical)" are already handled automatically). Use for irregular
+   * forms, e.g. ['generalize'] for "Generalization". See
+   * scripts/check-glossary-links.mjs.
+   */
+  match?: string[];
 }
 
 export const glossary: Record<string, GlossaryEntry> = {

@@ -27,6 +27,28 @@ For public, notable changes:
   with the JSON.
 - the changelog teaser in the footer should only show 3 items max, never more.
 
+## Glossary links
+
+Every glossary term (`src/data/glossary.ts`) must be wrapped in `<Term id="…">`
+the **first** time it appears in a page's running prose, so the reader meets the
+definition before the jargon. A build guard enforces this and fails on any miss
+(`glossaryLinksGuard` in `astro.config.mjs`, script `scripts/check-glossary-links.mjs`).
+It is a deterministic text check, no LLM.
+
+- **See offenders:** `npm run glossary:links`. **Gate (exit non-zero):**
+  `npm run glossary:check`. The build runs the gate at `astro:build:start`.
+- **Matching** is case-insensitive and tolerates plurals and hyphen/space
+  variants. For irregular surface forms (e.g. `slop` for "the statistical
+  middle", `generalize` for "generalization"), add a `match: ['…']` array to that
+  glossary entry — the glossary stays the single source of truth.
+- **Out of scope** (never flagged): frontmatter, imports, fenced/inline code,
+  URLs and markdown links, headings, blockquotes, table rows, JSX tags and their
+  attributes, and the inside of an existing `<Term>`. Only first use is checked;
+  later mentions may stay plain.
+- A page that uses a term only in those excluded spots needs no wrapper. If you
+  add the first `<Term>` to a page that had none, remember its
+  `import Term from '../../components/Term.astro';`.
+
 ## Visuals and the agent .md routes
 
 The visual components live in `src/components/visuals/*.astro`. HTML pages render

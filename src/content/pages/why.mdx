@@ -47,9 +47,9 @@ The objective worth optimizing is solution quality, and the field evidence backs
 
 ## Outcome Grading is the new specification
 
-If the build step is a search process, the leverage moves to whoever can grade what comes out of it. Grade the outcome precisely and you can let machines iterate against that grade, for hours, in parallel, while you do something else. Tests are the primitive form of this: this input, this expected output. The broader forms cover whole classes of behavior: rubrics and scenarios, the golden and counter examples that calibrate them, an LLM judge playing adversary, a human where the call is genuinely a judgment call, and production itself, grading whatever slipped through.
+If the build step is a search process, the leverage moves to whoever can grade what comes out of it. Grade the outcome precisely and you can let machines iterate against that grade, for hours, in parallel, while you do something else. Tests are the primitive form of this: this input, this expected output. The broader forms cover whole classes of behavior: <Term id="rubric">rubrics</Term> and scenarios, the <Term id="golden">golden</Term> and counter examples that calibrate them, an <Term id="llm-judge">LLM judge</Term> playing adversary, a human where the call is genuinely a judgment call, and production itself, grading whatever slipped through.
 
-One caveat I want to plant early, because the whole framework gets dangerous without it: a rubric is not automatically truth. Good outcome graders are engineering artifacts in their own right, calibrated against counterexamples, failure taxonomies, the occasional human read. Skip that calibration and the agent will optimize toward output that sounds plausible to the grader, and the grader will applaud. You will have built a machine for generating confident mediocrity.
+One caveat I want to plant early, because the whole framework gets dangerous without it: a rubric is not automatically truth. Good outcome graders are engineering artifacts in their own right, calibrated against <Term id="counterexample">counterexamples</Term>, failure taxonomies, the occasional human read. Skip that calibration and the agent will optimize toward output that sounds plausible to the grader, and the grader will applaud. You will have built a machine for generating confident mediocrity.
 
 ## Only retained feedback counts
 
@@ -67,11 +67,11 @@ Ten times! The whole of that setup has a name, the <Term id="harness">harness</T
 
 ## The explosion and the slow collision
 
-Sprawl is the explosion, slop is the slow collision. Both are what a search process does with nothing pushing back. The anatomy of each is worth a look.
+Sprawl is the explosion, <Term id="statistical-middle">slop</Term> is the slow collision. Both are what a search process does with nothing pushing back. The anatomy of each is worth a look.
 
 For sprawl, the pressure-reactor image holds up the more you push on it. Agents generate pressure — output, speed, options — and the harness is the containment wall that makes a productive reaction possible instead of just an explosion to fear. The rest of the assembly maps over too: grading is the sensors that tell you what is happening inside, approval gates are the safety valves, rollback is the emergency shutdown. None of it is interesting on its own. A reactor is the whole assembly, or it is a crater.
 
-Slop needs the front of the loop to explain, which surprised me when I first worked through it. Slop is sampling from the <Term id="statistical-middle">statistical middle</Term> of everything the model has ever read, and the agent lands there because it lacks the specific context that would pull it out: your customers, your constraints, the edge cases your domain knows by heart. So slop gets squeezed from two sides. Context at the front keeps the agent from starting in the middle at all (the grounding step in the formula), and product and domain backpressure at the back pulls whatever comes out the rest of the way toward your product.
+Slop needs the front of the loop to explain, which surprised me when I first worked through it. Slop is sampling from the statistical middle of everything the model has ever read, and the agent lands there because it lacks the specific context that would pull it out: your customers, your constraints, the edge cases your domain knows by heart. So slop gets squeezed from two sides. Context at the front keeps the agent from starting in the middle at all (the grounding step in the formula), and product and domain backpressure at the back pulls whatever comes out the rest of the way toward your product.
 
 And the two depend on each other: backpressure without context is a filter with no signal. Your graders either reject endlessly, which looks exactly like sprawl, or they wave plausible-generic output through because they were calibrated on the middle themselves. You cannot buy your way out of missing context with more gates.
 

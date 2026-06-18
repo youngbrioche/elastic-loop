@@ -32,7 +32,7 @@ The version you ran this morning is the tightest one. Every turn under your eyes
 
 ## The whole framework in one sentence
 
-<p class="framework-sentence">Intent <strong>opens</strong> the loop. Context <strong>grounds</strong> it. Backpressure <strong>keeps it useful</strong>. Verification <strong>closes</strong> it.</p>
+<p class="framework-sentence">Intent <strong>opens</strong> the loop. Context <strong>grounds</strong> it. <Term id="backpressure">Backpressure</Term> <strong>keeps it useful</strong>. Verification <strong>closes</strong> it.</p>
 
 <CardGrid cols={2}>
 
@@ -50,7 +50,7 @@ The version you ran this morning is the tightest one. Every turn under your eyes
 
 <div>
 
-**Keeps it useful.** <Term id="backpressure">Backpressure</Term> is the word that stuck in agentic engineering for resistance: anything an agent's output has to survive before it counts ([Geoffrey Huntley](https://ghuntley.com/ralph/) and [Moss Banay](https://banay.me/dont-waste-your-backpressure/) did much of the early work on it). A failing test is backpressure, and so is a designer's critique or an acceptance scenario from someone who knows the domain. Plenty of the resistance that matters never touches a compiler. The challenge is how much of this backpressure can be automated, so it does not need a human in the loop stopping the belt.
+**Keeps it useful.** Backpressure is the word that stuck in agentic engineering for resistance: anything an agent's output has to survive before it counts ([Geoffrey Huntley](https://ghuntley.com/ralph/) and [Moss Banay](https://banay.me/dont-waste-your-backpressure/) did much of the early work on it). A failing test is backpressure, and so is a designer's critique or an acceptance scenario from someone who knows the domain. Plenty of the resistance that matters never touches a compiler. The challenge is how much of this backpressure can be automated, so it does not need a human in the loop stopping the belt.
 
 </div>
 
@@ -98,13 +98,13 @@ Output without containment: variant inflation, refactoring PRs nobody asked for,
 
 ### Slop
 
-The stock-photo feeling: output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. Lots of noise, almost no signal. The everyday version is the onboarding text that sounds like every onboarding text ever written. Slop does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. Colleagues you avoid texting with, because they sent you uncanny copywriting, lots of it. It gets squeezed from both sides: context up front keeps the agent from starting in the <Term id="statistical-middle">statistical middle</Term> of everything it has ever read, and product backpressure at the back pulls the output out of it.
+The stock-photo feeling: output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. Lots of noise, almost no signal. The everyday version is the onboarding text that sounds like every onboarding text ever written. <Term id="statistical-middle">Slop</Term> does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. Colleagues you avoid texting with, because they sent you uncanny copywriting, lots of it. It gets squeezed from both sides: context up front keeps the agent from starting in the statistical middle of everything it has ever read, and product backpressure at the back pulls the output out of it.
 
 </div>
 
 </CardGrid>
 
-One honest caveat, because sprawl has two natures and the grid only catches one. The kind that comes from missing checks is what the rows measure: output that does not fit the system, broken refactors, architectural drift. It shows up as a cell. The other kind comes from missing closure: output that passes every check, but that nobody is assigned to read. Those thirty landing pages again. It can happen anywhere, even under full backpressure, because depth of checking is not the same as having someone there to shut the loop. That second kind rides on closure, which I keep off the axes on purpose, since it applies to every cell equally.
+One honest caveat, because sprawl has two natures and the grid only catches one. The kind that comes from missing checks is what the rows measure: output that does not fit the system, broken refactors, architectural <Term id="drift">drift</Term>. It shows up as a cell. The other kind comes from missing closure: output that passes every check, but that nobody is assigned to read. Those thirty landing pages again. It can happen anywhere, even under full backpressure, because depth of checking is not the same as having someone there to shut the loop. That second kind rides on closure, which I keep off the axes on purpose, since it applies to every cell equally.
 
 <Squeeze />
 
@@ -132,7 +132,7 @@ AI amplifies and reflects whatever organizational structure it lands in, includi
 
 ### The pressure reactor
 
-Backpressure is containment, and containment is what allows a productive reaction at all. This is the image for architecture and harness debates, where "guardrails" sounds like bureaucracy until you see the wall as the thing that lets you run the reactor hot.
+Backpressure is containment, and containment is what allows a productive reaction at all. This is the image for architecture and <Term id="harness">harness</Term> debates, where "guardrails" sounds like bureaucracy until you see the wall as the thing that lets you run the reactor hot.
 
 </div>
 

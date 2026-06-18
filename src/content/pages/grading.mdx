@@ -14,7 +14,7 @@ import GradingScene from '../../components/GradingScene.astro';
 import TwoIterationLayers from '../../components/visuals/TwoIterationLayers.astro';
 
 <PageIntro kicker="Part four" title="Grading">
-If you come from deterministic software development, where a requirement translates into code and the code either meets it or it doesn't, the rest of this framework probably feels like it has a hole in the middle. Agents search a space of possible solutions (the longer argument lives on [Why](/why)), and a search process needs something to search against. That something is <Term id="outcome-grading">outcome grading</Term>: the ability to judge whether a result is good, precisely enough that a machine can iterate against the judgment. It is the bridge between the spec world and the search-space world, and without it the framework falls apart for exactly the people I most want to reach. So this page exists to build the bridge properly.
+If you come from deterministic software development, where a requirement translates into code and the code either meets it or it doesn't, the rest of this framework probably feels like it has a hole in the middle. Agents search a space of possible solutions (the longer argument lives on [Why](/why)), and a search process needs something to search against. That something is <Term id="outcome-grading">outcome grading</Term>: the ability to judge whether a result is good, precisely enough that a machine can iterate against the judgment. It is the bridge between the spec world and the <Term id="search-space">search-space</Term> world, and without it the framework falls apart for exactly the people I most want to reach. So this page exists to build the bridge properly.
 </PageIntro>
 
 ## You have been grading outcomes all along
@@ -44,7 +44,7 @@ So where does that leave the specification? I keep meeting two camps: one that w
 
 Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering contract to something executable, and finally, in the learning loop that wraps every zone, to distilled feedback for the next round. Keep in mind, though:
 
-**A spec earns its keep when it structures the <Term id="search-space">search space</Term>. The moment it stands in for that space, it has turned back into a waterfall.**
+**A spec earns its keep when it structures the search space. The moment it stands in for that space, it has turned back into a waterfall.**
 
 <div class="reading grading-intro">
 

@@ -45,6 +45,23 @@ function diagramsSyncGuard() {
   };
 }
 
+// Fail the build if a glossary term's first prose use on any page is not wrapped
+// in <Term id="…">, so the reader always meets the definition before the jargon.
+// Deterministic text check (no LLM): see scripts/check-glossary-links.mjs. Run
+// `npm run glossary:links` to see offenders, `npm run glossary:check` to gate.
+function glossaryLinksGuard() {
+  return {
+    name: 'glossary-links-guard',
+    hooks: {
+      'astro:build:start': () => {
+        execFileSync('node', ['scripts/check-glossary-links.mjs', '--check'], {
+          stdio: 'inherit',
+        });
+      },
+    },
+  };
+}
+
 // Render the HTML-based visuals (Squeeze, LoopSizes) to PNG from the built site,
 // after the build, into dist/diagrams. The .md / agent route embeds these. Doing
 // it at build time means they regenerate from the live component every time and
@@ -78,5 +95,12 @@ export default defineConfig({
     // clashes with the site's light code styling (see the pre rules in global.css).
     syntaxHighlight: false,
   },
-  integrations: [mdx(), sitemap(), changelogSyncGuard(), diagramsSyncGuard(), screenshotDiagrams()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    changelogSyncGuard(),
+    diagramsSyncGuard(),
+    glossaryLinksGuard(),
+    screenshotDiagrams(),
+  ],
 });

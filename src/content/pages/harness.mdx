@@ -20,7 +20,7 @@ A <Term id="harness">harness</Term> is the scaffold that turns a model into an a
 
 <HarnessScene />
 
-Before the parts, it helps to know why they are worth the trouble at all. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination that actually ships, harness and configuration and model together, and finds that the configuration around the model moves the result about ten times more than the model choice does. While the industry refreshes leaderboards and debates which frontier model to standardize on, or whether SWE-Bench was fine with slop all along, the variable that dominates is the loop infrastructure around the model. Chollet supplies the theory on [Why](/why), that building is a search process and so the setup around the search matters, and clawbench supplies the measurement. The lever sits here, in the harness, not in the model. Which makes it worth knowing exactly what goes into one.
+Before the parts, it helps to know why they are worth the trouble at all. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination that actually ships, harness and configuration and model together, and finds that the configuration around the model moves the result about ten times more than the model choice does. While the industry refreshes leaderboards and debates which frontier model to standardize on, or whether SWE-Bench was fine with <Term id="statistical-middle">slop</Term> all along, the variable that dominates is the loop infrastructure around the model. Chollet supplies the theory on [Why](/why), that building is a search process and so the setup around the search matters, and clawbench supplies the measurement. The lever sits here, in the harness, not in the model. Which makes it worth knowing exactly what goes into one.
 
 </div>
 
@@ -52,7 +52,7 @@ The product and domain layer is built from different stuff, and almost none of i
 1. the actual user problem and the job to be done
 2. explicit non-goals (the solution spaces you deliberately ruled out)
 3. domain rules and edge cases
-4. acceptance scenarios and counterexamples
+4. acceptance scenarios and <Term id="counterexample">counterexamples</Term>
 5. quality standards from the people who own product, UX, risk, and operations
 6. variant comparisons with explicit trade-offs
 7. and production signals like rework, support feedback, and usage patterns
@@ -61,7 +61,7 @@ Notice how much of this list is knowledge that lives in someone's head until som
 
 ## Your test suite will not catch slop
 
-Here is the job each layer actually does, which is what makes the two more than a tidy taxonomy. The technical layer mostly fights sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". Slop is the other layer's problem. Scenarios, counterexamples, and domain rubrics (written grading criteria) pull the output away from the <Term id="statistical-middle">statistical middle</Term> and into the specific solution space of this product, this domain, this user. That is the back half of the squeeze: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.
+Here is the job each layer actually does, which is what makes the two more than a tidy taxonomy. The technical layer mostly fights sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". Slop is the other layer's problem. Scenarios, counterexamples, and domain <Term id="rubric">rubrics</Term> (written grading criteria) pull the output away from the statistical middle and into the specific solution space of this product, this domain, this user. That is the back half of the squeeze: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.
 
 > Technical backpressure keeps the work correct against the system. Whether the product ever needed it is the other layer's call.
 
@@ -73,7 +73,7 @@ Both layers grow while you pay out leash, and neither grows forever. They also a
 
 The line that decides what you can remove cuts across both layers, not between them. Some of the scaffold only compensates for a capability gap: planning horizon, coherence over a long run, context-window juggling. A better model closes those gaps, so the crutches built for them are the first thing to strip out. The rest is backpressure that encodes a target the model had no way to know. That part stays, however capable the model gets.
 
-The trap is reading the whole technical layer as the disposable side. Judgment lives inside it too. Whether a change fits your architecture, respects your bounded contexts, cuts the seam where you wanted it: a fitness function catches the mechanical part of that question, no cycles in the dependency graph, and stops there. The rest is a call graded by a rubric, an LLM judge, or a human, and a stronger model does not retire it, because it was never a capability gap to begin with. Architecture conformance lives in the technical layer and ages like a domain rule, not like a crutch. So "simplify as the model improves" holds with one correction: strip the scaffolding, keep the judgment, wherever in the harness it happens to sit.
+The trap is reading the whole technical layer as the disposable side. Judgment lives inside it too. Whether a change fits your architecture, respects your bounded contexts, cuts the seam where you wanted it: a fitness function catches the mechanical part of that question, no cycles in the dependency graph, and stops there. The rest is a call graded by a rubric, an <Term id="llm-judge">LLM judge</Term>, or a human, and a stronger model does not retire it, because it was never a capability gap to begin with. Architecture conformance lives in the technical layer and ages like a domain rule, not like a crutch. So "simplify as the model improves" holds with one correction: strip the scaffolding, keep the judgment, wherever in the harness it happens to sit.
 
 ## Backpressure only counts if it sticks
 
@@ -103,7 +103,7 @@ Context and backpressure both work on the content of the loop: context is the ga
 
 Three families of mechanisms, and they sit on different levers. Self-inspection by the agent (opening the build in a browser, reading the DOM snapshot or screenshot, running Lighthouse, axe, Core Web Vitals) is backpressure in the engineering cluster, already covered above, no new lever required. The numeric signals are the clean ones here: a performance budget that speaks when broken and stays silent when held is sounder than an LLM judge grading aesthetics. Self-demonstration sits on both levers at once. Simon Willison's [Showboat](https://github.com/simonw/showboat) is a CLI through which the agent presents its own work; Peter Steinberger has agents record a video demo of what they built. The demo makes the gate cheaper, since the human grades an outcome instead of digging through the artifact, and the act of building the demo is forced self-confrontation: while assembling it, the agent stumbles over its own defects, feedback that would never have existed without the obligation to present. Legibility artifacts (screenshots, recordings, trace summaries) are pure gate relief and carry no backpressure at all.
 
-The trap deserves its own paragraph. A polished demo can hide slop, and verification stress is partly productive: it is the friction where bad judgment gets caught. Self-demonstration makes the human gate cheaper to clear without making the judgment behind it any sharper. Demo mechanisms lower the cost of good judgment, while the judgment itself still has to come from outcome grading against goldens and counterexamples.
+The trap deserves its own paragraph. A polished demo can hide slop, and verification stress is partly productive: it is the friction where bad judgment gets caught. Self-demonstration makes the human gate cheaper to clear without making the judgment behind it any sharper. Demo mechanisms lower the cost of good judgment, while the judgment itself still has to come from <Term id="outcome-grading">outcome grading</Term> against <Term id="golden">goldens</Term> and counterexamples.
 
 ## Does any of this exist outside slide decks?
 
