@@ -67,6 +67,14 @@ Here is the function assignment that makes the two layers more than a tidy taxon
 
 You need both, and they are not interchangeable. A perfect test suite will wave through onboarding copy that sounds like every onboarding copy ever written, because nothing in it knows what your product is for.
 
+## What the next model takes away
+
+Both layers grow while you pay out leash, and neither grows forever. They also age differently, which is the part worth planning for. Anthropic's own [harness write-up](https://www.anthropic.com/engineering/harness-design-long-running-apps) argues for shrinking the scaffold as the model improves: every piece you bolt on encodes an assumption about what the model cannot do yet, and those assumptions expire. Between two model generations they tore out their task decomposition and folded a per-stage evaluator back into a single pass at the end, because the newer model held coherence for hours on its own.
+
+The line that decides what you can remove cuts across both layers rather than between them. On one side sits scaffolding that compensates for a capability gap: planning horizon, coherence over a long run, context-window juggling. A better model closes those gaps, so the crutches built for them are the first thing to strip out. On the other side sits backpressure that encodes a target the model had no way to know, and that stays however capable the model gets.
+
+The trap is reading the whole technical layer as the disposable side. Judgment lives inside it too. Whether a change fits your architecture, respects your bounded contexts, cuts the seam where you wanted it: a fitness function catches the mechanical part of that question, no cycles in the dependency graph, and stops there. The rest is a call graded by a rubric, an LLM judge, or a human, and a stronger model does not retire it, because it was never a capability gap to begin with. Architecture conformance lives in the technical layer and ages like a domain rule, not like a crutch. So "simplify as the model improves" holds with one correction: strip the scaffolding, keep the judgment, wherever in the harness it happens to sit.
+
 ## Backpressure only counts if it sticks
 
 There is a condition both layers share: backpressure is only effective once the signal changes a later decision. A failing test that gets retried into silence is noise. A rejected variant that teaches nobody anything is wasted compute. The signal has to land somewhere: a changed plan, an updated memory, a better test, a more precise rubric, a new counterexample. <Term id="retained-feedback">Retained feedback</Term> is what connects the two layers, because retention works the same way whether the signal came from a compiler or from a domain expert.
