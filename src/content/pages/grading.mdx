@@ -39,7 +39,7 @@ So where does that leave the specification? I keep meeting two camps: one that w
 |---|---|---|---|
 | Tight | Starter grip: intent, examples, non-goals | IDE, tests, UI, logs | Human judgment, small tests, diff feedback |
 | Elastic | Steering contract: boundaries, acceptance, constraints, risks, search space | Reproducible setup, CI, PR review, reviewer subagents, checkpoints | Tests, acceptance criteria, rubrics, review checklist |
-| Loose / <Term id="dark-factory">Dark Factory</Term> | Executable spec in the production system | Sandbox, worktrees, isolated runtime, permissions, audit, rollback, observability | Outcome rubrics, scenarios, goldens, counterexamples, automated graders, abort criteria, regression gates |
+| Loose | Executable spec in the production system | Sandbox, worktrees, isolated runtime, permissions, audit, rollback, observability | Outcome rubrics, scenarios, goldens, counterexamples, automated graders, abort criteria, regression gates |
 | *Learning loop (wraps every zone)* | Feedback distillate for the next piece of work | Stored traces, error classes, skills, docs | Rework, production signals, drift, pattern learning |
 
 Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering contract to something executable, and finally, in the learning loop that wraps every zone, to distilled feedback for the next round. Keep in mind, though:
