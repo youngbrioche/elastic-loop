@@ -56,7 +56,7 @@ const MASTER_GRID_MARKDOWN = [
   '',
   '| Backpressure ↓ / Loop size → | Tight | Elastic | Loose |',
   '| --- | --- | --- | --- |',
-  '| **Full** (technical + product / domain) | High-risk work, research, regulated change | A delegated feature with product backpressure | The dark factory, done right: agents delivering asynchronously against automated checks, humans reviewing outcomes |',
+  '| **Full** (technical + product / domain) | High-risk work, research, regulated change | A delegated feature with product backpressure | A (dark) factory: agents delivering asynchronously against automated checks, humans reviewing outcomes |',
   '| **Technical only** (tests, CI, linters) | Pair coding with tests, linting etc. | Delegated implementation, system-checked but slop-exposed | **Slop at scale**: looks like productivity while the output drifts generic |',
   '| **No automated checks** (you hold the line) | You are the dam, reading every turn | Output piles up between check-ins, nobody on the volume | **Sprawl at scale**: output multiplying faster than anyone can contain it |',
   '',
