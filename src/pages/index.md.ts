@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getEntry } from 'astro:content';
 import { mdxToMarkdown } from '../lib/markdown';
-import { tokenBudget } from '../lib/tokens';
 
 const rawPages = import.meta.glob('../content/pages/*.mdx', {
   query: '?raw',
@@ -16,7 +15,7 @@ export const GET: APIRoute = async () => {
     return new Response('Not found', { status: 404 });
   }
   const markdown = mdxToMarkdown(rawMdx, page.data);
-  const body = `<!-- ${tokenBudget(markdown)} -->\n${markdown}`;
+  const body = markdown;
   return new Response(body, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
   });

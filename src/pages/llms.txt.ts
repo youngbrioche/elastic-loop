@@ -25,7 +25,7 @@ export const GET: APIRoute = async () => {
 
   const pageLines = rendered.map(({ page, md }) => {
     const path = page.id === 'index' ? '/index.md' : `/${page.id}.md`;
-    return `- [${page.data.title}](${SITE}${path}) (${tokenBudget(md)}): ${page.data.description}`;
+    return `- [${page.data.title}](${SITE}${path}): ${tokenBudget(md)} — ${page.data.description}`;
   });
 
   // llms-full.txt is the pages joined with separators (its license block adds a
@@ -43,8 +43,8 @@ export const GET: APIRoute = async () => {
     ...pageLines,
     '',
     '## Optional',
-    `- [llms-full.txt](${SITE}/llms-full.txt) (${tokenBudget(fullBody)}): all pages concatenated`,
-    `- [Changelog](${SITE}/changelog.md) (${tokenBudget(changelogBody)}): recent notable changes, mirrors the site footer`,
+    `- [llms-full.txt](${SITE}/llms-full.txt): ${tokenBudget(fullBody)} — all pages concatenated`,
+    `- [Changelog](${SITE}/changelog.md): ${tokenBudget(changelogBody)} — recent notable changes, mirrors the site footer`,
     '',
     '## License',
     '© 2026 Robert Glaser. Code is licensed under Apache 2.0; site content is licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).',

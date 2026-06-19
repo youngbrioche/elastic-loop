@@ -16,7 +16,8 @@ export const GET: APIRoute = async () => {
     .map((page) => {
       const rawMdx = rawPages[`../content/pages/${page.id}.mdx`];
       if (rawMdx === undefined) return null;
-      return mdxToMarkdown(rawMdx, page.data).trim();
+      const md = mdxToMarkdown(rawMdx, page.data).trim();
+      return `<!-- Page: ${page.id} -->\n\n${md}`;
     })
     .filter((part): part is string => part !== null);
 
