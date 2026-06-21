@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import sprawlImg from '../assets/sprawl.webp';
+---
+
+{/*
+  Key visual for the Sprawl card on the hub, in the hero's rendered-3D
+  pool-noodle style: a single mint loop has burst into dozens that spill over the
+  rim of a containment basin and roll away in every direction, while miniature
+  figures rush in, point, and try to catch them — output without containment,
+  loud and visible, everyone reacts. Sits as a full-width topper above the card
+  prose; paired with SlopScene next to it, the two read as one diptych (loud
+  explosion vs. quiet collision). The .md / llms.txt rendition drops it (see
+  COMPONENT_REPLACEMENTS in src/lib/markdown.ts): the card prose already makes
+  the same point.
+*/}
+<figure class="sprawl-scene">
+  <Image
+    src={sprawlImg}
+    alt="A single mint loop burst into dozens that spill over the rim of a containment basin and roll away in every direction, while miniature figures rush in, point, and try to catch them"
+    widths={[320, 480, 640]}
+    sizes="(max-width: 600px) 100vw, 440px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  .sprawl-scene {
+    width: 76%;
+    margin: 0 auto 12px;
+  }
+
+  .sprawl-scene :global(img) {
+    width: 100%;
+    height: auto;
+  }
+</style>

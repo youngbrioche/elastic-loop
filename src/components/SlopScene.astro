@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import slopImg from '../assets/slop.webp';
+---
+
+{/*
+  Key visual for the Slop card on the hub, in the hero's rendered-3D pool-noodle
+  style: a long neat row of identical mint loops recedes into the distance while
+  miniature figures walk past, turn their backs, and stare at phones — output
+  that looks fine and announces nothing, so nobody reacts. Sits as a full-width
+  topper above the card prose; paired with SprawlScene next to it, the two read
+  as one diptych (loud explosion vs. quiet collision). The .md / llms.txt
+  rendition drops it (see COMPONENT_REPLACEMENTS in src/lib/markdown.ts): the
+  card prose already makes the same point.
+*/}
+<figure class="slop-scene">
+  <Image
+    src={slopImg}
+    alt="A long neat row of identical mint loops receding into the distance while miniature figures walk past, turn their backs, and stare at phones, none of them reacting"
+    widths={[320, 480, 640]}
+    sizes="(max-width: 600px) 100vw, 440px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  .slop-scene {
+    width: 76%;
+    margin: 0 auto 12px;
+  }
+
+  .slop-scene :global(img) {
+    width: 100%;
+    height: auto;
+  }
+</style>

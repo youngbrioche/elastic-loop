@@ -151,6 +151,12 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
   // GradingScene is a decorative key visual; the surrounding prose already
   // states the same point (the spec is a living artifact, not a waterfall).
   [/<GradingScene[\s\S]*?\/>/g, ''],
+  // SprawlScene is a decorative key visual; the Sprawl card prose already
+  // states the same point (output without containment, loud and visible).
+  [/<SprawlScene[\s\S]*?\/>/g, ''],
+  // SlopScene is a decorative key visual; the Slop card prose already states
+  // the same point (plausible output that announces nothing).
+  [/<SlopScene[\s\S]*?\/>/g, ''],
   // StartList: markdown list generated from startListCards, see above.
   [/<StartList[\s\S]*?\/>/g, START_LIST_MARKDOWN],
 ];

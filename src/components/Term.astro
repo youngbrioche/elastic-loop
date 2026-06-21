@@ -58,6 +58,10 @@ const popId = `term-${id}`;
     padding: 12px 14px;
     white-space: normal;
     text-align: left;
+    /* Reset inherited emphasis: a Term may sit inside markdown *italics*
+       (e.g. when a term is introduced), and the wrapping <em> would otherwise
+       render the whole popover in italics too. */
+    font-style: normal;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-4px);
