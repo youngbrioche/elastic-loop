@@ -1,5 +1,11 @@
 # Changelog
 
+## 21 Jun 2026 — Theory of Constraints and Cynefin, named and explained
+
+[`b01a1df`](https://github.com/youngbrioche/elastic-loop/commit/b01a1df04180411654221afea173f19a3d263bcd)
+
+Why now names Goldratt's Theory of Constraints in plain terms: a system has one bottleneck at a time, building was that bottleneck for twenty years, and once AI relieved it the constraint jumped to the two ends. Harness names Snowden's Cynefin to keep the Toyota analogy honest: classic manufacturing runs ordered, repeatable work, while a loop mostly runs complex work, so the factory's instinct to eliminate variance flips into harvesting it. Cynefin also gets a glossary entry, with pronunciation and an everyday anchor, for readers meeting the word for the first time.
+
 ## 21 Jun 2026 — A sharper opening and loops you build on purpose
 
 [`dc0ab71`](https://github.com/youngbrioche/elastic-loop/commit/dc0ab71e30e43a583805e1de5a45d0825d3cd3de)
