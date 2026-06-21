@@ -47,6 +47,11 @@ export const glossary: Record<string, GlossaryEntry> = {
     def: 'The set of possible solutions a task allows. An agent does not translate a spec line by line; it samples from this space, pulled toward one solution by your context, or proposing a few in a planning step. Generating many on purpose and selecting the best is a discipline you opt into.',
     anchor: 'There are many valid ways to implement a story. The agent is choosing among them, not transcribing the one right answer.',
   },
+  cynefin: {
+    term: 'Cynefin',
+    def: "A Welsh word (roughly 'kuh-NEV-in') for sorting problems by how knowable the answer is before you start: clear (one obvious right way), complicated (a right answer an expert can find), complex (no answer you can work out in advance, so you try something and learn from what happens), and chaotic (no stable cause and effect at all). Different kinds of problem call for different approaches.",
+    anchor: 'Tying your shoes is clear, fixing an engine is complicated, taking a product into a market is complex. You already switch approaches for each without naming the buckets.',
+  },
   'evaluation-function': {
     term: 'Evaluation function',
     def: 'The function that scores how good a candidate solution is, so the search can tell a better result from a worse one and steer toward it. Without one, generating many solutions tells you nothing about which to keep.',
