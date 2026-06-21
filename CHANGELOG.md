@@ -1,5 +1,11 @@
 # Changelog
 
+## 21 Jun 2026 — Roles: do new jobs appear, or do old ones just change?
+
+[`263c99a`](https://github.com/youngbrioche/elastic-loop/commit/263c99aff043efb4c22b36dca6d131bbd436f137)
+
+The Roles page mapped existing roles onto the loop but never said whether genuinely new titles emerge, so a new section applies a hard test: a new title needs an important task, a scarce skill no existing role reliably supplies, and someone funded to answer for it. Almost everything folds back into existing roles whose center of gravity moved from making artifacts to encoding judgment, and the one job that survives is the harness engineer, who owns the shared scaffold as a product. Whether grading and eval work becomes its own seat is left honestly open.
+
 ## 21 Jun 2026 — Theory of Constraints and Cynefin, named and explained
 
 [`b01a1df`](https://github.com/youngbrioche/elastic-loop/commit/b01a1df04180411654221afea173f19a3d263bcd)
