@@ -1,5 +1,11 @@
 # Changelog
 
+## 21 Jun 2026 — A sharper opening and loops you build on purpose
+
+[`dc0ab71`](https://github.com/youngbrioche/elastic-loop/commit/dc0ab71e30e43a583805e1de5a45d0825d3cd3de)
+
+Reworked from a close read of the whole book. The masthead now opens on the restaurant-with-no-menu hook and runs a food thread through it, the truffle that tastes like a bicycle accident in the forest and the schnitzel that is everyday slop. Loops is reframed around what changes when a machine does the work: you now have to build the loop it runs in instead of letting it just happen, grounded in the everyday example of shipping a change and waiting on a UX team, and closing on the long-running loops a background agent can carry.
+
 ## 17 Jun 2026 — New page for the readiness skill
 
 [`f4398a1`](https://github.com/youngbrioche/elastic-loop/commit/f4398a1662d53fa045d78879851bcf3c4ef19d13)
