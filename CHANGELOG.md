@@ -1,5 +1,11 @@
 # Changelog
 
+## 24 Jun 2026 — Reground the harness-beats-model claim in real measurements
+
+[`83de3e8`](https://github.com/youngbrioche/elastic-loop/commit/83de3e8d2fd1e02ef8d087edb047cc1d8646786e)
+
+The earlier text leaned on a clawbench measurement that the configuration moves the result about ten times more than the model, a number with no data behind it. The pages now cite measurements that hold the model fixed and change only the scaffold: HAL has Claude Sonnet 4.5 at 68% against 34% on SWE-bench Verified Mini, the harness alone doubling the score, and LangChain reports +13.7 points on Terminal-Bench 2.0 with gpt-5.2-codex held fixed. clawbench keeps its design role, scoring the combination that actually ships rather than supplying the measurement.
+
 ## 21 Jun 2026 — Roles: do new jobs appear, or do old ones just change?
 
 [`263c99a`](https://github.com/youngbrioche/elastic-loop/commit/263c99aff043efb4c22b36dca6d131bbd436f137)
