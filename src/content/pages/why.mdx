@@ -63,9 +63,9 @@ That is the empirical version of the <Term id="backpressure">backpressure</Term>
 
 ## The setup around the model beats the model
 
-Chollet gives the theory; there is now a measurement to go with it. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, scores the combination you ship: the model together with the loop and configuration around it, not the model alone. Its finding: swapping the configuration moves the result ten times more than swapping the model does.
+Chollet gives the theory; there are now measurements to go with it. Hold the model fixed and swap only the scaffold around it, and the score swings hard. On SWE-bench Verified Mini, the [Holistic Agent Leaderboard](https://hal.cs.princeton.edu/swebench_verified_mini) ([Kapoor et al.](https://arxiv.org/abs/2510.11977)) has Claude Sonnet 4.5 at 68% with the SWE-Agent scaffold and 34% with the HAL Generalist scaffold. Same model, and the <Term id="harness">harness</Term> alone doubles the score. "Agent scaffolds create drastic differences in cost and accuracy," the authors write. LangChain ran the same test on Terminal-Bench 2.0 and got [+13.7 points](https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering), 52.8% to 66.5%: "We only tweaked the harness and kept the model fixed, gpt-5.2-codex."
 
-Ten times! The whole of that setup has a name, the <Term id="harness">harness</Term>, and it is the variable that dominates the outcome, not the model the industry keeps arguing about. That claim, and the measurement under it, earns its own chapter: [Harness](/harness).
+Double the score by changing nothing but the scaffold! The harness is the variable that dominates the outcome, not the model the industry keeps arguing about. [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, takes the design stance to its conclusion: it scores the combination you ship, the model together with the loop and configuration around it, not the model alone. That whole argument earns its own chapter: [Harness](/harness).
 
 ## The explosion and the slow collision
 
