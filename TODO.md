@@ -31,3 +31,38 @@ Candidate new section on the Harness page.
   - Brooks — Structural backpressure beats smarter agents (https://reubenbrooks.dev/blog/structural-backpressure-beats-smarter-agents/)
   - Evil Martians — Stop writing rules in AGENTS.md (https://evilmartians.com/chronicles/stop-writing-rules-in-agents-md-use-agent-hooks-and-nano-staged-instead)
   - Addy Osmani — Agent harness engineering (https://addyosmani.com/blog/agent-harness-engineering/)
+
+## "Loop Engineering" cross-references to fold into the book (June 2026)
+
+> Do NOT auto-apply — Robert reviews these as curated diffs before they go into the public book. Handoff for a fresh agent: you have all the context you need below; you do NOT need the conversation that produced this. Match the existing book voice (first-person "I", real external links, `<Term>` components where a defined term already exists, `status: seed`). Write nothing to `src/content/pages/*.mdx` without Robert's explicit go — draft the blocks, show them, let him decide.
+
+### Source provenance (READ FIRST — applies to all three candidates below)
+
+The trigger is a document titled "Loop Engineering: The Anthropic Playbook for Designing Systems That Prompt Your Agents", styled as an IEEE working note. It is NOT peer-reviewed. It is a HuaShu reformatting of Addy Osmani's open "Orange Book" guide *Loop Engineering: Stop Asking Me What It Is* (v260615, June 2026). The framework and quoted formulations are Osmani's; the generator/evaluator findings are Prithvi Rajasekaran's (Anthropic engineering); the enterprise case is Steve Kaliski's (Stripe, via the *How I AI* podcast). Some figures inside it are explicitly secondhand (the doc itself flags "around 90% of Claude Code written by itself" as rough reference). **Cite the primary humans (Osmani / Rajasekaran / Kaliski), NOT "the IEEE paper".** Citing a reformatted secondhand doc as a study would undercut the book's own "snippets aren't sources" discipline.
+
+Loop Engineering, the term, surfaced independently in one week of June 2026 from Peter Steinberger (OpenClaw), Boris Cherny (Claude Code lead, Anthropic), and Addy Osmani (Google Chrome), named in writing by Osmani. Its core claim: stop prompting the agent; design the system that prompts it — "replacing oneself as the person who prompts the agent." It frames itself as a fourth layer above prompt/context/harness, decomposes one loop turn into five moves (discovery, handoff, verification, persistence, scheduling) realized by six parts (automations, worktrees, skills, connectors, sub-agents, memory).
+
+### Candidate 1 — FAQ entry: "Isn't this just Loop Engineering?"
+
+New Q&A on the FAQ page (`src/content/pages/faq.mdx`), same shape as the existing "Isn't this just spec-driven development?" and "Is Scrum dead?" entries.
+
+- [ ] The relationship in one frame: Loop Engineering is the **vertical deep-bore into the Loose zone** — the single-operator, async, "dark factory" loop. The Elastic Loop is the **horizontal span across all three zones (tight / elastic / loose) and all roles**. Loop Engineering answers "how do I build one autonomous loop and keep it honest"; this book answers "how much loop should this task carry, and whose judgment closes it."
+- [ ] The counter only this book can land: Loop Engineering optimizes the one-engineer loop — and this framework's position is that the one-engineer loop is *itself* a risk, because the judgment about what's worth building and whether the result holds up is spread across roles, not concentrated in whoever schedules the agent. (Tie to [Roles](/roles): "checking the output is only the last of those, and the first thing that gets lost.")
+- [ ] Keep it a genuine counter, not a name-drop or a turf fight. Loop Engineering is good, convergent work — acknowledge the overlap honestly (see Candidates below), then draw the line where the book goes wider.
+- [ ] Cite Osmani (blog/Substack, June 2026) as the primary; mention Steinberger and Cherny as the parallel originators.
+
+### Candidate 3 — Grading page: generator/evaluator split as external validation of Failure Mode 1
+
+Sharpening for the Grading page (`src/content/pages/grading.mdx`), at or near the existing "the grader can't be the maker" / "a rubric is not automatically truth" material.
+
+- [ ] This is the single cleanest third-party confirmation available for the book's "whatever closes the loop must sit outside the thing being graded" thesis. Rajasekaran (Anthropic), building long-running agentic apps, found: an agent asked to grade its own output praises it (it sees its own chain of self-persuasion, not the result); tuning a *standalone skeptical evaluator* is far more tractable than making a generator self-critical; the evaluator should *act, not just read* (hooked to Playwright MCP — open the page, click, screenshot, judge behavior not intent); default stance is doubt ("assume broken until proven otherwise"); final say goes to a *fresh* model on an explicit stop condition.
+- [ ] Name the lineage the doc gives: this is **maker-checker** (decades old in banking — the person entering a large transfer and the person approving it must differ) ported to generation/judgment, with a nod to the GAN framing (one network builds, one finds faults).
+- [ ] One paragraph, one link to Osmani / Rajasekaran. Frame as "a practitioner finding that independently lands on the same structural rule," reinforcing — not replacing — the existing argument.
+
+### Candidate 5 — Roles page: Loop Engineering as a contrast foil (exhibit, not opponent)
+
+Margin note / short aside on the Roles page (`src/content/pages/roles.mdx`), fits near the "every role carries judgment nobody else can supply" thesis or the "when handoffs stop making sense" close.
+
+- [ ] The move: the best public Loop Engineering material is almost entirely engineer-centric — its whole cast is the one developer writing themselves out of the loop, and its closing line is "stay the engineer, not just the one who presses go." Use that as an **exhibit**, not an adversary: it shows, unintentionally, what the conversation looks like when only engineers are in the room.
+- [ ] The sharpening: Loop Engineering catalogs four silent costs — verification debt, comprehension rot, cognitive surrender, token blowout — and treats them as the *individual engineer's* discipline problem. This book reframes the same failures as an *organizational structure* problem (tie to the existing Charity Majors point: "AI wins and AI costs land with different people, so there is no natural feedback loop"). The single operator plus a pile of loops becomes an echo chamber where no one argues — which is precisely why judgment has to be distributed, not just disciplined.
+- [ ] Keep it short and generous — the point proves the book's thesis *because* the Loop Engineering work is good and tightly engineer-scoped, not by attacking it.
