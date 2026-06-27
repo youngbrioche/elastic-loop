@@ -1,5 +1,11 @@
 # Changelog
 
+## 28 Jun 2026 — Two backpressure sharpenings: structural vs behavioral, and the rubric line
+
+[`e35a7c5`](https://github.com/youngbrioche/elastic-loop/commit/e35a7c5354300c868f4d561523daadf558d902fc)
+
+Harness gains a 'Structural vs behavioral harness' section: an AGENTS.md rule the agent can read, ignore, or rewrite is the soft, in-band layer, while hooks, CI gates, and sandboxes are the hard layer it cannot route around, laid out in a comparison table with the field terms from Habler, Brooks, and the Evil Martians. On Grading, a new section keeps the deterministic checks out of the rubric: anything a compiler or a contrast check can settle runs as build-time backpressure, and the outcome grader is reserved for the judgment no check can make. Both connect through judge independence, the rule that whatever grades the work sits outside the run that produced it.
+
 ## 24 Jun 2026 — Reground the harness-beats-model claim in real measurements
 
 [`83de3e8`](https://github.com/youngbrioche/elastic-loop/commit/83de3e8d2fd1e02ef8d087edb047cc1d8646786e)

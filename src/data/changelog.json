@@ -1,5 +1,12 @@
 [
   {
+    "date": "28 Jun 2026",
+    "title": "Two backpressure sharpenings: structural vs behavioral, and the rubric line",
+    "commit": "e35a7c5354300c868f4d561523daadf558d902fc",
+    "text": "Harness now separates the backpressure an agent can ignore from the kind it can't route around, and Grading draws the line that keeps deterministic checks out of the outcome rubric.",
+    "body": "Harness gains a 'Structural vs behavioral harness' section: an AGENTS.md rule the agent can read, ignore, or rewrite is the soft, in-band layer, while hooks, CI gates, and sandboxes are the hard layer it cannot route around, laid out in a comparison table with the field terms from Habler, Brooks, and the Evil Martians. On Grading, a new section keeps the deterministic checks out of the rubric: anything a compiler or a contrast check can settle runs as build-time backpressure, and the outcome grader is reserved for the judgment no check can make. Both connect through judge independence, the rule that whatever grades the work sits outside the run that produced it."
+  },
+  {
     "date": "24 Jun 2026",
     "title": "Reground the harness-beats-model claim in real measurements",
     "commit": "83de3e8d2fd1e02ef8d087edb047cc1d8646786e",
