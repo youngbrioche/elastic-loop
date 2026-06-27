@@ -36,6 +36,22 @@ Candidate new section on the Harness page.
   - Evil Martians — Stop writing rules in AGENTS.md (https://evilmartians.com/chronicles/stop-writing-rules-in-agents-md-use-agent-hooks-and-nano-staged-instead)
   - Addy Osmani — Agent harness engineering (https://addyosmani.com/blog/agent-harness-engineering/)
 
+### Candidate 3 — BinEval paper: empirical grounding for the grading page
+
+Source: "Ask, Don't Judge: Binary Questions for Interpretable LLM Evaluation and Self-Improvement" — Cho, Chawla, Cai et al. (IBM Research), arXiv 2606.27226v1, 25 June 2026.
+
+Core finding: decomposing evaluation into atomic yes/no questions (auto-generated from the task prompt) consistently outperforms holistic LLM scoring. G-Eval gives a factually wrong summary 5.0/5.0; BinEval scores it 1.57/5.0 by catching 4 of 7 specific errors. Holistic judges fail because they cannot hold disjunkte error types in attention simultaneously.
+
+Three concrete integration points for the Grading page. Do NOT auto-apply — Robert reviews as curated diff.
+
+- [ ] **"A rubric is not automatically truth" — add the numbers.** The current paragraph is a warning without evidence. BinEval provides the measurement: holistic judges rubber-stamp factually wrong output with perfect scores. One sentence + the G-Eval vs BinEval numbers as inline evidence, positioned under the bold caveat paragraph. Possible phrasing: "BinEval, which auto-generates atomic yes/no questions from the task prompt instead of asking for a holistic score, rated a factually wrong summary 1.57/5.0 — a summary G-Eval had just scored 5.0/5.0."
+
+- [ ] **Rubric operationalization: mention binary decomposition as a concrete pattern.** The grading ladder describes rubrics as "written lists of what good means." BinEval shows a next-level pattern: rubric criteria generated automatically from the task prompt, turned into discrete checkable questions. Short optional addition after "Rubrics widen that to qualitative criteria…": what this looks like mechanically. Keeps the page practitioner-facing without going deep on the mechanism.
+
+- [ ] **Add the prior check before "could you say which one is best?"** The closing question is good but missing one precondition. BinEval distinguishes instruction-constrained tasks (format, structure, constraint compliance — feedback-improvable, up to +17pp in their evals) from capability-constrained tasks (counting, ratio, syllabics — zero improvement regardless of grader quality). Before the best-of-n payoff question, add a sentence: "But there's a prior question — is the gap between best and worst even grading-addressable, or do all five fail for the same underlying capability reason no rubric can fix?" This sharpens the Best-of-n section and gives teams an earlier escape hatch before they invest in grading infrastructure for the wrong kind of task.
+
+What NOT to include: the three-mechanism explanation (complexity reduction, variance reduction, coverage breadth) — too deep for this audience. The over-decomposition limitation on subjective dimensions (relevance) is already handled by the "human review stays irreplaceable" point.
+
 ## "Loop Engineering" cross-references to fold into the book (June 2026)
 
 > Do NOT auto-apply — Robert reviews these as curated diffs before they go into the public book. Handoff for a fresh agent: you have all the context you need below; you do NOT need the conversation that produced this. Match the existing book voice (first-person "I", real external links, `<Term>` components where a defined term already exists, `status: seed`). Write nothing to `src/content/pages/*.mdx` without Robert's explicit go — draft the blocks, show them, let him decide.
