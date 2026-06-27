@@ -4,7 +4,9 @@
 
 > Do NOT auto-apply — Robert reviews these as curated diffs before they go into the public book. Both are sharpenings consistent with the existing framework, not reversals.
 
-### Candidate 1 — The outcome grader is the product/domain judgment layer only
+### Candidate 1 — The outcome grader is the product/domain judgment layer only ✅ DONE
+
+_Shipped 28 Jun 2026: Grading section "Keep the deterministic checks out of the rubric"._
 
 Sharpening for the Grading and/or Harness pages.
 
@@ -13,7 +15,9 @@ Sharpening for the Grading and/or Harness pages.
 - [ ] State the operating rule plainly: deterministic backpressure first; reach for a non-deterministic judge only when nothing deterministic can decide.
 - [ ] Tie-in: a UI/dashboard outcome-grader rubric should be PURE judgment — e.g. "the north-star metric reads as the most prominent", "doesn't read as the dashboard every BI tool ships by default" — with the deterministic checks assumed to have already passed upstream.
 
-### Candidate 2 — Implicit vs explicit (soft vs structural) harness
+### Candidate 2 — Implicit vs explicit (soft vs structural) harness ✅ DONE
+
+_Shipped 28 Jun 2026: Harness section "Structural vs behavioral harness"._
 
 Candidate new section on the Harness page.
 

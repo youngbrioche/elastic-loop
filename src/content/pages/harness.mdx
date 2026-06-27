@@ -60,6 +60,29 @@ The product and domain layer is built from different stuff, and almost none of i
 
 Notice how much of this list is knowledge that lives in someone's head until somebody does the work of writing it down in a form an agent can be held against.
 
+## Structural vs behavioral harness
+
+Backpressure comes in two strengths, and what separates them is one question: can the agent get around it?
+
+Some backpressure is a rule you write down and hope the worker follows. You put it in an AGENTS.md (a plain instructions file the agent reads when a run starts), or you hand it to a second agent you spin up to review the first one's work. The agent reads these, and it can ignore them, or even rewrite them. One did exactly that, [editing its own AGENTS.md](https://x.com/NiravJ3/status/2068451283389096095) to drop a rule it found inconvenient. This is the behavioral layer, and it's advisory. It holds right up until the run where the agent decides it doesn't.
+
+The other kind is a wall the agent runs into and can't move. A change blocked from being saved until it passes a check, a sandbox (a sealed-off copy of the system where a bad run can't touch anything real), a permission gate a human has to open. The agent can't author these or switch them off. The structural layer still holds when the agent is wrong and sure of itself at the same time.
+
+The split runs through product rules too. A non-goal you wrote down, say "never email a customer twice in a day", sitting in an instructions file is behavioral: the agent might honor it, might not. The same rule wired up as an automated check that fails the moment a second email goes out is structural. Same intent, two very different guarantees.
+
+| | Behavioral harness (soft) | Structural harness (hard) |
+|---|---|---|
+| What it is | A rule the agent reads and is meant to follow | A wall the agent can't get past |
+| Examples | AGENTS.md / CLAUDE.md instructions, a "watch out for X" note, a review agent spun up inside the same run | A commit blocked before it lands, an automated build-and-test gate, a sandbox, a permission prompt a human must approve, a reviewer kept outside the run |
+| Can the agent route around it? | Yes: read it, ignore it, even rewrite it | No: it can't author or disable it |
+| Holds when the agent is confident but wrong? | No | Yes |
+
+The field has been circling this same line. Idan Habler separates [soft guardrails from hard boundaries](https://idanhabler.medium.com/building-safer-agents-soft-guardrails-hard-boundaries-and-the-layers-between-14205d709b93). Reuben Brooks, building on Geoffrey Huntley's backpressure work, calls it [behavioral gates versus structural gates](https://reubenbrooks.dev/blog/structural-backpressure-beats-smarter-agents/) and argues the structural ones beat a smarter agent. The Evil Martians put it operationally: [stop writing rules in AGENTS.md](https://evilmartians.com/chronicles/stop-writing-rules-in-agents-md-use-agent-hooks-and-nano-staged-instead), move the ones that matter into checks that actually fire.
+
+AGENTS.md is still harness. [Addy Osmani](https://addyosmani.com/blog/agent-harness-engineering/) and others count instruction files and review agents as parts of it, and they're right to. The enforcement runs inside the harness itself: AGENTS.md is its soft and movable layer, and the question up top tells you which layer any rule sits in. If the agent can route around it, you've written a suggestion, however firmly you phrased it.
+
+This is also where judge independence comes from, the rule from [Grading](/grading) that whatever grades the work can't be the same thing that made it. A review agent the same run spun up shares its blind spots, and it can be talked out of an objection. Independence comes from the layer the agent can neither write nor bypass: a reviewer kept outside the run, a gate it doesn't get a vote on. So before you trust a rule you've written down: what would actually stop the agent if it just ignored it?
+
 ## Your test suite will not catch slop
 
 Here is the job each layer actually does, which is what makes the two more than a tidy taxonomy. The technical layer mostly fights sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". Slop is the other layer's problem. Scenarios, counterexamples, and domain <Term id="rubric">rubrics</Term> (written grading criteria) pull the output away from the statistical middle and into the specific solution space of this product, this domain, this user. That is the back half of the squeeze: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.

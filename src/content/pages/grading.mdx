@@ -74,6 +74,16 @@ There is also a structural answer to the agent satisfying the letter of your gra
 
 which is too radical for most organizations I work with, but the design vocabulary travels well. Their scenario <Term id="holdout">holdouts</Term> keep the test sets outside the repo, so the agent cannot tune itself to pass an exam it can read, the same instinct that made machine-learning teams guard their test data for decades. And their satisfaction testing asks a second AI, across thousands of runs, how often the agent's path through a scenario would actually leave the user happy.
 
+## Keep the deterministic checks out of the rubric
+
+A rubric is for the calls a machine can't make on its own. So before you write a single grading criterion, sort the checks into two piles. One pile is the mechanical stuff a computer settles without an opinion: does it compile, does the contrast pass, does the API contract hold. That pile runs earlier, at build time, as the structural <Term id="backpressure">backpressure</Term> from [Harness](/harness). It never reaches the grader.
+
+The other pile needs judgment. Is this the right thing? Does it read as slop? That's what the outcome grader is for, and dropping the deterministic checks in alongside it just blurs the two layers the whole framework rests on.
+
+Let something deterministic decide wherever it can, and reach for a judge (an LLM or a human) only when nothing deterministic will settle it. A judge is the expensive instrument. Spend it on judgment.
+
+Take a dashboard. By the time its rubric runs, the boring checks have already passed: contrast, no overflow, a performance budget that stays silent when it's met. So the rubric is free to be the part no check can reach. Does the north-star metric read as the most prominent thing on the screen? Or does this look like the default dashboard every BI tool ships, the one nobody chose? A check can't grade that. A person, or a judge calibrated against goldens and counterexamples, can.
+
 ## What you do with cheap search
 
 Once grading works, the economics get interesting. When search gets cheap, the move is to generate several variants and select, rather than pushing one ticket through faster. <Term id="best-of-n">Best-of-n</Term> becomes a delivery discipline. This is the variance from [Why](/why) put to work: the spread a search throws off, harvested on purpose instead of stamped flat. Basically, what digital product development has always preached, except that building variants with the actual material (code) was slow and expensive. That's why the Design Sprint exists.
