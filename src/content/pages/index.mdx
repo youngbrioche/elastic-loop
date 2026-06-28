@@ -76,9 +76,9 @@ Two questions decide where a task sits: how much leash does the agent get, and w
 
 A longer leash does not call for more context. The amount a task needs is fixed. What changes is how much of it the agent has to reach on its own, without you handing it over turn by turn from your own head or systems the agent can not use on its own.
 
-So what is *context*? Basically, everything the agent would need to stop guessing: the decision history that evaporated in a chat thread three months ago, the business rules that live only in your most experienced colleague's head, the design system, API docs that describe what the system does today rather than two years ago, who the customer is and what they have already tried. Most of this exists in any team that has shipped something. It just rarely exists in a form an agent can read, because heads, kitchen conversations, and meeting recordings nobody rewatches do not count.
+So what is *context*? Basically, everything the agent would need to stop guessing: the decision history that evaporated in a chat thread three months ago, the business rules that live only in your most experienced colleague's head, the design system, API docs that describe what the system does today rather than two years ago, who the customer is and what they have already tried. Most of this exists in any team that has shipped something. It just rarely exists in a form an agent can read, because heads, kitchen conversations, and meeting recordings nobody rewatches do not count. As agents write faster than anyone records why, the rationale and constraints nobody captured pile up into what Margaret-Anne Storey calls [intent debt](https://arxiv.org/abs/2603.22106).
 
-Freshness is part of the bar, and on the right side of the grid it is the sharp part. In a tight loop a stale document costs you one correction, because you watch the wrong turn happen. In a loose loop a stale document is worse than none, because the agent follows it with full conviction and nobody contradicts it for hours.
+Freshness matters too, and on the right side of the grid it matters most. In a tight loop a stale document costs you one correction, because you watch the wrong turn happen. In a loose loop a stale document is worse than none, because the agent follows it with full conviction and nobody contradicts it for hours.
 
 Moving that knowledge into a state where it stays available and current without a human pumping it in has become a discipline of its own, usually filed under *context engineering*. It is slower work than adding another check, which is why the floor sits where it does.
 
@@ -96,7 +96,7 @@ A <Term id="search-space">search process</Term>, because that is what an agentic
 
 ### Sprawl
 
-Output without containment: variant inflation, refactoring PRs nobody asked for, backlogs gathering mold. It happens far from any repo too. Picture the team that generates thirty landing-page variants in an afternoon while nobody is assigned to review even one. The good news is that sprawl announces itself. You can see it in pull request volume, and pull people back. Think of a pressure reactor: agents generate pressure, and the containment wall is what makes a productive reaction possible in the first place.
+Output without containment: variant inflation, refactoring PRs nobody asked for, backlogs gathering mold. It happens far from any repo too. Picture the team that generates thirty landing-page variants in an afternoon while nobody is assigned to review even one. Every one of them looks complete, and the pile grows faster than anyone pulls it back. The good news is that sprawl announces itself. You can see it in pull request volume, and pull people back. Think of a pressure reactor: agents generate pressure, and the containment wall is what makes a productive reaction possible in the first place.
 
 </div>
 
@@ -106,13 +106,13 @@ Output without containment: variant inflation, refactoring PRs nobody asked for,
 
 ### Slop
 
-Here is the schnitzel again, the order everyone defaults to when the menu is missing and imagination runs short. Output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. Lots of noise, almost no signal. The everyday version is the onboarding text that sounds like every onboarding text ever written. <Term id="statistical-middle">Slop</Term> does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. Colleagues you avoid texting with, because they sent you uncanny copywriting, lots of it. It gets squeezed from both sides: context up front keeps the agent from starting in the statistical middle of everything it has ever read, and product backpressure at the back pulls the output out of it.
+Here is the schnitzel again, the order everyone defaults to when the menu is missing and imagination runs short. Output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. Lots of noise, almost no signal. The everyday version is the onboarding text that sounds like every onboarding text ever written. <Term id="statistical-middle">Slop</Term> does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. Colleagues you avoid texting with, because they sent you uncanny copywriting, lots of it. It gets pulled out of the statistical middle in two moves: context up front keeps the agent from starting there, in the middle of everything it has ever read, and product backpressure at the back pulls the output the rest of the way out.
 
 </div>
 
 </CardGrid>
 
-Sprawl has two natures, though, and the grid only catches one. The kind that comes from missing checks is what the rows measure: output that does not fit the system, broken refactors, architectural <Term id="drift">drift</Term>. It shows up as a cell. The other kind comes from missing closure: output that passes every check, but that nobody is assigned to read. Those thirty landing pages again. It can happen anywhere, even under full backpressure, because depth of checking is not the same as having someone there to shut the loop. That second kind rides on closure, which I keep off the axes on purpose, since it applies to every cell equally.
+Sprawl has two natures, though, and the grid only catches one. The kind that comes from missing checks is the one the grid maps: output that does not fit the system, broken refactors, architectural <Term id="drift">drift</Term>. It shows up as a cell. The other kind comes from missing closure: output that passes every check, but that nobody is assigned to read. Those thirty landing pages again. It can happen anywhere, even under full backpressure, because depth of checking is not the same as having someone there to shut the loop. That second kind rides on closure, which I keep off the axes on purpose, since it applies to every cell equally.
 
 <Squeeze />
 

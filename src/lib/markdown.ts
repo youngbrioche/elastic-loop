@@ -109,8 +109,8 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     /<Squeeze[\s\S]*?\/>/g,
     imageFigure(
       'squeeze.png',
-      'The squeeze',
-      "*[Figure: The squeeze. Context positions the agent's start outside the statistical middle before any work happens; product and domain backpressure pulls the output the rest of the way toward your specific solution.]*",
+      'Out of the statistical middle',
+      "*[Figure: Context positions the agent's start outside the statistical middle before any work happens; product and domain backpressure then pulls the output the rest of the way toward your specific solution.]*",
     ),
   ],
   [
