@@ -1,5 +1,11 @@
 # Changelog
 
+## 28 Jun 2026 — Name the debt a fast loop accrues, and retire the squeeze label
+
+[`59d9866`](https://github.com/youngbrioche/elastic-loop/commit/59d9866abef1b0da986b23098fb8f2bb0c3c9a69)
+
+Where the home page defines context, it now names what builds up when that context is never written down: Margaret-Anne Storey's intent debt, the rationale and constraints no agent or later human can find, with cognitive debt attributed to her on the Loops page. The slop visual keeps its picture but drops the 'squeeze' label that fought it, since the two forces pull the output out of the statistical middle in the same direction. The Sprawl card now reads its closed-looking loops as an unread pile, and two home-page sentences on freshness and the grid lose their bumpy phrasing.
+
 ## 28 Jun 2026 — Two backpressure sharpenings: structural vs behavioral, and the rubric line
 
 [`e35a7c5`](https://github.com/youngbrioche/elastic-loop/commit/e35a7c5354300c868f4d561523daadf558d902fc)
