@@ -1,5 +1,11 @@
 # Changelog
 
+## 21 Oct 2026 — Connect loops, harnesses, and the software factory
+
+[`78c014d`](https://github.com/youngbrioche/elastic-loop/commit/78c014da823f7780898ba084e4c1d2c624350d89)
+
+The new Factory chapter connects agent work with team responsibility and investment, while Loops, Harness, and Grading clarify delegation, inexpensive backpressure, independent review, and evaluation across tasks. Updated examples, artwork, diagrams, and glossary entries accompany readiness skill 0.2.0, which turns the framework into an evidence-based team diagnosis. Thank you to Christoph Eckerle for his review and feedback.
+
 ## 28 Jun 2026 — Name the debt a fast loop accrues, and retire the squeeze label
 
 [`59d9866`](https://github.com/youngbrioche/elastic-loop/commit/59d9866abef1b0da986b23098fb8f2bb0c3c9a69)
