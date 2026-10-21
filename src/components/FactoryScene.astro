@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import factoryImg from '../assets/factory.webp';
+---
+
+<figure class="factory-scene">
+  <Image
+    src={factoryImg}
+    alt="Four people erecting a large tent on empty white ground, stretching a mint canopy over a frame of black and silver rings"
+    widths={[300, 450, 600]}
+    sizes="(max-width: 600px) 100vw, 300px"
+    draggable="false"
+  />
+</figure>
+
+<style>
+  .factory-scene { margin: 0 0 4px; }
+  .factory-scene :global(img) { width: 100%; height: auto; }
+  @media (min-width: 601px) {
+    .factory-scene {
+      float: left;
+      width: 300px;
+      margin: 2px 30px 2px 0;
+      shape-outside: margin-box;
+    }
+  }
+</style>

@@ -15,7 +15,7 @@
         "source": "local",
         "path": "goodies/elastic-loop-readiness"
       },
-      "description": "Diagnose a team's elastic loop readiness: which loop sizes they can carry and the one constraint gating the next. Reads the live framework, then grills. A verdict, never a score."
+      "description": "Assess a team’s delegation setup using The Elastic Loop: suitable loop sizes, supporting evidence, and one improvement with a way to evaluate it."
     }
   ]
 }

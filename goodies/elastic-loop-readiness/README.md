@@ -1,14 +1,20 @@
 # elastic-loop-readiness
 
-A Claude Code plugin that ships one skill: a readiness diagnosis for teams
-delegating software work to AI agents. It reads [The Elastic Loop](https://elastic-loop.robert-glaser.de)
-live, then grills a team about how much loop they can actually carry, which loop
-sizes are available to them, and the one constraint gating the next. It gives a
-readiness verdict, never a score, level, or maturity title.
+A readiness diagnosis for teams delegating software work to AI agents. It reads
+[The Elastic Loop](https://elastic-loop.robert-glaser.de), examines evidence from
+the team’s work, and asks about missing information. The result explains suitable
+loop sizes and proposes one improvement with a way to assess its effect.
 
-The skill itself is `SKILL.md` in this directory. It works in any agent harness
-that can read a URL; the plugin wrapper below is for native install in Claude
-Code.
+The diagnosis covers context and permissions, inexpensive feedback during work,
+independent review, and evaluations across completed tasks. It asks how an AI
+evaluator was calibrated against human assessments, with criteria such as human
+rework and adherence to product requirements. Findings concern working conditions;
+the skill does not score or rank people or teams.
+
+`SKILL.md` is the instruction source. Use it with an agent that can follow these
+instructions and retrieve the book. The plugin provides installation in Claude
+Code. This version requires the book’s Harness, Factory, and Grading chapters;
+it must be released with the corresponding book update.
 
 ## Install in Claude Code
 
@@ -34,6 +40,6 @@ To update by hand at any time, run `/plugin` and update the plugin from there.
 
 ## Use it without installing
 
-You do not need the plugin to use the skill. Point any capable agent at
-`SKILL.md` (or `https://elastic-loop.robert-glaser.de/llms-full.txt` plus the
-instruction to run a loop-readiness diagnosis) and it will work the same way.
+Give your agent the `SKILL.md` URL and ask it to follow the diagnosis. The skill
+loads the book itself. Supplying only the book omits the interview procedure and
+the conditions for using the diagnosis.

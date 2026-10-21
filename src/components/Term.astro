@@ -90,13 +90,9 @@ const popId = `term-${id}`;
     transform: translateY(0);
   }
 
-  /* Below ~860px the reading column nears the full viewport width, so a popover
-     anchored to its trigger (left: 0) could extend past the right edge no matter
-     where the term sits inline, adding horizontal page scroll. Detach it from the
-     trigger and pin it to the viewport gutters so it always fits and never widens
-     the page. (On desktop the column is centered with wide margins, so the
-     trigger-anchored popover stays inside the viewport and is left as-is.) */
-  @media (max-width: 860px) {
+  /* A 740px reading column needs 320px of margin on either side for a
+     trigger-anchored popover to fit. Use viewport gutters below that width. */
+  @media (max-width: 1380px) {
     .term-pop {
       position: fixed;
       left: 16px;

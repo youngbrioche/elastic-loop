@@ -48,31 +48,31 @@ function imageFigure(file: string, alt: string, caption: string): string {
 
 /**
  * The master grid is a table, not a picture, so it renders as a markdown table
- * (leash across, backpressure down) with the context floor as an ascii ramp
+ * (leash across, checks and review down) with the context floor as an ascii ramp
  * beneath — richer and more agent-legible than an embedded image would be.
  */
 const MASTER_GRID_MARKDOWN = [
-  'The master grid. Loop size runs across the columns; backpressure depth runs down the rows.',
+  'The master grid. Loop size runs across the columns; coverage of checks and review runs down the rows.',
   '',
-  '| Backpressure ↓ / Loop size → | Tight | Elastic | Loose |',
+  '| Checks and review ↓ / Loop size → | Tight | Elastic | Loose |',
   '| --- | --- | --- | --- |',
-  '| **Full** (technical + product / domain) | High-risk work, research, regulated change | A delegated feature with product backpressure | A (dark) factory: agents delivering asynchronously against automated checks, humans reviewing outcomes |',
-  '| **Technical only** (tests, CI, linters) | Pair coding with tests, linting etc. | Delegated implementation, system-checked but slop-exposed | **Slop at scale**: looks like productivity while the output drifts generic |',
-  '| **No automated checks** (you hold the line) | You are the dam, reading every turn | Output piles up between check-ins, nobody on the volume | **Sprawl at scale**: output multiplying faster than anyone can contain it |',
+  '| **Checks and review** (technical + product / domain) | High-risk work, research, regulated change | A delegated feature with technical checks and product review | Agents carry tasks to review gates; authorized reviewers assess the outcomes |',
+  '| **Technical only** (tests and code checks) | Work together with tests and code-style checks | Technical checks pass; product requirements still need review | **Slop at scale**: many plausible results that miss product requirements |',
+  '| **No automated checks** (you inspect the work) | You inspect each attempt and request corrections | Unchecked work accumulates between checkpoints | **Sprawl at scale**: more work than the team can inspect or use |',
   '',
-  'Column timings: Tight is every turn supervised, minutes. Elastic is checkpoints at agreed points, minutes to hours. Loose is multiple hours of autonomy, outcomes only.',
+  'Decision points: Tight means staying with the work at every turn. Elastic uses agreed checkpoints. Loose carries a task to its outcome gate.',
   '',
-  'A context floor sits beneath the grid and rises left to right: the thicker the floor, the more the context can serve itself.',
+  'The band beneath the grid shows the need for independent access to context as more work is delegated.',
   '',
   '```text',
   '  Tight     Elastic      Loose',
   '                         ██████',
   '            ██████       ██████',
   '  ██████    ██████       ██████',
-  '  thin      rising       thick',
+  '  supplied  retrievable  independently usable',
   '```',
   '',
-  'Loose only opens once the context can serve itself.',
+  'Loose work needs context the agent can find and use independently.',
 ].join('\n');
 
 /**
@@ -81,7 +81,7 @@ const MASTER_GRID_MARKDOWN = [
  * it would mean parsing nested markup). This guards the mirror cheaply: every
  * cell / danger-sub text in the component must appear verbatim in the table, so
  * editing a cell without updating the table fails the build. Short labels that
- * the table deliberately rephrases (column timings, "Full backpressure" → "Full")
+ * the table deliberately rephrases (column descriptions and row headings)
  * live in <span>/head markup and are not matched here, avoiding false positives.
  */
 function assertMasterGridMirror(): void {
@@ -110,7 +110,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     imageFigure(
       'squeeze.png',
       'Out of the statistical middle',
-      "*[Figure: Context positions the agent's start outside the statistical middle before any work happens; product and domain backpressure then pulls the output the rest of the way toward your specific solution.]*",
+      "*[Figure: Context guides the agent toward product requirements. Checks and review identify where the result still misses them; corrections need evaluation.]*",
     ),
   ],
   [
@@ -118,7 +118,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     imageFigure(
       'loop-sizes.png',
       'Three sizes of the same loop',
-      '*[Figure: Three sizes of the same loop. Tight: minutes, in the loop at every turn. Elastic: minutes to hours, at checkpoints on the edge. Loose: multiple hours, only at the outcome gate.]*',
+      '*[Figure: Three sizes of the same loop. Tight: with the work at every turn. Elastic: at agreed checkpoints. Loose: at the outcome gate.]*',
     ),
   ],
   [
@@ -126,7 +126,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     imageFigure(
       'two-iteration-layers.svg',
       'Two iteration layers',
-      '*[Figure: Two iteration layers, drawn as two concentric loops. The inner agent loop runs fast over the output; the outer human loop runs slowly over the grading material: spec, rubrics, scenarios, goldens, counterexamples. Output flows outward to evaluation; sharpened graders flow back inward. Patch the output and the loop reproduces it; sharpen the grader and it learns.]*',
+      '*[Figure: Two iteration layers, drawn as two concentric loops. The inner agent loop corrects work using quick checks. The outer review and learning loop involves authorized agents and people. Findings lead to corrections and proposed changes to context, checks, and review criteria. Evaluate those changes on later comparable work.]*',
     ),
   ],
   [
@@ -134,7 +134,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
     imageFigure(
       'stations-vs-loop.svg',
       'Stations versus loop',
-      '*[Figure: Stations versus loop. Before: the old sequence of roles as a handoff line, PO to UX to Engineering to QA to Ops, each step expensive enough to deserve its own station. After: the same people gathered around a central loop of six uniform steps (intent, context, variants, verification, decision, production learning), each role labelled with the backpressure it supplies. AI materializes the intermediate steps; each role brings judgment no one else can.]*',
+      '*[Figure: Stations versus loop. Sequential handoffs from product through operations are compared with shared work around a loop of intent, context, variants, verification, decision, and production learning. Each role contributes context, criteria, review, or decisions. Agents produce drafts that several roles can inspect together.]*',
     ),
   ],
   // Hero carries no prose of its own (title comes from the header block).
@@ -146,8 +146,9 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
   // the same point (the middle shrinks, the ends get expensive).
   [/<WhyScene[\s\S]*?\/>/g, ''],
   // HarnessScene is a decorative key visual; the surrounding prose already
-  // states the same point (the setup around the model beats the model).
+  // supports the discussion of the execution environment.
   [/<HarnessScene[\s\S]*?\/>/g, ''],
+  [/<FactoryScene[\s\S]*?\/>/g, '*[Illustration: People erect a mint tent canopy over a ring frame on empty ground, building a shared working environment.]*'],
   // GradingScene is a decorative key visual; the surrounding prose already
   // states the same point (the spec is a living artifact, not a waterfall).
   [/<GradingScene[\s\S]*?\/>/g, ''],

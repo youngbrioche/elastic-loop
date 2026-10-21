@@ -39,43 +39,43 @@ export const glossary: Record<string, GlossaryEntry> = {
   },
   backpressure: {
     term: 'Backpressure',
-    def: 'The resistance an agent works against while it builds, well before any review at the end: a failing test or type error on the technical side, an acceptance scenario or rubric on the product side. Some of it reaches the agent automatically as a signal in the loop; some it imposes on itself by following a discipline set at the start, like writing the failing test first and working until it goes green. The more of it you can encode, the longer you can let the loop run.',
-    anchor: 'A red build is backpressure; the agent reads it and fixes the code. So are acceptance criteria: write them well and the agent works against your definition of good as it goes, instead of a person catching the miss at the end.',
+    def: 'Quick, inexpensive feedback an agent can act on during its work cycle. The feedback has to arrive soon enough to steer the work, with a cost in time, tokens, and context that the loop can afford.',
+    anchor: 'A focused test reports the failing case, and the agent fixes it. A small product check flags that an urgent case is missing from a dashboard, and the agent adjusts the view.',
   },
   'search-space': {
     term: 'Search space',
-    def: 'The set of possible solutions a task allows. An agent does not translate a spec line by line; it samples from this space, pulled toward one solution by your context, or proposing a few in a planning step. Generating many on purpose and selecting the best is a discipline you opt into.',
-    anchor: 'There are many valid ways to implement a story. The agent is choosing among them, not transcribing the one right answer.',
+    def: 'The set of possible solutions a task allows. Context and feedback help an agent choose among them. You can also ask it to propose several candidates for comparison.',
+    anchor: 'Several implementations can satisfy the same requirement. Constraints help narrow the choice.',
   },
-  cynefin: {
+  'cynefin': {
     term: 'Cynefin',
-    def: "A Welsh word (roughly 'kuh-NEV-in') for sorting problems by how knowable the answer is before you start: clear (one obvious right way), complicated (a right answer an expert can find), complex (no answer you can work out in advance, so you try something and learn from what happens), and chaotic (no stable cause and effect at all). Different kinds of problem call for different approaches.",
-    anchor: 'Tying your shoes is clear, fixing an engine is complicated, taking a product into a market is complex. You already switch approaches for each without naming the buckets.',
+    def: 'A framework for matching an approach to a situation: ordered situations have cause and effect that are clear or discoverable through analysis; complex situations need exploration; chaotic situations need action to establish stability.',
+    anchor: 'One product can contain precise coding rules and unresolved questions about what users need.',
   },
   'evaluation-function': {
     term: 'Evaluation function',
-    def: 'The function that scores how good a candidate solution is, so the search can tell a better result from a worse one and steer toward it. Without one, generating many solutions tells you nothing about which to keep.',
-    anchor: 'A test suite or a definition of done, read as a score the search aims for instead of a yes/no check at the very end.',
+    def: 'A method for scoring a proposed result against defined criteria.',
+    anchor: 'A test suite or checklist used to assess successive attempts.',
   },
   rubric: {
     term: 'Rubric',
     def: 'A written list of what “good” means for a kind of output, so the same standard can be applied to every result.',
-    anchor: 'Acceptance criteria, reused as a grading checklist instead of a one-off.',
+    anchor: 'Acceptance criteria reused to assess several results.',
   },
   golden: {
     term: 'Golden',
-    def: 'An output you have blessed as correct and keep around as the answer key, to compare new output against.',
-    anchor: 'The trusted fixture in an integration test: the known-good result everything else is measured against.',
+    def: 'An accepted result retained as a reference for assessing later results.',
+    anchor: 'An approved result you can compare with later attempts.',
   },
-  counterexample: {
+  'counterexample': {
     term: 'Counterexample',
-    def: 'A plausible-looking but wrong output you keep on file, so the system learns never to produce that kind of thing again.',
-    anchor: 'The bug you once shipped and then wrote a regression test for.',
+    def: 'A plausible but unsuitable result retained with the reason it fails the relevant criteria. It helps assess later results and the reviewer itself.',
+    anchor: 'A previously shipped defect can supply a regression case; a rejected design may need reconsideration if requirements change.',
   },
   'llm-judge': {
     term: 'LLM judge',
     def: 'A second AI you ask to grade the first one’s output against your criteria. It scales review, but has blind spots of its own.',
-    anchor: 'A tireless reviewer who needs a clear checklist, or it will rubber-stamp anything that looks plausible.',
+    anchor: 'A reviewer assessed against examples people have already evaluated, including plausible answers that should be rejected.',
   },
   'reward-hacking': {
     term: 'Reward hacking',
@@ -94,77 +94,77 @@ export const glossary: Record<string, GlossaryEntry> = {
   },
   'statistical-middle': {
     term: 'The statistical middle (slop)',
-    def: 'Output that converges on the bland average of everything the model has ever read: plausible, smooth, and indistinguishable from anyone else’s.',
-    anchor: 'The onboarding text that reads like every onboarding text ever written.',
+    def: 'Plausible, generic work that misses what makes it fit a particular product or task. It can ignore local coding conventions, architectural decisions, or brand requirements.',
+    anchor: 'A dashboard invents visual styles despite an existing set of approved components.',
+    match: ['slop'],
   },
   'best-of-n': {
     term: 'Best-of-n',
-    def: 'Generate several independent attempts at a task, then pick the best, instead of pushing one attempt through faster.',
-    anchor: 'Spiking three solutions and choosing one, except cheap enough to do as a routine.',
+    def: 'Generate several independent attempts at a task, then select one using agreed criteria.',
+    anchor: 'Trying 3 solutions and comparing their quality and cost before choosing one.',
   },
   'blackbox-artifact': {
     term: 'Blackbox artifact',
-    def: 'Something you judge by how it behaves, not by reading how it was made.',
-    anchor: 'A dependency you trust through its tests and its behavior, not by reading its source.',
+    def: 'A result assessed through its observable behavior.',
+    anchor: 'Assessing a dependency through tests and observed behavior.',
   },
   generalization: {
     term: 'Generalization',
     def: 'Whether something keeps working on cases it was not specifically built or tested against.',
-    anchor: 'Does the fix hold for the inputs you did not think of, not just the one in the ticket?',
+    anchor: 'Does the fix also handle inputs beyond those described in the ticket?',
   },
   'retained-feedback': {
     term: 'Retained feedback',
-    def: 'Feedback only counts when it changes a later decision: an updated plan, a sharper test, a rejected option that stays rejected. The rest is noise, however expensive it was to produce.',
-    anchor: 'A review comment matters only if it changes the next commit.',
+    def: 'Useful feedback carried forward into a plan, test, decision record, or guidance for later work. Evaluate its effect on comparable tasks before claiming improvement.',
+    anchor: 'Keep the reason for a rejected option and the conditions that would justify reconsidering it.',
   },
-  harness: {
+  'harness': {
     term: 'Harness',
-    def: 'The scaffold that turns a model into an agent, assembled from many parts. Among those: the loop it works in, the tools it can reach, how its context is managed as a run grows long (compression, retrieval), the hooks that fire on what it does, subagents, and guardrails. Backpressure and other resistance attach here, and beyond it.',
-    anchor: 'An interactive agent tool like Claude Code, Codex, or Pi is a harness. You have been working inside one all along.',
+    def: 'The software around a model that lets it act, inspect results, and continue working: its execution loop, tools, context management, and controls. Harness engineering also covers checks and review arrangements across technical systems.',
+    anchor: 'An agent that can read files, run checks, and correct its work uses a harness.',
   },
   'dark-factory': {
     term: 'Dark factory',
-    def: 'The loose loop run to its end: agents delivering on their own against automated checks, with humans reviewing outcomes rather than every turn.',
-    anchor: 'Named after lights-out manufacturing, where the line runs without people on the floor.',
+    def: 'A term for highly automated delivery with limited direct human intervention. It describes one automation arrangement within a software factory.',
+    anchor: 'The team’s software factory can support tight, elastic, and loose loops for different tasks.',
   },
 
   // Lean / Toyota Production System lineage. These are the manufacturing terms
-  // the harness discipline descends from; used in the "old discipline on a new
-  // substrate" section on /harness. Anchors bridge to the software equivalent
+  // used as precedents in /factory. Anchors bridge to the software equivalent
   // rather than to "you already do this", since few readers run a factory.
   tpm: {
     term: 'Total productive maintenance (TPM)',
     def: 'Keeping every machine on a line in good working order continuously, so production does not stop for failures that routine care would have prevented.',
     anchor: 'Keeping your build scripts, docs, and dev setup current, so the next run does not break on something avoidable.',
   },
-  spc: {
+  'spc': {
     term: 'Statistical process control (SPC)',
-    def: 'Watching a process with statistics to catch it drifting out of its normal range, rather than inspecting every finished part by hand.',
-    anchor: 'Tracking error rates or latency over time and reacting when the trend moves, instead of checking every single request.',
+    def: 'Using statistical methods to compare a process with a historical baseline and calculated control limits. It requires comparable measurements and a method suited to the data.',
+    anchor: 'A control chart can help investigate changes in failure rates across comparable tasks. An ordinary trend chart alone does not establish process control.',
   },
   kaizen: {
     term: 'Kaizen',
     def: 'Continuous improvement: many small, steady changes to how the work is done, driven by the people doing it and by what each run of the process reveals.',
-    anchor: 'A retrospective that actually changes how you work next time, repeated forever.',
+    anchor: 'A retrospective that leads to a change whose effect the team examines in subsequent work.',
   },
   andon: {
     term: 'Andon',
-    def: 'A signal on a line that stays dark while things run normally and lights up only when something goes wrong, so attention lands where it is needed.',
+    def: 'A signal that makes a production problem visible to the people who can respond.',
     anchor: 'A pipeline that says nothing on green and pings you only on a failure.',
   },
   'poka-yoke': {
     term: 'Poka-yoke',
-    def: 'Designing the work so a given mistake simply cannot happen, instead of relying on people to remember not to make it.',
-    anchor: 'A type checker that refuses to compile the bug, rather than a comment asking you to be careful.',
+    def: 'Designing a process to prevent or detect a particular mistake.',
+    anchor: 'A type checker rejects code that passes text where a number is required.',
   },
   jidoka: {
     term: 'Jidoka',
-    def: 'Machines that detect an abnormality and stop on their own, handing the decision to a person rather than producing defects at full speed.',
+    def: 'Detecting an abnormality and stopping the process so the problem can be addressed.',
     anchor: 'A check that halts the pipeline and escalates to a human when it hits something it should not decide alone.',
   },
   oee: {
     term: 'Overall equipment effectiveness (OEE)',
-    def: 'A single measure of how productive a line really is, combining how often it runs, how fast it runs, and how much of its output is good.',
-    anchor: 'Tracking not just how many pull requests ship, but how many survive review and hold up in production.',
+    def: 'A single measure of how productive a line is, combining how often it runs, how fast it runs, and how much of its output is good.',
+    anchor: 'In software, examine delivery together with review results and production quality; these require measures suited to software work.',
   },
 };

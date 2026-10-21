@@ -1,23 +1,23 @@
 ---
 title: "The readiness skill"
-description: "A companion skill that turns the framework on your own team. Point your agent at your project, and it reads the live book, then grills you about how much loop you can carry, which loop sizes are available to you here, and the one constraint gating the next."
-socialDescription: "A skill that turns the framework on your own team: point your agent at your project and let it diagnose how much loop you can carry."
+description: "A companion skill that helps your team assess suitable loop sizes and identify what limits further delegation."
+socialDescription: "A companion skill that helps your team assess suitable loop sizes and identify what limits further delegation."
 kicker: "Goodie"
-order: 7
+order: 8
 status: seed
-updated: 2026-06-17
+updated: 2026-10-21
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
 
 <PageIntro kicker="Goodie" title="The readiness skill">
-The book is written for you to read first. This is the companion you put to work afterwards: a skill that turns the framework on your own team instead of on a single task. It reads the live book, then sits you down and works through how much loop you can actually carry here, which [loop sizes](/loops) are available to you in this codebase, and the one constraint gating the next size up. What you get back is a readiness verdict. Sometimes that verdict is a plain "loose is not available to you here yet", when that is the honest read. Never a score, a level, or a maturity badge.
+The readiness skill helps you apply the framework to your team. It reads the current book, examines the evidence available in your project, and asks about how your team works. It proposes suitable [loop sizes](/loops) and identifies what limits further delegation. You might discover that a task needs closer supervision until its context or checks improve.
 </PageIntro>
 
 ## Point your agent at the repo
 
-The skill lives in the project's GitHub repository, in its own folder. Hand any capable agent that folder and ask it to install the skill it finds there. It works in any <Term id="harness">harness</Term> that can read a URL.
+The skill lives in the project's GitHub repository, in its own folder. Hand any capable agent that folder and ask it to install the skill it finds there. Your <Term id="harness">harness</Term> needs to support skills and retrieve the linked material.
 
 ```
 Install this skill: https://github.com/youngbrioche/elastic-loop/tree/main/goodies/elastic-loop-readiness
@@ -25,13 +25,7 @@ Install this skill: https://github.com/youngbrioche/elastic-loop/tree/main/goodi
 
 ## A few prompts to get going
 
-Install it. Point your agent at the folder and let it take the skill from there:
-
-```
-Read https://github.com/youngbrioche/elastic-loop/tree/main/goodies/elastic-loop-readiness and install the skill you find there.
-```
-
-Then run the diagnosis, and say who you are so it grills the part of the loop you can actually speak to:
+Ask for a diagnosis and say which work you know firsthand:
 
 ```
 Run an elastic-loop readiness diagnosis with me. I am a product owner on a team that has started letting agents touch our codebase.
@@ -43,7 +37,7 @@ Or skip the self-report and let your own session history set the baseline:
 Analyze my last 100 sessions in this project, take that as a starting point from an individual team member and start diagnosing our elastic loop readiness.
 ```
 
-Or aim it straight at a doubt you already carry:
+Or aim it straight at a question you already have:
 
 ```
 We let agents do the work but never merge without reading every line. Where are our loop sizes a choice, and where are they an accident?
@@ -61,6 +55,6 @@ If you are in Claude Code, there is a native path. Add the marketplace, install 
 
 Then ask for a loop-readiness diagnosis and Claude picks it up, or run it directly with `/elastic-loop-readiness:elastic-loop-readiness`. That is not a typo: the command reads `plugin:skill`, and here the plugin and the skill carry the same name.
 
-Run it with the team, not for the team. Get the people who see different stretches of the loop into one room: an engineer, a product owner, a domain expert. Where they disagree about how far to let go is half of what you came for, because that disagreement is where the team's trust actually sits. One person quietly filling it in for everyone else gets a tidy answer and skips the conversation that was the point. A single seat's view is still worth having. It just sees one stretch of the loop and misses the rest.
+Include people who see different aspects of the work, such as an engineer, a product owner, and a domain expert. Discuss where their assessments differ and what evidence would help resolve the disagreement. An individual diagnosis can give you a starting point, with the limits of that person’s view made explicit.
 
-One thing to keep in mind, because the framework turns on it: the skill running on your team is itself a loop. Its read is a strong first draft to argue with. The judgment about whether it holds is still yours.
+Check the skill’s conclusions against your experience and evidence from the project. The team remains responsible for deciding what to delegate.

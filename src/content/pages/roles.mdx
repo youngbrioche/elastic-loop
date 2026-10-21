@@ -1,78 +1,76 @@
 ---
 title: "Roles"
-description: "Every role carries judgment about agent work that nobody else can supply. What engineers, product people, designers, domain experts, the people who run the process, and leaders each bring to the loop."
-socialDescription: "Every role carries judgment about agent work that nobody else can supply. What each brings across the loop."
-kicker: "Part five"
-order: 5
+description: "How engineers, product people, designers, domain experts, and leaders contribute to agent work."
+socialDescription: "How engineers, product people, designers, domain experts, and leaders contribute to agent work."
+kicker: "Part six"
+order: 6
 status: seed
-updated: 2026-06-12
+updated: 2026-10-21
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
 import StationsVsLoop from '../../components/visuals/StationsVsLoop.astro';
 
-<PageIntro kicker="Part five" title="Roles">
-Every role on a team carries judgment about agent work that nobody else can supply: what is worth building, which of several solutions is the right one, and whether the result actually holds up. Checking the output is only the last of those. It is the first thing that gets lost when companies roll out agents: engineering builds the [harness](/harness), dashboards fill up with velocity, and the people who actually know the product, the users, and the domain stand around wondering whether their job now requires learning Python. It does not. What the loop needs from them runs its whole length. Someone has to set the intent that opens it and bring the context that grounds it. Someone has to supply the <Term id="backpressure">backpressure</Term> that keeps it honest. And someone has to have the taste to tell a strong variant from a merely plausible one. The product and domain side of that judgment is also what keeps fast output from sliding into <Term id="statistical-middle">slop</Term> (the plausible, generic stuff that passes every technical check and dies quietly in the market). Treating non-engineering roles as smaller coders wastes them. Their leverage is the judgment no compiler or linter can provide, across the loop and not just at its end.
+<PageIntro kicker="Part six" title="Roles">
+Agent work needs knowledge from across the team. Product people clarify what is worth building; designers and domain experts help define and assess the result. Engineers make the context, tools, and checks usable. Those responsible for the working process and budget give that work time and ownership. These contributions shape the task from its beginning through review and subsequent use.
 </PageIntro>
 
 ## The engineer: designer of the loop
 
-The shift here is an identity question. If your professional identity was "I type the implementation", agentic work feels brutal. If it was "I turn ambiguity into reliable systems", the canvas just got larger. The new disciplines have names by now: intent design, context engineering, <Term id="harness">harness</Term> engineering, backpressure design, verification and evaluation, <Term id="outcome-grading">outcome grading</Term>, variant generation and selection, production learning, and plain judgment about what deserves to exist. Nine is a lot, and nobody masters all of them. The shortest version I have: The developer becomes less like a manual fabricator and more like a designer of executable learning factories.
+Engineers design and maintain the technical conditions in which agents work. That includes making the application runnable, supplying relevant context, and building quick checks that provide <Term id="backpressure">backpressure</Term>. They also arrange independent reviews and enforce permissions. [Harness](/harness) explains how these mechanisms work together.
 
-## The product owner: one discipline, two outputs
+For the dashboard, an engineer might encode dependency rules as architecture tests, investigate a reviewer’s security finding, or make a realistic preview available for product feedback. <Term id="harness">Harness</Term> engineering includes improving that setup as the team learns from its use.
 
-If you have ever written acceptance criteria, you have already produced product backpressure. You produced it for humans, late in the loop, as part of a handoff. The change is that this material becomes a steering instrument: agents will iterate against whatever definition of good you can make explicit, and they will iterate against the gaps in it too.
+## The product owner
 
-POs are not replaced by AI. Their bottleneck moves to intent and verification.
+Acceptance criteria tell the agent what the result needs to satisfy. Product people contribute examples and explain which rules are settled and which questions still need exploration. A quick, inexpensive check against those criteria can provide backpressure. A more involved assessment belongs at a review gate, performed by a person, an agent, or both.
 
 In practice that splits into seven jobs:
 
-1. Make intent explicit: problem, user, impact, assumptions, non-goals, which constraints are hard and which are negotiable.
-2. Curate product context in agent-legible form (scenarios, examples, decision history, business rules) instead of letting it evaporate in chat threads.
+1. Explain the problem, who it affects, and the intended result. Separate firm requirements from assumptions the team can explore.
+2. Keep product rules, examples, and decision history available where the agent can find them.
 3. Make options and trade-offs visible before committing.
-4. Test variants in real software, close to the actual architecture and data, because a variant far from the system is output rather than learning.
-5. Prevent backlog inflation, the sprawl pattern in product clothing, since an agent with an unclear mandate generates artifacts faster than any grooming session can absorb.
-6. Co-design evaluation with UX, engineering, QA, and the business side.
-7. Feed production learning back into the next loop: usage signals, rework, support pain.
+4. Test variants with representative behavior and data, so the team can assess whether they would work in the product.
+5. Limit proposed work to what the team can assess and prioritize.
+6. Design the evaluation with designers, engineers, testers, and domain experts.
+7. Use findings from product use, repairs, and support to guide the next task.
 
-Notice what these seven have in common. They are one discipline with two outputs. The PO defines the <Term id="search-space">search space</Term>, which is intent and context and the non-goals that fence it. And the PO supplies what the result gets graded against: acceptance scenarios, <Term id="counterexample">counterexamples</Term>, <Term id="rubric">rubrics</Term>. That sits closer to machine learning engineering than to classic product management. Whether the role's name survives the shift is a question I cannot answer yet.
+Product people help define the <Term id="search-space">search space</Term> through intent, context, and constraints. They also supply evaluation material, including acceptance scenarios, <Term id="counterexample">counterexamples</Term>, and <Term id="rubric">rubrics</Term>. The team needs these contributions throughout implementation and evaluation.
 
 ## The designer
 
-Interaction vignettes can become rubrics an agent's output gets graded against. Evaluating generated variants is grading work, and designers have been doing the qualitative version of it for years. Brand and voice consistency is domain-specific backpressure of the purest kind, the "this is off" that no test suite produces. And the design system needs to become a constraint in the search space, walls the agent works within rather than guidelines it might read. Not a bin of Lego bricks to snap together and nothing more. That degrades the agent to an assembler and wastes most of what it can do. I am keeping this section deliberately short: this role is less mapped than the PO's, and I would rather leave it open for now.
+Designers provide the examples and constraints that make work fit the product and its audience. Approved components and brand assets give agents usable context. Fast checks can verify properties such as allowed colors, while a design review assesses the choices those checks leave open. Review findings can lead to better examples or new checks; their effect needs evaluation on subsequent work.
+
+For the dashboard, designers can help the team explore how people understand a priority order and choose what to handle next. The comparison in [Grading](/grading) keeps that product question open while tests verify each proposed rule.
 
 ## The domain expert
 
-Edge cases, professional rules, failure taxonomies, regulatory and operational limits, decision history, the war stories about why the obvious solution was wrong the last time someone tried it. <Term id="golden">Golden examples</Term> of known-good output, counterexamples of plausible-but-wrong output. This is the most valuable grading material in the whole loop, for a simple reason. It is the material agents are least able to generate themselves. That makes it the hardest part of the harness to bootstrap, and the part most worth a person's time to supply.
+Domain experts explain the rules, exceptions, and past decisions that an agent may be unable to find in the code or documentation. They can supply <Term id="golden">golden examples</Term> of accepted results and counterexamples that explain why a plausible answer fails. For the dashboard, this might include cases where the apparent urgency hides a contractual or operational consequence. Give experts time to make that knowledge usable.
 
 ## The people who run the process
 
-Two anchors hold what I can say so far. First, the mirror logic: the loop reflects the team's rituals back at it, so whatever a scrum master or coach has built into how the team works, agents will amplify. Second, [Charity Majors' observation](https://charity.wtf/2026/06/02/ai-enthusiasts-are-in-a-race-against-time-ai-skeptics-are-in-a-race-against-entropy-xpost/) that AI wins and AI costs often land with different people, so "there is no natural feedback loop". The backpressure discipline I see emerging is organizational loop closure: making sure what individual loops learn lands with the team instead of staying private practice, and turning loop sizing (tight, elastic, loose: how much line the agent gets) into an explicit team decision rather than something each person quietly settles alone. What does a retrospective look like when half the iterations happened inside an agent run? I do not know yet. Anyone selling a finished framework for it this early is guessing. But if a team builds and evolves a factory (the harness) alongside the products the factory produces, there must be mechanisms in place to identify failures and harden the factory with every iteration.
+The people responsible for the team’s working process help connect findings across tasks with decisions about improvement. They make room to investigate recurring problems, assign responsibility, and follow up on the effect of changes. The [Factory](/factory) chapter develops this part of the operating model. Harness engineering supplies technical improvements within it.
 
 ## The engineering leader
 
-The engineering leader carries four jobs in this model.
+Leaders make the investment and delegation decisions explicit:
 
-- **Loop intelligence:** what are we actually learning from the real loops running in our teams, which ones close, which stay open, which decay?
-- **Backpressure maturity diagnosis:** which teams are stuck in tight supervision because the resistance layer is missing, not because the people are cautious?
-- **Deciding where backpressure investment goes**, because the resistance layer is built, not bought incidentally.
-- **Capability building over tool procurement:** the lever is rarely the next license, it is whether the team can encode its judgment into something a loop can use.
+- Use evaluations of completed tasks to examine recurring failures, human rework, and evidence of improvement.
+- Investigate why a task needs close supervision. Missing context or unreliable checks may be repairable; an unresolved product question may need continued collaboration.
+- Budget for maintaining context, checks, and review, including time from product and domain experts.
+- Define authority and escalation. The [delegation agreement](/loops#agree-what-the-agent-may-do) distinguishes starting work, reporting progress, and taking actions that need separate approval.
 
 ## Do these become new jobs?
 
-So does this spawn new roles, or just reshape the ones you have? Mostly it reshapes them. A new title earns its place only when an important task needs a scarce skill no existing role reliably supplies, and someone will fund it and answer for it when it rots. Most candidates fail that test. The skill folds back into a senior version of a job that already exists, or the next model absorbs it. Everything in the sections above is an existing role whose center of gravity moved, from making artifacts to encoding judgment a loop can use.
+Most of these responsibilities can sit within existing roles. A dedicated harness engineering role may make sense when several teams depend on shared tooling and someone needs to own its reliability and development. In a smaller team, an engineer may take that responsibility alongside product work.
 
-One job does pass the test, and it is new. The harness engineer owns the shared scaffold your agents run inside, the loop shapes and tools and graders and guardrails, as a product with a roadmap and a pager. The scarce skill is debugging a probabilistic system end to end and knowing which knob actually moves the failure rate, a reliability instinct most product teams have never had to build. It earns a title the way shared infrastructure eventually does. The harness crosses team lines and rots when it belongs to no one, so a company ends up putting someone on it. Below platform scale it stays a hat a staff engineer wears.
-
-One more sits at the edge: who decides what the fleet is allowed to touch, and who answers when an agent writes to production it should never have reached. That usually attaches to a security function you already have, and someone there has to own it. Past that, the honest answer is I don't know yet. Whether grading and eval work becomes its own seat, or stays a hat the product owner, designer, and domain expert pass around, depends on scale and on how fast the tooling commoditizes the one hard part, calibrating the judge. So the org chart barely grows. One new title, maybe two at scale, and underneath them the old roles carrying more weight than they used to.
+Assign responsibility and time for evaluation, access controls, and investment decisions. The [Factory](/factory) chapter describes how the team makes those duties part of its operating model.
 
 ## When handoffs stop making sense
 
-Here is the reframe I want to leave you with. Where people expect AI to dissolve silos by making everyone do everything, the actual mechanism is that AI materializes the intermediate steps. The spec draft, the prototype, the test, the review artifact, the things that used to justify a handoff, now appear in hours inside the loop. The old sequence (PO formulates, UX designs, engineering builds, QA checks, operations learns about it later) assumed those steps were expensive enough to deserve their own stations. The loop model runs intent, context, variants, verification, decision, production learning, and the roles gather around it rather than queueing along it. The bottleneck moves to the work everyone now does at once: sharpening the context and the assumptions, weighing the options, agreeing what good looks like.
+Agents can produce drafts, prototypes, and tests quickly enough for several roles to examine the same work together. Product and domain experts can question the behavior while engineers assess the implementation. Some handoffs remain necessary, especially where responsibility or access changes. Others can become a shared review of a working result.
 
 <StationsVsLoop />
 
-Which brings this page back to where it started: every role carries judgment nobody else can supply. The question for your team is:
-
-> Whose judgment is still trapped in someone's head, where no loop can reach it?
+For your team, whose knowledge is missing from the context and review?

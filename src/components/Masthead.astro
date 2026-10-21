@@ -5,6 +5,7 @@ const navItems = [
   { slug: 'loops', label: 'Loops' },
   { slug: 'why', label: 'Why' },
   { slug: 'harness', label: 'Harness' },
+  { slug: 'factory', label: 'Factory' },
   { slug: 'grading', label: 'Grading' },
   { slug: 'roles', label: 'Roles' },
   { slug: 'faq', label: 'FAQ' },
@@ -149,7 +150,11 @@ const isActive = (slug: string) => path === `/${slug}`;
     display: block;
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1320px) {
+    .mh-ext { display: none; }
+  }
+
+  @media (max-width: 1180px) {
     .mh-row {
       padding: 0 24px;
       gap: 14px;

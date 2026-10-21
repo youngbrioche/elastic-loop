@@ -1,173 +1,134 @@
 ---
 title: "Harness"
-description: "The backpressure layers in full: what holds agent output honest against the system, and what holds it honest against the product."
-socialDescription: "The backpressure layers in full: what holds agent output honest against the system, and against the product."
+description: "The context, feedback, boundaries and review that let an agent work between human decisions."
+socialDescription: "The context, feedback, boundaries and review that let an agent work between human decisions."
 kicker: "Part three"
 order: 3
 status: seed
-updated: 2026-06-12
+updated: 2026-10-21
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
-import HarnessScene from '../../components/HarnessScene.astro';
 import Term from '../../components/Term.astro';
+import HarnessScene from '../../components/HarnessScene.astro';
 
 <PageIntro kicker="Part three" title="Harness">
-A <Term id="harness">harness</Term> is the scaffold that turns a model into an agent, assembled from many parts. Among those: the loop it works in, the tools it can reach, how its context is kept manageable as a run grows long, the hooks that fire on what it does, subagents, and guardrails. A raw model answers once. A harness is what lets it take a hundred turns on a task while you look away. It is also where you start attaching resistance. A hook can block a bad commit, an AGENTS.md can carry rules the agent is meant to follow but can still quietly ignore, and plenty of resistance lives outside the harness too, in a git hook, in CI, in a human reviewer. <Term id="backpressure">Backpressure</Term> is the name for all of it, and the more of it you can encode, the more leash you can pay out, from tight to elastic to loose. On the [master grid](/#where-does-your-next-task-belong), the vertical axis is exactly this: no automated checks, then technical ones, then full backpressure that adds product and domain judgment on top. This page is about that top level. What actually goes into it, and what does it cost the human to keep running?
+When you let an agent work on its own, it needs a way to find information, try things, inspect the result, and correct mistakes. It also needs limits on what it can do and a way to hand decisions back to you.
 </PageIntro>
-
-<div class="reading harness-intro">
 
 <HarnessScene />
 
-Before the parts, it helps to know why they are worth the trouble at all. Hold the model fixed and change only the scaffold around it, and the score moves hard: on SWE-bench Verified Mini the [Holistic Agent Leaderboard](https://hal.cs.princeton.edu/swebench_verified_mini) has Claude Sonnet 4.5 at 68% with one scaffold and 34% with another, so the harness alone doubles the result, and LangChain got [+13.7 points](https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering) on Terminal-Bench 2.0 tweaking only the harness. While the industry refreshes leaderboards and debates which frontier model to standardize on, or whether SWE-Bench was fine with <Term id="statistical-middle">slop</Term> all along, the variable that dominates is the loop infrastructure around the model. Chollet supplies the theory on [Why](/why), that building is a search process and so the setup around the search matters, and [clawbench](https://github.com/openclaw/clawbench), the agent benchmark from the OpenClaw ecosystem, takes the design stance to its conclusion: it scores the whole combination you ship, harness and configuration and model together. The lever sits here, in the harness, not in the model. Which makes it worth knowing exactly what goes into one.
+A **<Term id="harness">harness</Term>** is the software around the model that makes this possible: the execution loop, tools, context management, and controls. If you use an agent that can read files, run a program, and keep working from the result, you’re already using one. Your team supplies much of what makes that harness useful in a particular setting, from access to the codebase to the checks and review arrangements around it.
 
-</div>
+Harness engineering includes the way your team designs and improves these conditions across technical systems. A check in the delivery pipeline or an independent reviewing agent can contribute from outside the agent’s runtime. Product and domain experts supply knowledge that this technical environment must make usable.
 
-I work with four clusters, and each one owns a different question about the same piece of agent output:
+## Four questions about the same change
 
-- **Engineering + Architecture** asks: is it correct?
-- **Product + Domain** asks: is it right?
-- **Security + Compliance** asks: is it allowed?
-- **Operations** asks: does it hold up in production?
+Consider the dashboard from [Loops](/loops), which helps a support team decide which cases need attention. An agent has built a new version. I’d want four kinds of judgment brought to it:
 
-Correct and right are not the same question. A change can pass every test, satisfy every type checker, and still solve a problem no user has. Say it is right, too. It can still touch data it had no business touching, or clear all three and quietly fall over under real load three weeks later. Four clusters, then. Four ways for plausible output to be wrong, and the work has to survive all four before it counts.
-
-## One layer compiles, the other one doesn't
-
-The technical layer is the one you have probably seen versions of already, because it is where the public harness debate lives. Its building blocks:
-
-- repo rules, AGENTS.md, skills and documentation (actually, this is context the agent uses as backpressure to hold on itself)
-- language servers, compilers, linters
-- tests in all their forms
-- CI, trial runs in ephemeral containers, security checks
-- PR diffs and reviewer subagents
-- logs, traces, and UI checks
-- hooks that fire on what the agent does, blocking a bad commit or write before it lands
-- sandbox boundaries, approval gates, rollback paths
-
-Each of these is something the agent's work has to get past without a human watching every turn.
-
-The product and domain layer is built from different stuff, and almost none of it compiles:
-
-1. the actual user problem and the job to be done
-2. explicit non-goals (the solution spaces you deliberately ruled out)
-3. domain rules and edge cases
-4. acceptance scenarios and <Term id="counterexample">counterexamples</Term>
-5. quality standards from the people who own product, UX, risk, and operations
-6. variant comparisons with explicit trade-offs
-7. and production signals like rework, support feedback, and usage patterns
-
-Notice how much of this list is knowledge that lives in someone's head until somebody does the work of writing it down in a form an agent can be held against.
-
-## Structural vs behavioral harness
-
-Backpressure comes in two strengths, and what separates them is one question: can the agent get around it?
-
-Some backpressure is a rule you write down and hope the worker follows. You put it in an AGENTS.md (a plain instructions file the agent reads when a run starts), or you hand it to a second agent you spin up to review the first one's work. The agent reads these, and it can ignore them, or even rewrite them. One did exactly that, [editing its own AGENTS.md](https://x.com/NiravJ3/status/2068451283389096095) to drop a rule it found inconvenient. This is the behavioral layer, and it's advisory. It holds right up until the run where the agent decides it doesn't.
-
-The other kind is a wall the agent runs into and can't move. A change blocked from being saved until it passes a check, a sandbox (a sealed-off copy of the system where a bad run can't touch anything real), a permission gate a human has to open. The agent can't author these or switch them off. The structural layer still holds when the agent is wrong and sure of itself at the same time.
-
-The split runs through product rules too. A non-goal you wrote down, say "never email a customer twice in a day", sitting in an instructions file is behavioral: the agent might honor it, might not. The same rule wired up as an automated check that fails the moment a second email goes out is structural. Same intent, two very different guarantees.
-
-| | Behavioral harness (soft) | Structural harness (hard) |
+| Responsibility | Question | A concern in the dashboard |
 |---|---|---|
-| What it is | A rule the agent reads and is meant to follow | A wall the agent can't get past |
-| Examples | AGENTS.md / CLAUDE.md instructions, a "watch out for X" note, a review agent spun up inside the same run | A commit blocked before it lands, an automated build-and-test gate, a sandbox, a permission prompt a human must approve, a reviewer kept outside the run |
-| Can the agent route around it? | Yes: read it, ignore it, even rewrite it | No: it can't author or disable it |
-| Holds when the agent is confident but wrong? | No | Yes |
+| Engineering and architecture | Is it correct? | The priority calculation works, and the change fits the surrounding system. |
+| Product and domain | Is it right? | People can find the case that needs their attention and understand why. |
+| Security and compliance | Is it allowed? | People can see only the case information they’re entitled to access. |
+| Operations | Does it hold up in production? | A delayed data feed is visible, so an old priority order doesn’t look current. |
 
-The field has been circling this same line. Idan Habler separates [soft guardrails from hard boundaries](https://idanhabler.medium.com/building-safer-agents-soft-guardrails-hard-boundaries-and-the-layers-between-14205d709b93). Reuben Brooks, building on Geoffrey Huntley's backpressure work, calls it [behavioral gates versus structural gates](https://reubenbrooks.dev/blog/structural-backpressure-beats-smarter-agents/) and argues the structural ones beat a smarter agent. The Evil Martians put it operationally: [stop writing rules in AGENTS.md](https://evilmartians.com/chronicles/stop-writing-rules-in-agents-md-use-agent-hooks-and-nano-staged-instead), move the ones that matter into checks that actually fire.
+These responsibilities can overlap or sit with the same person. Each brings knowledge the agent needs before it builds, criteria for inspecting what it produces, and reasons to intervene along the way. The [Roles](/roles) chapter looks at who contributes that judgment.
 
-AGENTS.md is still harness. [Addy Osmani](https://addyosmani.com/blog/agent-harness-engineering/) and others count instruction files and review agents as parts of it, and they're right to. The enforcement runs inside the harness itself: AGENTS.md is its soft and movable layer, and the question up top tells you which layer any rule sits in. If the agent can route around it, you've written a suggestion, however firmly you phrased it.
+The kind of knowledge tells you little about how to check it. A domain rule can be precise enough for an automated test. An architecture question can require a discussion about trade-offs. For each concern, decide what evidence would settle it and how to obtain that evidence.
 
-This is also where judge independence comes from, the rule from [Grading](/grading) that whatever grades the work can't be the same thing that made it. A review agent the same run spun up shares its blind spots, and it can be talked out of an objection. Independence comes from the layer the agent can neither write nor bypass: a reviewer kept outside the run, a gate it doesn't get a vote on. So before you trust a rule you've written down: what would actually stop the agent if it just ignored it?
+## Give the agent the reasons it needs
 
-## Your test suite will not catch slop
+For the dashboard, “sort cases by priority” leaves a lot to guess. What makes a case urgent? How should the view handle incomplete information? Which users may see the underlying details? The agent needs the relevant rules, examples, and constraints, along with enough information to run the application and its checks.
 
-Here is the job each layer actually does, which is what makes the two more than a tidy taxonomy. The technical layer mostly fights sprawl, the explosion: compilers, tests, CI, architecture fitness graders filter out what does not fit the system, and they push back against "too much, too wild". Slop is the other layer's problem. Scenarios, counterexamples, and domain <Term id="rubric">rubrics</Term> (written grading criteria) pull the output away from the statistical middle and into the specific solution space of this product, this domain, this user. That is the back half of the move: context decides where in the possibility space the agent starts, and this layer pulls whatever comes out the rest of the way toward your product.
+It also needs to understand decisions that the implementation alone cannot reliably explain. Suppose the team chose a deterministic priority rule so support staff could explain the order to customers. The code can show how that rule works. A short decision record can explain why it was chosen, which alternatives were considered, and under what conditions the team would reconsider it. Without those reasons, an agent asked to improve the dashboard might replace a deliberate choice with something that appears more sophisticated.
 
-> Technical backpressure keeps the work correct against the system. Whether the product ever needed it is the other layer's call.
+Make this material easy to find when the task needs it. A short project guide can point to the current priority rule, the decision record, representative cases, and the commands that run the checks. Keep one authoritative copy of each rule, name who maintains it, and give the agent a way to notice when sources disagree. If the priority policy is unresolved, that is a question to bring back to the team.
 
-You need both, and they are not interchangeable. A perfect test suite will wave through onboarding copy that sounds like every onboarding copy ever written, because nothing in it knows what your product is for.
+The same applies to the standards that make the dashboard fit your product. Provide examples of the project’s coding conventions, explain the architectural boundaries, and make approved visual components and brand assets available. A plausible generic solution can still miss all three. That is a concrete form of **<Term id="statistical-middle">slop</Term>** the team can assess against its own requirements.
 
-## What the next model takes away
+The amount of material an agent reads has a cost. Reading every document at the start of every task spends time and tokens, and leaves less room for the work itself. Start with enough orientation to find the relevant detail, then retrieve that detail as needed. Searchable files, a knowledge base, or a retrieval service can all serve this purpose. Judge the arrangement by whether it delivers the right information at the right time, at a cost the task can afford.
 
-Both layers grow while you pay out leash, and neither grows forever. They also age differently, which is the part worth planning for. Anthropic's own [harness write-up](https://www.anthropic.com/engineering/harness-design-long-running-apps) argues for shrinking the scaffold as the model improves: every piece you bolt on encodes an assumption about what the model cannot do yet, and those assumptions expire. Between two model generations they tore out their task decomposition and folded a per-stage evaluator back into a single pass at the end, because the newer model held coherence for hours on its own.
+## Make corrections cheap enough to repeat
 
-The line that decides what you can remove cuts across both layers, not between them. Some of the scaffold only compensates for a capability gap: planning horizon, coherence over a long run, context-window juggling. A better model closes those gaps, so the crutches built for them are the first thing to strip out. The rest is backpressure that encodes a target the model had no way to know. That part stays, however capable the model gets.
+**<Term id="backpressure">Backpressure</Term>** is quick, inexpensive feedback an agent can act on during its work cycle. It runs frequently, so its cost in time, tokens, and context has to stay low. A code-style checker flags a violation of the project’s coding rules. The agent corrects it, runs the check again, and continues.
 
-The trap is reading the whole technical layer as the disposable side. Judgment lives inside it too. Whether a change fits your architecture, respects your bounded contexts, cuts the seam where you wanted it: a fitness function catches the mechanical part of that question, no cycles in the dependency graph, and stops there. The rest is a call graded by a rubric, an <Term id="llm-judge">LLM judge</Term>, or a human, and a stronger model does not retire it, because it was never a capability gap to begin with. Architecture conformance lives in the technical layer and ages like a domain rule, not like a crutch. So "simplify as the model improves" holds with one correction: strip the scaffolding, keep the judgment, wherever in the harness it happens to sit.
+Some feedback comes automatically from doing the work. Before an agent can try a program written in Go or Rust, it has to build a runnable version. If that fails, the build tool reports what is wrong. The agent has to correct the problem before it can try the program. Choosing tools that work this way gives the agent feedback at a step it already needs to take.
 
-## Backpressure only counts if it sticks
+Teams can encode some architecture rules in the same way. An architecture fitness test is an automated check of a property the system should preserve. It might detect that one part of the application now depends on another part it must remain separate from. When the check runs quickly and reports the offending dependency, the agent can correct it during implementation.
 
-There is a condition both layers share: backpressure is only effective once the signal changes a later decision. A failing test that gets retried into silence is noise. So is a rejected variant nobody learns anything from, however much compute it burned to produce. The signal has to land somewhere it changes the next run: a changed plan, a sharper rubric, a new counterexample. And a wall the agent hit once should leave a guard behind, a new test or a hook that fires before the bad write lands. <Term id="retained-feedback">Retained feedback</Term> is what connects the two layers, because retention works the same way whether the signal came from a compiler or from a domain expert.
+The same approach can help with brand requirements. If the dashboard uses a color outside the approved palette, a quick check can identify it and show which colors are allowed. The agent can correct the interface immediately. Whether the overall design suits the product still needs review.
 
-> Agent struggle becomes harness backlog.
+Some product requirements also allow quick checks. Once the team has agreed a priority rule, representative cases can reveal whether the dashboard follows it. A small model-based check might assess whether the view explains the reason for priority, using a compact <Term id="rubric">rubric</Term>, a written set of quality criteria. Evaluate that check against examples people have reviewed and measure its cost. It supplies backpressure only if it is useful, quick, and inexpensive enough to repeat during the work. More extensive assessment belongs at a review gate. [Grading](/grading) explains how to evaluate both.
 
-**Example: Agent memory and skills**
+Choose checks the agent can afford to run repeatedly. Return the failing case and enough detail to investigate it. Keep routine success messages brief, while retaining evidence of what ran. Watch the cost of the feedback itself: a check that takes longer than the work or returns pages of irrelevant detail can consume the time and context needed to act on it.
 
-Agent memory is the most tangible retention site I know, and a skill is one form of it, procedural memory in executable form. A skill that does not get better after repeated use, or a memory that never gets corrected, is just static documentation wearing a different hat. The raw material for improving them sits right in the agent traces: retry loops and dead ends, wrong or outdated commands, missing setup assumptions, the places where the agent made a best-guess decision because the skill left a gap. Treat those signals as deltas, patch immediately when risk and evidence allow it, route the rest through a review gate, and maintenance becomes a closure mechanism inside the loop. You could even optimize the token efficiency of your skill by telling the agent to use the initial version as a baseline, and run experiments on it until token consumption is improved while the result stays the same (don't let it rephrase the skill in caveman lingo).
+A document containing acceptance criteria provides context. Running a check against those criteria can produce backpressure. A permission boundary limits an action. These mechanisms often work together; knowing what each contributes helps you find what is missing when a run goes wrong.
 
-## The quiet layer
+## Combine automated checks with review gates
 
-Why does the product and domain layer get so little attention? Because its failure mode is quiet. Sprawl shows up in CI logs and PR volume; you can see it and pull people back. Slop surfaces in the market, quarters later, or in some people's stomachs, the longer they look at it. The engineering mainstream of the harness debate (OpenAI's [harness engineering](https://openai.com/index/harness-engineering/) write-up, Addy Osmani's [work on agent harnesses](https://addyosmani.com/blog/agent-harness-engineering/)) covers the technical layer well. But the other layer needs different disciplines and different roles: product people, designers, domain experts, the people whose "this is off" never touches a compiler. Their judgment is the backpressure itself, the thing the output has to clear while it is being made, well before any review step at the end.
+A **gate** controls whether work may proceed to a particular action or stage. The team defines the conditions for passing it, who or what evaluates them, and when to escalate. Reviews can be performed by people, agents, or both.
 
-## The wins and the costs land on different desks
+Give deterministic checks the work they can reliably settle. A code-style checker applies the project’s coding rules; a complexity checker flags code that exceeds agreed limits. Repeating those checks through a reviewing agent adds time and cost. The reviewer should use their results and investigate questions the checks cannot answer.
 
-There is a version of this that has nothing to do with tooling. Charity Majors [wrote in June](https://charity.wtf/2026/06/02/ai-enthusiasts-are-in-a-race-against-time-ai-skeptics-are-in-a-race-against-entropy-xpost/) about the gap between the people experiencing AI wins and the people carrying the costs: "There is no natural feedback loop." The wins land on one team's dashboard while the cleanup, the reliability erosion, and the on-call pain land on someone else entirely, and the organization polarizes instead of learning. Seen through this framework's lens, the skeptics in that fight are often the people carrying the backpressure the system failed to encode. They hold the realistic information about failure modes precisely because the consequences flow to them.
+For the dashboard, a security reviewer might discover that one request lets a user read another team’s support case. The code can pass style, type, and complexity checks while missing the permission check required for that request. Finding the defect requires understanding who may access which data and how that rule applies along the request’s path through the application. The reviewer’s finding may point to a single line of code. An architecture reviewer might instead question whether a service boundary fits the domain or whether the proposed design creates an operational problem. The reviewer investigates what the existing checks leave unresolved, at whatever level of detail the task requires.
 
-Her question for the enthusiasts is the one I would put on the wall:
+A separate reviewer has an explicit job: challenge the proposed result, look for ways it could fail, and support each finding with evidence. It can question assumptions the implementing agent carried through its work. [Research on self-correction](https://arxiv.org/html/2507.02778v3) has found that models can catch errors presented as someone else’s work while overlooking the same errors in their own output. Future models may assess their own work just as well. For now, I’d use independent review where the additional mistakes it catches justify its cost.
 
-> "What would it take for you to feel comfortable shipping code to production without reading it?"
+Run these agent reviews at a review gate. They consume too much time, computation, and context to repeat at the frequency of backpressure during implementation. Their feedback loop is review, findings, revision, and another review. During revision, the implementing agent continues to use the quick checks to correct its work.
 
-That single question turns a culture war into a loop-sizing requirement. Answer it honestly and you get a concrete list: the evals, the feature flags, the blast-radius limits, the rollback paths. Which is to say, you get a harness spec.
+Make the two work together. Give the reviewer the intended behavior, relevant constraints, the change itself, and the results of the automated checks. Let its findings determine what needs correction or a decision. When a finding can be captured in a reliable automated test, add that test. The missing permission check can then become a regression case that helps detect the same defect in later changes. Run the checks again after revisions, and have the reviewer assess whether the findings have been resolved and whether the revisions introduce other problems.
 
-## How many agents can one person actually check?
+A fast test can also be a condition for passing a gate. For example, the same checks that guide the agent during implementation may have to pass before its change can be merged. The reviewing agent contributes the assessment those passing checks leave open.
 
-Context and backpressure both work on the content of the loop: context is the gate in front of it, deciding whether the agent can do the work at all, and backpressure is the continuous pressure inside it, holding that work against reality. Neither says anything about how expensive it is for the human to close the loop at the human gate. Even the best-calibrated loose loop ends in a human decision point, and when closing it means wading through diffs, logs, and pull requests, the ceiling on parallel loops is set by the verification cost per judgment rather than by containment. That cost is the third lever.
+## Know what enforces a rule
 
-Three families of mechanisms, and they sit on different levers. Self-inspection by the agent (opening the build in a browser, reading the DOM snapshot or screenshot, running Lighthouse, axe, Core Web Vitals) is backpressure in the engineering cluster, already covered above, no new lever required. The numeric signals are the clean ones here: a performance budget that speaks when broken and stays silent when held is sounder than an LLM judge grading aesthetics. Self-demonstration sits on both levers at once. Simon Willison's [Showboat](https://github.com/simonw/showboat) is a CLI through which the agent presents its own work; Peter Steinberger has agents record a video demo of what they built. The demo makes the gate cheaper, since the human grades an outcome instead of digging through the artifact, and the act of building the demo is forced self-confrontation: while assembling it, the agent stumbles over its own defects, feedback that would never have existed without the obligation to present. Legibility artifacts (screenshots, recordings, trace summaries) are pure gate relief and carry no backpressure at all.
+The distinction between a **behavioral harness** and a **structural harness** concerns enforcement. Behavioral guidance tells the agent how it should work. Structural controls enforce a boundary through mechanisms the agent cannot change or bypass with its available access.
 
-The trap deserves its own paragraph. A polished demo can hide slop, and verification stress is partly productive: it is the friction where bad judgment gets caught. Self-demonstration makes the human gate cheaper to clear without making the judgment behind it any sharper. Demo mechanisms lower the cost of good judgment, while the judgment itself still has to come from <Term id="outcome-grading">outcome grading</Term> against <Term id="golden">goldens</Term> and counterexamples.
+An instructions file might say, “Ask before sending a customer notification.” That helps the agent understand the intended workflow. Enforcement requires the sending tool or service to refuse the action until the required approval exists. A check that reports a duplicate notification after it has been sent detects the problem too late to prevent it. To enforce a frequency limit, the service has to check before sending, including when two attempts arrive together.
 
-## Does any of this exist outside slide decks?
+The same question applies to automated checks and reviewers. A required check is a dependable gate only if the agent cannot disable it, change the acceptance rule, or take another route around it. The team can authorize a reviewing agent to accept work within defined limits and refer other cases to a person. Its access, criteria, and place in the workflow determine how independent it really is. The agent producing the work must not be able to change the gate’s acceptance rules or waive a rejection.
 
-OpenClaw is the closest thing we have to a running reference in the wild: a 375k-star project with roughly 7,000 open issues and PRs, operated deep in the loose zone. There is a fascinating ring of [metatools](https://openclaw.ai/ecosystem/) the team built around the agent. Almost none of it is the harness itself. It is what has to surround a harness before you can let an agent run loose for hours and trust what comes back, and it does two jobs at once: supply backpressure, and give the agent enough infrastructure to reach its own verdict.
+Structural controls protect the boundaries you actually enforce. A sandbox may restrict access to production while allowing the agent to make a large, difficult change in its own workspace. That change still needs inspection. Use isolation to limit consequences, and choose the amount of delegated work so the result remains reviewable.
 
-- Context tooling like the crawl family that externalizes scattered knowledge into searchable stores, so the agent can ground itself instead of guessing
-- Execution machinery like crabbox, fanning tests across operating systems and clouds in reproducible containers, so the agent can answer what no prompt can answer for it: does this bug actually reproduce?
-- Backpressure like ClawPatch (a reviewer subagent with a fix loop) and clawbench, which puts pressure on the harness itself
-- Verification through evidence ledgers and human gates that carry the final judgment back to a person
+## Make the result inspectable
 
-The price of that autonomy was an explosion of infrastructure around a comparatively small harness.
+You or the reviewer authorized by your team eventually has to decide whether to accept what the agent produced. The time and attention needed to make that decision are the **verification cost**. As you delegate more work, that cost can become the limit on how much you can handle.
 
-My favorite vignette is Vincent Koc [running 24 tmux panes](https://x.com/vincent_koc/status/2059996577561755684) of agent sessions from a Mac Mini, reading failures, deciding what runs next. Rather than leaving the loop, the human steps one level up, and his judgment moves to the orchestration layer. Those 24 panes are also the verification cost ceiling from the section above. Containment is not what caps him. The cost per human judgment at the gate is, and every mechanism that lowers that cost lets the same attention orchestrate more panes.
+For the dashboard, I’d want a working preview with representative cases, a short explanation of the changed behavior, the checks that ran, and any unresolved questions. I’d also want to change the inputs myself. A recording of the happy path would leave me with plenty still to find out.
 
-## An old discipline on a new substrate
+Self-inspection and presentation help in different ways. When the agent opens the dashboard and discovers that the urgent case is hidden on a small screen, it has found a defect it can correct. If that check is quick and inexpensive enough to repeat, it supplies backpressure. A screenshot or recording gives a reviewer evidence to inspect. Producing a demonstration can do both, because the agent has to exercise the result while assembling it.
 
-None of this is unprecedented, and it helps to know that. Long before anyone wired a compiler into an agent loop, factories had already worked out how to run a process that produces variable output: how to catch defects without inspecting every part by hand, and how to feed what each run teaches back into the line. The discipline has names, and most of them trace to one place, the Toyota Production System and the lean tradition that grew from it. Lay the two side by side and the mapping is close enough to be useful rather than cute.
+Keep the evidence connected to the result being reviewed. Identify the version and scenarios it covers, and make the result available for further inspection. A polished demonstration can omit the difficult cases as easily as a rough one. Agreed criteria, trusted examples, and known bad examples give the reviewer a basis for challenging what they see.
 
-| Factory floor | Harness equivalent |
-|---|---|
-| <Term id="tpm">Total productive maintenance</Term> | Keeping the agent-legible environment in repair: AGENTS.md, skills, reproducible setup |
-| <Term id="spc">Statistical process control</Term> | Watching loops for drift and rework signals instead of inspecting every output |
-| <Term id="kaizen">Kaizen</Term> | The learning loop: production signals distilled back into skills, tests, and docs |
-| <Term id="andon">Andon</Term> | Backpressure that stays silent on success and speaks only on failure |
-| <Term id="poka-yoke">Poka-yoke</Term> | Deterministic backpressure that makes a class of mistake impossible: compilers, type checkers, scope denial |
-| <Term id="jidoka">Jidoka</Term> | Human-in-the-loop gates: the line stops and escalates to a person on a real anomaly |
-| <Term id="oee">Overall equipment effectiveness</Term> | Loop metrics: validated loops per month, loop closure rate |
+## Keep what the work teaches you
 
-The parallel is fascinating. We're looking at the industrialization of software product development. The reassurance: these are not hypotheses. Manufacturing has run on statistical process control and continuous improvement for decades, so the shape of the answer is known even where the agentic details still are not. And it is an orthogonal lineage. Most of the harness debate argues from the software tradition of Agile, DevOps, and CI/CD, while this one comes in from the factory floor, which is exactly why it tends to land with people who have run a real process.
+Feedback can correct the current attempt and improve future ones. **<Term id="retained-feedback">Retained feedback</Term>** is useful feedback preserved in a plan, a test, a decision record, or instructions that later work will use.
 
-The factory and the loop part ways on one thing, though. Dave Snowden's <Term id="cynefin">Cynefin</Term> framework ([HBR, 2007](https://hbr.org/2007/11/a-leaders-framework-for-decision-making)) sorts problems by how knowable the answer is before you start:
+Suppose the dashboard uses invented colors and controls despite an existing set of approved components. Inspect how the agent reached that result. If the project guide points to an obsolete example, repair the reference and show how the current components are used. A fast check for unsupported styling can then flag violations while the agent works. The context explains the intended design; the executed check supplies feedback on the attempt.
 
-- **Clear:** cause and effect are obvious and there is one right way, like following a recipe.
-- **Complicated:** a right answer exists, but it takes an expert to find it, like a mechanic diagnosing an engine.
-- **Complex:** you cannot work the answer out in advance. You try something, watch what happens, and adjust, the way you learn what a market wants.
+Agent memory and skills, reusable instructions for carrying out a task, are places to retain this learning. Repeated failed commands, missing setup steps, and unnecessary retries show where those instructions need attention. An agent can propose a correction, and straightforward repairs can be delegated within agreed limits. Changes to acceptance criteria, permissions, or policy need review by whoever owns them.
 
-Classic manufacturing lives almost entirely in the first two. The ten-thousandth car door has a known target, and the whole Toyota line exists to hit it every time, every deviation a defect.
+Check the revised guidance and mechanisms on representative tasks, including cases that worked before. Keep the evaluator’s criteria independent of the agent proposing the change, and retain the version actually used. A saved correction preserves feedback. Evidence of better results on later comparable work supports a claim that the system improved.
 
-Most of what we point a loop at is the third kind, because building a software product is complex work, and so is most knowledge work. You don't know the answer up front. It shows itself once you have tried a few. So we are building the same learning factory and the same hard-won discipline of running a process without checking every part by hand, and aiming it at complex work. That changes what we want from variance. A Toyota line fights to drive variance out. A loop is here to harvest it, generating several real variants and keeping the one that holds. The machinery carries straight over, and here the variance is the product. Backpressure is the wall that keeps it inside useful bounds. Some tasks really are ordered, well specified and fully tested, and there the loop behaves like the classic line and drives variance out. Complex is the common case, though, and complex is where the factory's instinct flips.
+Keep the active guidance small enough to use and current enough to trust. Preserve the reasons for rejected alternatives in decision records and retrieve them when relevant. An alternative rejected because a requirement changed may be useful later. Remove obsolete guidance when its reason has gone away.
 
-The warning is the one the lean tradition keeps relearning. None of these mechanisms is a tool you install once. They are practices a team keeps alive, or they quietly rot, and a rotting harness is worse than none, because it still looks like it is working. Which is the same thing the [roles](/roles) page says from the other direction: you build and evolve the factory alongside the products it turns out, or you do not really have one.
+## Measure the effect of harness changes
+
+There is evidence that changes around a model can improve results substantially. In February 2026, [LangChain reported](https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering) an increase from 52.8% to 66.5% on Terminal-Bench 2.0 while keeping GPT-5.2-Codex fixed. Its changes included guidance and mechanisms for verification, context delivery, and managing the time available. That result supports investing in the surrounding setup. How much it helps your work still needs to be measured on your tasks.
+
+[Harness Learning Enables Generalizable Test-Time Adaptation](https://arxiv.org/html/2609.35738v1) tests whether a model can learn to improve another model’s working setup. One model attempts reasoning and question-answering tasks. A second model uses feedback from those attempts to revise the harness code. The researchers found that this ability to revise the setup also helped on tasks it had not seen before. The models themselves stayed unchanged during those later tasks.
+
+The experiments cover bounded research tasks. A team would need to evaluate the approach on its own work before relying on it. Costs need comparison too: the approaches in the question-answering experiment used different amounts of computation and feedback, even when they made the same number of proposals.
+
+## Retire a workaround when the evidence supports it
+
+Some mechanisms compensate for limitations in a particular model or tool. In a [talk on harness evolution](https://www.youtube.com/watch?v=7Y4sbZgBdnc&t=972s), Jediah Katz describes logging when these temporary aids intervene and using the records to propose removals. That gives a team candidates to investigate.
+
+Suppose you added a reminder that sends the agent to the approved component examples before it changes the dashboard. The reminder helped an earlier model that repeatedly invented its own controls. After a model change, it may add delay and context without improving the result. Compare the new model on representative tasks with and without the reminder, keeping the acceptance criteria and independent review unchanged. Include tasks that previously needed the reminder, and examine quality, correction effort, and total cost.
+
+A reminder that rarely fires may be redundant, or the task mix may simply have changed. Check that the record captures its use and that the comparison covers the original problem. If quality holds and the saving is worthwhile, remove the reminder through the team’s release process. Keep the previous configuration so you can restore it if later work gets worse.
+
+The approved components and the reasons for using them remain product context. Runtime reliability, permissions, and required checks have their own purposes. Evaluate each mechanism against the job it performs. Similar benchmark scores alone leave questions about cost and operating behavior unanswered.
+
+The team needs time and budget to carry out these improvements. In the [Factory](/factory) chapter, the same slop example continues across many tasks: how to find recurring problems, decide what to invest in, and evaluate whether later work improves. Harness engineering supplies the technical changes. The team’s operating model makes their evaluation and maintenance a regular responsibility.

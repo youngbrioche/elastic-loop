@@ -1,4 +1,4 @@
-// The five section cards on the hub's reading path. Single source for both the
+// The section cards on the book's reading path. Single source for both the
 // <StartList> component on the HTML page (src/content/pages/index.mdx) and the
 // markdown list in the agent rendition (src/lib/markdown.ts), so the two cannot
 // drift.
@@ -12,8 +12,9 @@ export interface StartListCard {
 
 export const startListCards: StartListCard[] = [
   { href: '/loops', num: '01', title: 'Loops', text: 'Tight, elastic, loose: three zones and how to size the loop for the task in front of you. None of the zones outranks the others, each just comes with different preconditions.' },
-  { href: '/why', num: '02', title: 'Why', text: 'Why stretch a loop past tight at all, and is the risk worth it? The payoff comes down to how well you can judge what comes back. The economic and technical case, now with measurement behind it.' },
-  { href: '/harness', num: '03', title: 'Harness', text: 'The backpressure layers in full: what holds agent output honest against the system, and what holds it honest against the product.' },
-  { href: '/grading', num: '04', title: 'Grading', text: 'Outcome grading is the new specification. Tests, rubrics, scenarios, golden examples of known-good output, and why a rubric is not automatically truth.' },
-  { href: '/roles', num: '05', title: 'Roles', text: 'Every role carries judgment about agent work that nobody else can supply. What engineers, product people, designers, domain experts, the people who run the process, and leaders each bring to the loop.' },
+  { href: '/why', num: '02', title: 'Why', text: 'Why delegate more work, and how can you tell whether it pays off? Assess quality, review effort, and the cost of the whole task.' },
+  { href: '/harness', num: '03', title: 'Harness', text: 'The context, feedback, boundaries and review that let an agent work between human decisions.' },
+  { href: '/factory', num: '04', title: 'Factory', text: 'How a team organizes agent work and invests in improvements supported by evaluations across tasks.' },
+  { href: '/grading', num: '05', title: 'Grading', text: 'How tests, reviews and product feedback work together, and how to evaluate the reviewers.' },
+  { href: '/roles', num: '06', title: 'Roles', text: 'How engineers, product people, designers, domain experts, and leaders contribute to agent work.' },
 ];

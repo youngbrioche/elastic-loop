@@ -1,95 +1,95 @@
 ---
 title: "Grading"
-description: "Outcome grading is the new specification. Tests, rubrics, scenarios, golden examples of known-good output, and why a rubric is not automatically truth."
-socialDescription: "Outcome grading is the new specification: tests, rubrics, scenarios, and why a rubric is not automatically truth."
-kicker: "Part four"
-order: 4
+description: "How tests, reviews and product feedback work together, and how to evaluate the reviewers."
+socialDescription: "How tests, reviews and product feedback work together, and how to evaluate the reviewers."
+kicker: "Part five"
+order: 5
 status: seed
-updated: 2026-06-12
+updated: 2026-10-21
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
 import Term from '../../components/Term.astro';
-import GradingScene from '../../components/GradingScene.astro';
 import TwoIterationLayers from '../../components/visuals/TwoIterationLayers.astro';
 
-<PageIntro kicker="Part four" title="Grading">
-If you come from deterministic software development, where a requirement translates into code and the code either meets it or it doesn't, the rest of this framework probably feels like it has a hole in the middle. Agents search a space of possible solutions (the longer argument lives on [Why](/why)), and a search process needs something to search against. That something is <Term id="outcome-grading">outcome grading</Term>: the ability to judge whether a result is good, precisely enough that a machine can iterate against the judgment. It is the bridge between the spec world and the <Term id="search-space">search-space</Term> world, and without it the framework falls apart for exactly the people I most want to reach. So this page exists to build the bridge properly.
+<PageIntro kicker="Part five" title="Grading">
+When an agent hands you a result, what would convince you it’s good? <Term id="outcome-grading">Outcome grading</Term> makes that assessment explicit enough to guide revisions. Some requirements have an exact answer a test can check. Others need a reasoned judgment, and some product questions need evidence from use. This chapter explains how to combine those forms of evaluation and assess the reviewers themselves.
 </PageIntro>
 
 ## You have been grading outcomes all along
 
-Grading comes in instruments, and they form a ladder from primitive to broad.
+Choose the method for the question you need to answer:
 
-- **Tests** check known cases. If you write software, you have been doing outcome grading all along, just in its most primitive form: this input, this expected output, pass or fail.
-- **<Term id="rubric">Rubrics</Term>** widen that to qualitative criteria for whole classes of behavior (does the answer cite the source, does the refund flow respect the policy, does the tone match the brand). Think acceptance criteria, reused as a grading checklist. Anthropic turned a question as soft as "is this beautiful?" into four graded criteria, one of them [originality, scored against template defaults and AI slop](https://www.anthropic.com/engineering/harness-design-long-running-apps), which is about as concrete as anti-slop grading gets.
-- **Scenarios** generalize beyond the cases you already thought of: walkthroughs of situations the system should handle, written by someone who knows where the domain gets weird.
-- **<Term id="golden">Goldens</Term> and <Term id="counterexample">counterexamples</Term>** calibrate everything else. Goldens are outputs you have blessed as correct and keep as the answer key; counterexamples are the plausible-looking wrong ones, which in my experience are worth more per line than almost any other artifact.
-- **<Term id="llm-judge">LLM judges</Term>** make qualitative grading scalable, with failure modes of their own (more on that in a moment).
-- **Human review** stays irreplaceable wherever the call is genuinely a judgment call.
-- **Production signals** are reality itself as the last layer: usage, rework, support tickets, exceptions, logs, the market quietly grading what everything upstream let through.
+- **Tests** compare behavior with defined expectations. They can cover technical properties and precise domain rules.
+- **<Term id="rubric">Rubrics</Term>** describe quality criteria and the evidence needed to assess them. They help reviewers explain their judgments.
+- **Scenarios** describe situations the product should handle, including difficult cases supplied by people who know the domain.
+- **<Term id="golden">Goldens</Term> and <Term id="counterexample">counterexamples</Term>** provide trusted examples and plausible failures. Keep the reasons for those assessments alongside the examples.
+- **Review** can be performed by people, agents, or both. Decide which judgments an agent may make, evaluate its performance on relevant examples, and define when a person must decide. Product goals and acceptance rules need accountable owners.
+- **Production signals** show what happens after acceptance: whether people can use the result, what needs repair, and which assumptions fail.
 
-Notice who can contribute to this ladder. Tests belong to engineers (remember product owners writing Cucumber tests?). Scenarios, counterexamples, and rubrics very often belong to the domain expert, the designer, the product person. That is the point [Roles](/roles) makes in full.
+Product people, designers, engineers, and domain experts contribute to these methods. [Roles](/roles) describes their work across the loop.
 
 ## The spec changes jobs as the loop stretches
 
-So where does that leave the specification? I keep meeting two camps: one that wants to write everything down before the agent moves, and one that has declared specs dead. Both are answering a sizing question with a doctrine. The spec changes its job as the loop stretches:
+A specification records the intent, constraints, and known requirements. Keep unresolved questions visible too. In the dashboard example, the team may know exactly how access must be restricted while still exploring how to prioritize support cases.
 
-| Loop zone | Role of the spec | Harness focus | Grading focus |
-|---|---|---|---|
-| Tight | Starter grip: intent, examples, non-goals | IDE, tests, UI, logs | Human judgment, small tests, diff feedback |
-| Elastic | Steering contract: boundaries, acceptance, constraints, risks, search space | Reproducible setup, CI, PR review, reviewer subagents, checkpoints | Tests, acceptance criteria, rubrics, review checklist |
-| Loose | Executable spec in the production system | Sandbox, worktrees, isolated runtime, permissions, audit, rollback, observability | Outcome rubrics, scenarios, goldens, counterexamples, automated graders, abort criteria, regression gates |
-| *Learning loop (wraps every zone)* | Feedback distillate for the next piece of work | Stored traces, error classes, skills, docs | Rework, production signals, drift, pattern learning |
+| Loop zone | What the agent needs | Where decisions happen |
+|---|---|---|
+| Tight | Intent, examples, and enough context to try the next step | People inspect attempts and refine the requirement together. |
+| Elastic | A bounded task, constraints, and agreed checkpoints | The agent uses checks while working and brings open questions to the checkpoints. |
+| Loose | Discoverable context, dependable checks, and clear acceptance and escalation rules | The agent carries the task to its review gate; unresolved decisions return to the authorized person. |
 
-Read the spec column top to bottom and you can watch the artifact change character: from a starter grip to a steering contract to something executable, and finally, in the learning loop that wraps every zone, to distilled feedback for the next round. Keep in mind, though:
+Keep the specification current as the team learns. A new requirement can change the implementation and the criteria used to assess it. The [Loops](/loops) chapter distinguishes the work delegated between human decisions from the time it takes to learn whether a product change helps.
 
-**A spec earns its keep when it structures the search space. The moment it stands in for that space, it has turned back into a waterfall.**
-
-<div class="reading grading-intro">
-
-<GradingScene />
-
-The spec can and should never be the beginning of a waterfall, but rather a living artifact humans (and agents) iterate on. Zero-shotting is not a sport. Well, most times it's not. And yet the pendulum is swinging back toward exactly that little waterfall right now: write everything down first, let the agent execute, and treat anyone who wants to feed learning back mid-run as undisciplined. Organizations rehearsed this movement for twenty years of doing agile without becoming agile, adopting the ceremony and dropping the feedback loop.
-
-A spec that pins down every implementation detail has quietly turned the agent back into a typist, and you paid for a search process you never ran.
-
-</div>
-
-The reflex has a name by now. ThoughtWorks tracks [spec-driven development](https://www.thoughtworks.com/radar/techniques/spec-driven-development) on the Radar, notably no further than Assess, warning that teams might "relearn a bitter lesson, that handcrafted detailed rules for AI ultimately do not scale". Birgitta Böckeler [sorts the practice](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) into three levels of rigor: spec-first writes the spec up front and archives it once the code exists, spec-anchored keeps it in the repo, maintained with every change and validated against the implementation, and spec-as-source treats code as mere generated output of the spec, a future no tool delivers in production today. Spec-anchored is the close relative of this framework: a living, versioned artifact instead of one-way planning.
-
-What this framework adds is a shift of attention from the input layer to the evaluation layer. Whichever rigor level you run, the artifacts humans iterate on in wide loops are the grading material, the spec and everything that calibrates it, while the agents iterate on the output itself. When you catch yourself patching the output instead of sharpening the grader, you are working on the wrong layer, and the loop will keep producing the thing you just fixed.
+Correct the current result when it needs repair, and investigate whether the failure exposes a recurring gap in context, checks, or review. Preserve a useful lesson in the appropriate material and evaluate the change on later comparable tasks. [Factory](/factory) explains how the team makes that improvement part of its regular work.
 
 <TwoIterationLayers />
 
-## A rubric is not automatically truth
+## Evaluate the grading criteria
 
-Here is the caveat I want printed in bold on every eval dashboard: writing a rubric does not make the rubric true. Good graders are engineering artifacts themselves, calibrated against counterexamples and failure taxonomies, with the occasional human read and <Term id="drift">drift</Term> control. Skip that work and the agent will optimize against the grader you actually built, which usually rewards whatever sounds plausible long before anything that holds up. An LLM judge calibrated on nothing will happily wave through the <Term id="statistical-middle">statistical middle</Term>, and slop walks in wearing a passing grade. A polished demo of the agent's own work deserves the same skepticism: it makes your judgment cheaper to apply, while the grading substance still has to come from goldens, counterexamples, and scenarios.
+A written rubric can omit a requirement, reward a superficial feature, or encode a mistaken assumption. An <Term id="llm-judge">LLM judge</Term>, a model asked to assess work against criteria, can make these errors too. Compare its judgments with independently assessed cases and investigate disagreements. The examples below show how.
 
-One failure mode hides inside the word grader: the thing that grades cannot be the thing that made the work. Models reliably praise their own output, and the leniency deepens when the work under review was itself machine-made. Anthropic had to tune their evaluator over several rounds because early versions talked themselves into approving bugs they had just flagged. Whatever closes the loop, a separate reviewer agent, a held-out judge, a human, has to sit outside the run that produced the work, or you have automated self-congratulation.
+Self-checks help the agent correct its work. For an independent review, give the reviewer access to the evidence and protect the acceptance criteria from changes by the agent producing the work. A separate session can reduce dependence on the producer’s account. Evaluate the reviewer’s judgments on cases people have already assessed.
 
-There is also a structural answer to the agent satisfying the letter of your grader while missing the point (<Term id="reward-hacking">reward hacking</Term>, if you want the ML name, the AI cousin of teaching to the test). StrongDM's software factory shows what it looks like when you take it seriously ([Simon Willison has a good writeup](https://simonwillison.net/2026/Feb/7/software-factory/)). Their internal charter reads
+Protect assessment cases too. Keep some <Term id="holdout">holdout</Term> cases separate from the examples used to develop a solution, so you can examine how it handles unfamiliar cases. Watch for <Term id="reward-hacking">reward hacking</Term>, where a result satisfies the scoring rule while missing the intended requirement.
 
-> "Code must not be written by humans. Code must not be reviewed by humans,"
+## Give each check a useful job
 
-which is too radical for most organizations I work with, but the design vocabulary travels well. Their scenario <Term id="holdout">holdouts</Term> keep the test sets outside the repo, so the agent cannot tune itself to pass an exam it can read, the same instinct that made machine-learning teams guard their test data for decades. And their satisfaction testing asks a second AI, across thousands of runs, how often the agent's path through a scenario would actually leave the user happy.
+Use deterministic checks for criteria they can settle reliably. A code-style checker can report a rule violation; an architecture test can flag a forbidden dependency. Fast, inexpensive checks give the implementing agent <Term id="backpressure">backpressure</Term> during its work. Required checks can also be conditions for passing a gate.
 
-## Keep the deterministic checks out of the rubric
+Give the reviewer those results along with the intended behavior and the change itself. A reviewing agent should investigate questions the existing checks leave open. It may find a defect in a single line or question an architectural decision. Run these reviews at a gate, with time and budget appropriate to their cost.
 
-A rubric is for the calls a machine can't make on its own. So before you write a single grading criterion, sort the checks into two piles. One pile is the mechanical stuff a computer settles without an opinion: does it compile, does the contrast pass, does the API contract hold. That pile runs earlier, at build time, as the structural <Term id="backpressure">backpressure</Term> from [Harness](/harness). It never reaches the grader.
+## Grade two dashboard variants
 
-The other pile needs judgment. Is this the right thing? Does it read as slop? That's what the outcome grader is for, and dropping the deterministic checks in alongside it just blurs the two layers the whole framework rests on.
+Suppose a support team wants to keep its reply commitments and help customers who cannot use the product. The team is exploring how its dashboard should prioritize cases. It hasn’t settled how to balance those goals when they conflict. The agent builds two variants:
 
-Let something deterministic decide wherever it can, and reach for a judge (an LLM or a human) only when nothing deterministic will settle it. A judge is the expensive instrument. Spend it on judgment.
+| Variant | Proposed priority rule | Consequence in the example |
+|---|---|---|
+| A | Handle the case closest to its promised reply time first. | A routine question due in 20 minutes comes before a newly reported outage affecting several customers. |
+| B | Handle the case with the greatest reported disruption first. | The outage comes first; the routine question may miss its promised reply time. |
 
-Take a dashboard. By the time its rubric runs, the boring checks have already passed: contrast, no overflow, a performance budget that stays silent when it's met. So the rubric is free to be the part no check can reach. Does the north-star metric read as the most prominent thing on the screen? Or does this look like the default dashboard every BI tool ships, the one nobody chose? A check can't grade that. A person, or a judge calibrated against goldens and counterexamples, can.
+Both variants pass the code-style and architecture checks. Tests confirm that each implements its proposed rule correctly, using the same case data. Choosing between them requires a judgment about the consequences of those rules. The team has yet to agree an expected answer for this conflict. Writing “the outage must come first” into a test would encode a product decision that still needs to be made.
 
-## What you do with cheap search
+A reviewer, human or agent, can examine the proposals against the team’s goals and the available evidence:
 
-Once grading works, the economics get interesting. When search gets cheap, the move is to generate several variants and select, rather than pushing one ticket through faster. <Term id="best-of-n">Best-of-n</Term> becomes a delivery discipline. This is the variance from [Why](/why) put to work: the spread a search throws off, harvested on purpose instead of stamped flat. Basically, what digital product development has always preached, except that building variants with the actual material (code) was slow and expensive. That's why the Design Sprint exists.
+> “A keeps reply deadlines visible, but several reports of one outage remain separate cases and could keep waiting behind routine questions. B brings that disruption forward, but a stream of new incidents could leave older requests waiting indefinitely. Try grouping related reports and making overdue commitments visible, then review how support staff choose their next case.”
 
-But (and this is the part I see teams get wrong in the first month) variants are only valuable when they are born close to the decision and close to the system. They have to live in the real material: the architecture and design system they target, the real APIs and data they run against, the same tests and scenarios that grade everything else. The anti-pattern is the gorgeous prototype with no system contact, a demo that nobody can merge and nobody learns from. A variant only becomes learning once a decision rides on it; without that, it is just more output.
+That review draws out consequences, questions the design, and proposes something the team can investigate. Its reasoning needs scrutiny too: reports that look related may have different causes, and reported disruption may be uncertain. An agent can make a reasoned recommendation within its authority; unresolved tradeoffs go to the people responsible for the product.
 
-Which leaves the question I would ask your team before any tooling discussion:
+Try bounded variants with support staff and observe their decisions. Their experience may change the requirement. Once the team settles a rule, deterministic tests can enforce it and provide quick backpressure during implementation. Evaluating whether that rule continues to serve the product’s goals remains part of review and product learning.
 
-> If an agent handed you five solutions tomorrow, could you say which one is best, and could you say why in a form a machine could check next time?
+## Check the reviewer too
+
+Evaluate a reviewing agent on separate scenarios assessed by people who understand the support work. Examine whether its findings follow from the evidence, whether it identifies material consequences, and whether it recognizes decisions that need more information. Include cases where disruption is uncertain or a reply commitment has consequences the initial report doesn’t mention. A reviewer that always favors outages would miss the judgment this task requires. Allow different recommendations when their reasoning is sound and they respect the agreed constraints.
+
+Use some examples to refine the criteria, then assess the reviewer on separate cases. Where a clear acceptance decision exists, count incorrect approvals and incorrect rejections separately. For unresolved product choices, assess the reasoning and evidence without treating one preferred design as the only valid answer. One good judgment on these two variants gives little evidence about unfamiliar cases. Recheck the reviewer when its model, instructions, or evaluation criteria change.
+
+Keep the observations tied to the task and the versions used. Record which criterion failed, whether the review found the problem, and what correction was required. Later evaluations can then examine whether better context or a new mechanism reduces the same failures on comparable tasks. [Harness](/harness) explains those mechanisms; [Factory](/factory) explains how the team organizes and funds their improvement.
+
+## Use variants to make a decision
+
+When the product question is still open, generating several variants can make the alternatives easier to assess. <Term id="best-of-n">Best-of-n</Term> means generating multiple attempts and selecting among them. Use it when the comparison is worth the implementation and review cost.
+
+Build variants close enough to the intended system that the team can learn from them. For the dashboard, use representative cases and the actual components, then inspect the consequences of each priority rule with support staff. Preserve why an alternative was rejected and what might justify revisiting it.
+
+> If an agent handed you 5 solutions tomorrow, could you explain which you would choose, what evidence supports that choice, and what still needs to be tried?

@@ -1,0 +1,129 @@
+---
+title: "Factory"
+description: "How a team organizes agent work and invests in improvements supported by evaluations across tasks."
+socialDescription: "How a team organizes agent work and invests in improvements supported by evaluations across tasks."
+kicker: "Part four"
+order: 4
+status: seed
+updated: 2026-10-21
+---
+
+import PageIntro from '../../components/PageIntro.astro';
+import Term from '../../components/Term.astro';
+import FactoryScene from '../../components/FactoryScene.astro';
+
+<PageIntro kicker="Part four" title="Factory">
+If every new dashboard change needs the same corrections, what should your team change before the next one?
+</PageIntro>
+
+<div class="reading factory-intro">
+
+<FactoryScene />
+
+Perhaps the agent keeps inventing visual styles, bypassing an architectural boundary, or ignoring local coding conventions. Fixing each result takes time. Someone also needs to investigate why those problems recur, decide which improvements deserve investment, and check whether later work benefits.
+
+I use **software factory** for the team’s operating model for working with agents. It includes the technical environment and how the team chooses work, makes decisions, and learns from the results. The <Term id="harness">harness</Term> is part of this arrangement.
+
+</div>
+
+| Harness | Factory |
+|---|---|
+| How can the agent work reliably? | How does the team organize its work with agents? |
+| Context, tools, permissions, fast checks, and review gates. | Task allocation, human decisions, product feedback, responsibility, and investment. |
+| How do we improve context, tools, checks, and review using evidence from their use? | How does the team make that improvement a regular responsibility, fund it, and assess its effect? |
+
+Harness engineering can span several technical systems. A required check in the delivery pipeline or an independent reviewing agent belongs to that technical design. Continuous improvement belongs to both columns: people improve the harness, and the operating model gives that work time, responsibility, and regular evaluation.
+
+## Make slop specific enough to evaluate
+
+The dashboard can look plausible while missing much of what makes it fit your product. Generic styling, familiar-looking code, and a conventional design may still violate decisions your team has already made. These are concrete forms of **<Term id="statistical-middle">slop</Term>** to investigate.
+
+Start with criteria that describe the problem. “Make it less generic” gives the agent little to act on. An approved component, an architectural constraint, or examples of the intended voice give it something it can use. Context and checks often need to improve together.
+
+| Recurring problem | Context the agent can use | Checks and review |
+|---|---|---|
+| Code ignores local conventions | Approved examples and the project’s coding rules | A code-style checker reports violations during implementation. |
+| Changes violate architectural decisions | The decision, its reasons, and an example of the intended design | An automated architecture test checks forbidden dependencies; a reviewer examines decisions those tests leave open. |
+| The interface or its language does not fit the brand | Shared components, brand assets, and examples of the intended voice | Checks verify properties such as approved colors; a reviewer assesses language and visual choices against agreed criteria. |
+
+Code-style rules belong in the tools that can check them reliably. A reviewing agent should use those results and investigate what remains unresolved. A brand reviewer also needs examples that people have assessed, so you can check whether its judgments are useful. [Grading](/grading) explains how to build that evidence.
+
+## Find the pattern across tasks
+
+One bad result gives you something to repair. Evaluations, often called evals, help you compare completed tasks and find recurring problems. They give the team a basis for deciding what to improve and whether the investment helped.
+
+Choose criteria that matter to your team. **Human rework** asks how much correction people had to do before they could use the result. **Slop** asks where plausible work missed your product’s requirements, such as its coding conventions, architectural decisions, or brand. Record human rework separately from code style, architecture, and brand adherence. Better formatting must not hide an architectural problem.
+
+For each task, retain the request, the result, and the corrections made along the way. Include what quick checks found, what review caught, and what people repaired afterward. A polished final dashboard can hide several rounds of manual correction. Record time spent on those repairs when you can; the number of edits alone tells you little about the effort.
+
+## Teach an evaluator what matters to your team
+
+A separate AI can help assess these records across many tasks. Give it a small set of criteria, examples, and the evidence it should examine. For the dashboard, you might ask how much human correction was needed and whether the agent used the approved components. Ask it to point to the changes or passages that support each finding.
+
+Start with completed tasks that people on the team have assessed themselves. Include both acceptable results and failures. Compare the AI’s judgments with theirs. If it calls a page on-brand merely because the colors match, use an example where the language is wrong to explain what it missed. Refine the criteria and examples, then check the evaluator on other tasks it has not seen. This is calibration: checking and refining how the evaluator applies your team’s standards. You can do this through instructions and examples without retraining the model.
+
+The evaluator needs to distinguish correction from a change of direction. If support staff try the dashboard and choose a different priority rule, that is product learning. If someone repairs a rule the agent implemented incorrectly, that is rework. Require the evaluator to flag missing evidence. It should not invent repair time from a conversation or treat an undocumented outcome as a success.
+
+Once its judgments are dependable enough for the purpose, use the evaluator to assess comparable tasks and periodically check a sample yourself. Keep the criteria and evaluator version with the results. For each failure rate, retain the number of affected tasks and the number assessed. Recheck the evaluator when its model or your standards change. [Grading](/grading) explains how to assess reviewers in more detail.
+
+Suppose the evaluations show that several dashboard changes bypassed the shared visual components. Inspect those cases. The components may be hard to find, their examples may be stale, or the agent may have found them and chosen something else. Each explanation suggests a different change.
+
+The team might improve the project guide, repair a component example, and add a fast check for unsupported styling. Record which versions were actually used in later work. A new guide sitting in the repository tells you little if the agent never reads it.
+
+## Check whether the change helped
+
+Evaluate the revised setup against the previous version on representative tasks, including cases that already worked. Use the same evaluation criteria and record the model and setup versions. Keep some assessment cases separate from those used to develop the fix. Where results vary between runs, repeat the comparison enough to understand that variation. A single successful retry gives little evidence about the next task.
+
+For the dashboard, inspect whether agents use the approved components, whether the interface still works, and how much correction the result needs. Include the cost of extra checks and reviews. A faster first draft followed by a longer repair can leave the team worse off.
+
+Then examine subsequent use. Did the same violations become less frequent on comparable tasks? Did fewer problems escape review? Were people able to use the result? A change in task difficulty or review thoroughness can also change the numbers. Keep the evidence behind the result available for inspection.
+
+Use the findings to decide which changes to keep, revise, or remove. After a model change, for example, the reminder to consult approved components may no longer help. Records of completed tasks can show which aids were available and how often they were used. Assign someone to compare results with and without the aid, decide whether to remove it, and watch subsequent work for regressions. Keep the previous configuration available.
+
+## What Toyota contributes
+
+Toyota’s [production system](https://global.toyota/en/company/vision-and-philosophy/production-system/) offers useful precedents for organizing this work. **<Term id="jidoka">Jidoka</Term>** includes detecting an abnormality and stopping so it can be addressed. An **<Term id="andon">andon</Term>** signals the problem to the people responsible. **<Term id="kaizen">Kaizen</Term>** makes improvement a continuing activity, supported by people who understand the process and can change it.
+
+For the dashboard, a failed architecture check can stop a change from proceeding. The implementing agent may be able to repair it within the existing rules. An unresolved conflict between the rule and the product requirement needs a decision from whoever owns that requirement. The signal should identify the problem and make it clear who can act. Repeated failures give the team a reason to improve the context or mechanism before delegating more of the same work.
+
+I find the combination useful: detection, a way to respond, and time to improve the process. The team maintains the rules and tools that make delegation dependable. Toyota provides a precedent for that discipline; the effectiveness of a particular agent setup still needs evidence from its own tasks.
+
+## Use process statistics where the work is comparable
+
+**<Term id="spc">Statistical process control</Term>**, or SPC, uses past measurements to help identify changes in a process. [NIST describes](https://www.itl.nist.gov/div898/handbook/pmc/section1/pmc12.htm) establishing a baseline and calculating control limits around it. Measurements outside those limits are a reason to investigate.
+
+Evaluations can supply measurements for that analysis. In the dashboard example, a team could track the proportion of comparable interface changes that violate brand criteria at review. Meaningful comparisons require consistent criteria and a sufficiently comparable process. Changing the reviewer or mixing routine edits with unfamiliar redesigns can alter the measurement itself. A control chart requires a statistical method suited to those data; an ordinary trend chart alone does not establish process control.
+
+Start by retaining counts, task categories, and the evaluation versions behind them. Investigate a change in the pattern before attributing it to a harness improvement. These observations complement the checks and gates applied to individual changes.
+
+## Leave room to discover what the product should do
+
+Dave Snowden’s [Cynefin framework](https://cynefin.io/wiki/Cynefin) helps explain why different situations need different approaches. In ordered situations, cause and effect are clear or can be established through analysis. In complex situations, understanding develops through interaction with the system. Chaotic situations call for immediate action to stabilize them. A team can encounter all of these while working on one product.
+
+The dashboard’s code conventions can be explicit while its usefulness is still uncertain. You can test whether an implementation obeys the agreed priority rule. To discover whether that rule helps support staff, try bounded variants with them and observe what happens. Their experience may change the requirement.
+
+Keep those reasons for change distinct in your evaluations. A variant discarded after useful exploration has taught the team something. A result that ignores an agreed requirement needs correction. Preserve why an alternative was rejected and what would justify revisiting it. Treating every discarded variant as a defect would discourage the experimentation that product development needs.
+
+Longer independent agent runs can still support frequent product feedback. The agent may implement a variant over several hours, and the team can try it with users as soon as it is ready. [Loops](/loops) describes how to choose the work between human decisions. Also decide when the team will test its assumptions about usefulness, including after release.
+
+## Connect the work between agents
+
+A factory can connect several delegated tasks. In [Katz’s account](https://www.youtube.com/watch?v=7Y4sbZgBdnc&t=653s), a bug report triggers an investigation, a fixing agent produces a demonstration, and another agent watches the deployed change. The team needs to test whether the information passed between them is sufficient.
+
+Suppose someone reports that urgent cases are missing from the dashboard. Before attempting a fix, the investigating agent records the affected version, how to reproduce the problem, and the expected behavior. The fixing agent uses that evidence, works within its assigned permissions, and returns its change with check results and a working demonstration.
+
+The reviewer needs enough information and access to investigate the fix, including cases the demonstration leaves out. Deployment requires authorization under the release policy. After release, monitoring must send problems to someone who can respond. Decide how conflicting requirements, uncertain reports, and failed releases reach the appropriate people.
+
+A vendor may supply much of the runtime, coordination, and review tooling. The team still needs to define the product criteria, access boundaries, and responsibility for exceptions. These connections can support different loop sizes for different tasks, with updates that let people know when their attention is needed.
+
+## Invest in the work around implementation
+
+The factory needs a budget for maintaining context, checks, and review. Product and domain experts need time to clarify rules. Engineers maintain the execution environment and its controls. Someone must own evaluation quality and follow up on recurring problems. The [Roles](/roles) chapter examines those responsibilities; one person may hold several of them.
+
+Give proposed improvements a place alongside feature work, with a named owner and evidence of the problem. For a new brand check, that might mean recurring violations, their correction cost, and a bounded trial of the proposed check. The team should be able to decide whether the expected benefit justifies the investment.
+
+Review capacity matters too. DX’s [Q3 2026 report](https://getdx.com/uploads/state-of-ai-impact-in-engineering-q3-report.pdf) observes growing complexity-weighted pull request throughput, a measure of proposed code changes completed. Organizations with more than 80% AI-generated code waited a median of 82 minutes for a first review, compared with 40 minutes in the 20–40% group. The report measured waiting time and did not measure how long reviewers actively worked. It cannot establish what caused the difference between organizations; context quality is one proposed explanation.
+
+Use such findings to choose what to investigate locally. If work waits because reviewers lack time, another automated check may leave that queue unchanged. If reviews repeatedly require reconstructing missing decisions, better context and evidence may help. Examine the whole task, including integration and later repairs. [Charity Majors describes](https://charity.wtf/p/ai-enthusiasts-are-in-a-race-against) how delivery gains in one team can create cleanup for another; include those costs when assessing the return.
+
+Start with one recurring problem your team can assess. Give someone time to investigate it, test a change, and examine its effect on later work.

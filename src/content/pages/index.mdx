@@ -5,7 +5,7 @@ socialDescription: "A framework for everyone delegating work to machines: when t
 kicker: "Helping software build itself"
 order: 0
 status: seed
-updated: 2026-06-12
+updated: 2026-10-21
 ---
 
 import Hero from '../../components/Hero.astro';
@@ -24,15 +24,15 @@ import Term from '../../components/Term.astro';
 
 We are sitting in the best restaurant in the world. Every dish is suddenly affordable, every once-scarce ingredient abundant, and the kitchen can execute anything you name. There is just no menu. So out of safety, risk aversion, and a plain lack of imagination, most people keep ordering what they know. The schnitzel was fine last time. Let's do the schnitzel again.
 
-That is about where building software landed this year. Once the kitchen can cook anything, the meal turns on two judgments: what is worth ordering, and whether the plate that came back is any good. In the actual work, that is what is worth building, and whether what came back is any good. The Elastic Loop is a working model for those two judgments, for everyone delegating work, specifically building software products, to AI agents. It is for you if you want to learn when to keep the loop tight, when to let it stretch, and what has to be in place before you let go. It is for engineers, but just as much for the people who decide what gets built and judge whether it is any good: product, design, the domain experts. And for the people who set the conditions, whoever shapes how a team works and whoever decides where the money goes. The breadth is the point: both judgments are spread across every one of those roles, not concentrated in whoever sits at the keyboard.
+Agents make it easier to build software, which gives us more choices about what to attempt. The Elastic Loop helps with two decisions: what is worth building, and how to judge what comes back. It’s for everyone delegating work to machines, especially teams building software products. Engineers, product people, designers, and domain experts contribute throughout that work. The people responsible for the team’s process and budget decide how to support it.
 
 </div>
 
 ## How far can you let go?
 
-Chances are you have done this today: you asked an AI for something, read the answer, winced, rephrased, read again. That round trip is the loop, and it is the unit everything here is built from. You put in intent, the agent does some work, you check what came back, and what you learned shapes the next ask. The size of a loop is how much work happens between two of your looks: a sentence, a feature, a week of output.
+Chances are you have done this today: you asked an AI for something, read the answer, winced, rephrased, read again. That round trip is the loop, and it is the unit everything here is built from. You put in intent, the agent does some work, you check what came back, and what you learned shapes the next ask. The size of a loop is how much work happens between two of your looks: a sentence, an experiment, a working feature.
 
-The version you ran this morning is the tightest one. Every turn under your eyes, every result checked before it counts, and that mode works well. The question this framework keeps circling is how far the loop can stretch beyond it: first elastic, where you hand over a bounded chunk of work and check in at agreed points, then loose, where the agent works for multiple hours on its own while you do something else. And what has to be in place before you can let go that far.
+The version you ran this morning is the tightest one. You inspect each small result before the agent continues. The question this framework keeps circling is how far the loop can stretch beyond it: first elastic, where you hand over a bounded chunk of work and check in at agreed points, then loose, where the agent carries a task through to its outcome gate. And what has to be in place before you can let go that far.
 
 ## The whole framework in one sentence
 
@@ -48,19 +48,19 @@ The version you ran this morning is the tightest one. Every turn under your eyes
 
 <div>
 
-**Grounds.** Context is what lets the agent stop guessing and start working from your specifics: your codebase, your customers, your constraints.
+**Grounds.** Context gives the agent information about your codebase, customers, and constraints.
 
 </div>
 
 <div>
 
-**Keeps it useful.** <Term id="backpressure">Backpressure</Term> is the word that stuck in agentic engineering for resistance: anything an agent's output has to survive before it counts ([Geoffrey Huntley](https://ghuntley.com/ralph/) and [Moss Banay](https://banay.me/dont-waste-your-backpressure/) did much of the early work on it). A failing test is backpressure, and so is a designer's critique or an acceptance scenario from someone who knows the domain. Plenty of the resistance that matters never touches a compiler. The challenge is how much of this backpressure can be automated, so it does not need a human in the loop stopping the belt.
+**Keeps it useful.** <Term id="backpressure">Backpressure</Term> is quick, inexpensive feedback an agent can act on while it works. A focused test or code-style checker reports a problem, and the agent corrects it. Context explains the requirements; permissions limit actions; reviews assess the result at agreed gates. Product and domain knowledge can inform each of these. [Harness](/harness) explains how they work together.
 
 </div>
 
 <div>
 
-**Closes.** The outcome gets checked, and what the loop learned survives it. How expensive that check is for the human decides how many loops you can run at once; more on that in [Harness](/harness).
+**Closes.** The reviewer evaluates the outcome, and useful feedback is retained for later work. The time and attention needed by the authorized reviewer affect how much work the team can handle; more on that in [Harness](/harness).
 
 </div>
 
@@ -68,25 +68,25 @@ The version you ran this morning is the tightest one. Every turn under your eyes
 
 ## Where does your next task belong?
 
-Two questions decide where a task sits: how much leash does the agent get, and what holds the output other than you? Read the grid on those two axes. Each step up adds one more dam between the agent and shipped product.
+Two questions organize the grid: how much work happens between human decisions, and which requirements are covered by checks and review? The second axis describes coverage. Fast backpressure and review gates contribute in different ways.
 
 <MasterGrid />
 
 ### What is context?
 
-A longer leash does not call for more context. The amount a task needs is fixed. What changes is how much of it the agent has to reach on its own, without you handing it over turn by turn from your own head or systems the agent can not use on its own.
+The agent needs access to the information relevant to the task. With more independent work, it has to find more of that information without you supplying it at each step.
 
-So what is *context*? Basically, everything the agent would need to stop guessing: the decision history that evaporated in a chat thread three months ago, the business rules that live only in your most experienced colleague's head, the design system, API docs that describe what the system does today rather than two years ago, who the customer is and what they have already tried. Most of this exists in any team that has shipped something. It just rarely exists in a form an agent can read, because heads, kitchen conversations, and meeting recordings nobody rewatches do not count. As agents write faster than anyone records why, the rationale and constraints nobody captured pile up into what Margaret-Anne Storey calls [intent debt](https://arxiv.org/abs/2603.22106).
+Context includes the business rules, product decisions, and technical information relevant to the task. An agent may need current API documentation, an approved design component, or the reason a customer rejected an earlier approach. Some of that knowledge lives only in conversations or people’s heads. Record what later work will need and make it accessible. Margaret-Anne Storey calls the accumulation of undocumented rationale and constraints [intent debt](https://arxiv.org/abs/2603.22106).
 
-Freshness matters too, and on the right side of the grid it matters most. In a tight loop a stale document costs you one correction, because you watch the wrong turn happen. In a loose loop a stale document is worse than none, because the agent follows it with full conviction and nobody contradicts it for hours.
+Stale guidance can misdirect work at any loop size. Checks and checkpoints help reveal the problem, provided they assess the result against current requirements.
 
-Moving that knowledge into a state where it stays available and current without a human pumping it in has become a discipline of its own, usually filed under *context engineering*. It is slower work than adding another check, which is why the floor sits where it does.
+Making this information accessible and keeping it current is part of *context engineering*. It needs maintenance as the product and its requirements change.
 
 ## Two ways this goes wrong
 
-> Sprawl is the explosion. Slop is the slow collision.<br />Both are what happens when a search process runs without backpressure, and only one of them announces itself.
+Delegated work can exceed what a team can use or review. It can also satisfy generic expectations while missing the product’s requirements. Constraints, checks, and review help address both problems.
 
-A <Term id="search-space">search process</Term>, because that is what an agentic loop is, essentially: it explores a space of possible solutions and looks for one or many variants that fit your intent (see [Why](/why)).
+An agent explores a <Term id="search-space">search space</Term> of possible solutions. The task, context, and feedback help it choose among them (see [Why](/why)).
 
 <CardGrid cols={2} strong>
 
@@ -96,7 +96,7 @@ A <Term id="search-space">search process</Term>, because that is what an agentic
 
 ### Sprawl
 
-Output without containment: variant inflation, refactoring PRs nobody asked for, backlogs gathering mold. It happens far from any repo too. Picture the team that generates thirty landing-page variants in an afternoon while nobody is assigned to review even one. Every one of them looks complete, and the pile grows faster than anyone pulls it back. The good news is that sprawl announces itself. You can see it in pull request volume, and pull people back. Think of a pressure reactor: agents generate pressure, and the containment wall is what makes a productive reaction possible in the first place.
+Sprawl is work generated beyond what the team can use or review. It might be an unrequested refactoring or 30 landing-page variants with nobody assigned to compare them. Agree the scope and who will assess the result before asking for more work. Review queues and unused proposals can show where generation has exceeded the team’s capacity to make decisions.
 
 </div>
 
@@ -106,13 +106,13 @@ Output without containment: variant inflation, refactoring PRs nobody asked for,
 
 ### Slop
 
-Here is the schnitzel again, the order everyone defaults to when the menu is missing and imagination runs short. Output that looks plausible, reads smoothly, and could have come from any team prompting any model on any given day. Lots of noise, almost no signal. The everyday version is the onboarding text that sounds like every onboarding text ever written. <Term id="statistical-middle">Slop</Term> does not announce itself. The damage shows up quarters later, in the market, in usage signals, in the competitor who built the thing properly. Colleagues you avoid texting with, because they sent you uncanny copywriting, lots of it. It gets pulled out of the statistical middle in two moves: context up front keeps the agent from starting there, in the middle of everything it has ever read, and product backpressure at the back pulls the output the rest of the way out.
+<Term id="statistical-middle">Slop</Term> looks plausible but misses what the product needs. An onboarding page might read smoothly while omitting the explanation new users need to get started. Give the agent relevant decisions and examples, then assess its work against those requirements. Track recurring misses across comparable tasks and use them to improve the context and mechanisms. [Factory](/factory) shows this through code style, architecture, and brand adherence.
 
 </div>
 
 </CardGrid>
 
-Sprawl has two natures, though, and the grid only catches one. The kind that comes from missing checks is the one the grid maps: output that does not fit the system, broken refactors, architectural <Term id="drift">drift</Term>. It shows up as a cell. The other kind comes from missing closure: output that passes every check, but that nobody is assigned to read. Those thirty landing pages again. It can happen anywhere, even under full backpressure, because depth of checking is not the same as having someone there to shut the loop. That second kind rides on closure, which I keep off the axes on purpose, since it applies to every cell equally.
+The grid shows how much work is delegated and how well checks and review cover its requirements. Weak coverage can allow defects and architectural <Term id="drift">drift</Term>. Even with extensive checks, work can accumulate if nobody has responsibility or time to accept it. That need for an acceptance decision applies across the grid.
 
 <Squeeze />
 
@@ -124,7 +124,7 @@ Sprawl has two natures, though, and the grid only catches one. The kind that com
 
 ### The truffle
 
-Delegation runs on taste, and taste is typically acquired. The line truffle people pass around is that the thing smells like a bicycle accident in the forest: wet metal, earth, fog, the forest floor after rain. You only taste the whole of it if you have met those smells before. That is what acquired taste means, qualitative judgment built through sensory contact with the work, the kind you get from reading diffs, shipping mistakes, and watching real users get stuck. I reach for this one with engineers who review every turn because letting go feels like losing the craft. Tight is a legitimate mode, just not the only one. And I reach for it with everyone who judges output without building it: designers, domain experts, anyone whose "this is off" is worth more than a passing test suite. The talk this framework grew out of, [How Does Truffle Taste?](https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/), was built around it.
+Judgment develops through experience. The truffle image in my talk [How Does Truffle Taste?](https://www.robert-glaser.de/the-elastic-loop-introducing-agentic-engineering-strategically/) makes that familiar: descriptions mean more once you’ve tasted one. Reading changes, investigating mistakes, and watching users struggle give you a better basis for assessing agent work. Engineers can develop that judgment through close involvement; designers and domain experts bring experience of the product and its use.
 
 </div>
 
@@ -132,7 +132,7 @@ Delegation runs on taste, and taste is typically acquired. The line truffle peop
 
 ### The mirror
 
-AI amplifies and reflects whatever organizational structure it lands in, including the parts you would rather it didn't. This one is for leadership teams shopping for tools when the question really sits in the operating model, and for the people who own how the team works, scrum masters and coaches included, because the loop will mirror their rituals right back at them.
+An agent depends on the team’s available information and decision process. Missing ownership or conflicting requirements can become visible when the agent gets stuck or produces the wrong result. Teams choosing tools should also examine these working conditions.
 
 </div>
 
@@ -140,7 +140,7 @@ AI amplifies and reflects whatever organizational structure it lands in, includi
 
 ### The pressure reactor
 
-Backpressure is containment, and containment is what allows a productive reaction at all. This is the image for architecture and <Term id="harness">harness</Term> debates, where "guardrails" sounds like bureaucracy until you see the wall as the thing that lets you run the reactor hot.
+A <Term id="harness">harness</Term> combines feedback with controls that limit what an agent can do. In the reactor image, containment stands for enforced boundaries. Backpressure supplies quick correction during the work; gates govern whether it may proceed.
 
 </div>
 
@@ -158,4 +158,4 @@ If you are new to all of this, start with Loops.
 
 ## A framework for everyone delegating work to machines. Even machines.
 
-Agents have started applying this loop to themselves. [Cursor's First Proof](https://1stproof.org/) and [OpenAI's harness engineering](https://openai.com/index/harness-engineering/) arrived at the same shape independently: decompose, parallelize, verify, iterate. Anthropic's Fable model shows strong signs of being post-trained to put itself in reinforced loops, and the [dynamic workflows](https://code.claude.com/docs/en/workflows) feature builds harnessed loops on the fly for the task at hand. I am keeping this as a coda rather than a headline, because it is the most interesting thread here and the one I am least sure about.
+Agents can help inspect their own working conditions: find missing context, propose a check, or compare alternative configurations. Those proposals need evaluation too. [Harness](/harness) describes how to assess changes to the setup; [Factory](/factory) explains who makes that improvement a regular responsibility.

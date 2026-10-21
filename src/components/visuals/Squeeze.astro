@@ -1,6 +1,6 @@
 ---
 // The squeeze: context positions the start outside the statistical middle;
-// backpressure pulls the output the rest of the way in the same direction.
+// checks and review identify where the result misses product requirements.
 // Build-time port of buildSqueeze() from the hifi mockup — the SVG is generated
 // once at build time with a deterministic PRNG, so output is stable across builds.
 
@@ -59,7 +59,7 @@ els.push(`<circle cx="430" cy="165" r="6.5" fill="${ink}"/>`);
 els.push(arrow(430, 165, 14, 640, 118, 11, true));
 // grounded start: outlined dot exactly at the end of segment 1
 els.push(`<circle cx="640" cy="118" r="7" fill="#FFFFFF" stroke="${mint}" stroke-width="2.5"/>`);
-// segment 2: backpressure pulls the rest of the way, same direction (solid = continuous pressure)
+// segment 2: checks and review inform corrections
 els.push(arrow(640, 118, 11, 798, 81, 12, false));
 // the solution: filled dot exactly at the end of segment 2
 els.push(`<circle cx="798" cy="81" r="8" fill="${mint}"/>`);
@@ -74,27 +74,27 @@ const svg = `<svg viewBox="0 0 980 340" width="100%" height="100%" style="positi
       <!-- context, left -->
       <div class="ctx-label">
         <div class="label-kicker">Context</div>
-        <div class="label-text">positions the start: before any work happens, grounding places the agent at your specifics, outside the middle</div>
+        <div class="label-text">supplies product requirements and examples before the agent begins</div>
       </div>
       <!-- ungrounded start label -->
       <div class="pt-label ungrounded">ungrounded start</div>
       <!-- segment captions -->
-      <div class="seg-caption seg-context">context positions</div>
-      <div class="seg-caption seg-backpressure">backpressure pulls</div>
+      <div class="seg-caption seg-context">context guides</div>
+      <div class="seg-caption seg-backpressure">checks and review</div>
       <!-- grounded start label -->
       <div class="pt-label grounded">grounded start</div>
       <!-- solution label -->
       <div class="pt-label solution">your specific solution</div>
       <!-- middle label -->
-      <div class="middle-label">the statistical middle &mdash; plausible, generic, everyone&rsquo;s output</div>
+      <div class="middle-label">plausible, generic results</div>
       <!-- backpressure, right -->
       <div class="bp-label">
-        <div class="label-kicker">Product &amp; domain backpressure</div>
-        <div class="label-text">holds it there and pulls the output the rest of the way toward your product</div>
+        <div class="label-kicker">Checks and review</div>
+        <div class="label-text">identify where the result misses product requirements and guide corrections</div>
       </div>
     </div>
   </div>
-  <figcaption>Context positions the start outside the middle before any work happens; backpressure then pulls the output the rest of the way out.</figcaption>
+  <figcaption>Context guides the agent toward product requirements. Checks and review identify where the result still misses them; corrections need evaluation.</figcaption>
 </figure>
 
 <style>
