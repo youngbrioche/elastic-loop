@@ -1,5 +1,11 @@
 # Changelog
 
+## 22 Oct 2026 — Clarify glossary terms and automatic backpressure
+
+[`1419235`](https://github.com/youngbrioche/elastic-loop/commit/1419235983a7689c3f986624edf0023c2197f339)
+
+The glossary clarifies holdouts, generalization, rubrics, and manufacturing terms with more concrete examples. Harness now shows how commits, builds, and file changes trigger inexpensive checks that help an agent correct its work. Judge/Evaluator replaces LLM judge throughout the book.
+
 ## 21 Oct 2026 — Connect loops, harnesses, and the software factory
 
 [`78c014d`](https://github.com/youngbrioche/elastic-loop/commit/78c014da823f7780898ba084e4c1d2c624350d89)

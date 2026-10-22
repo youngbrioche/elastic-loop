@@ -1,5 +1,12 @@
 [
   {
+    "date": "22 Oct 2026",
+    "title": "Clarify glossary terms and automatic backpressure",
+    "text": "Revised glossary definitions and examples explain Judge/Evaluator and show how checks built into the workflow provide backpressure.",
+    "body": "The glossary clarifies holdouts, generalization, rubrics, and manufacturing terms with more concrete examples. Harness now shows how commits, builds, and file changes trigger inexpensive checks that help an agent correct its work. Judge/Evaluator replaces LLM judge throughout the book.",
+    "commit": "1419235983a7689c3f986624edf0023c2197f339"
+  },
+  {
     "date": "21 Oct 2026",
     "title": "Connect loops, harnesses, and the software factory",
     "text": "A new Factory chapter connects technical improvements with team responsibility, while Harness and Grading distinguish quick checks, review gates, and product learning.",
