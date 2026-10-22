@@ -34,17 +34,17 @@ export interface GlossaryEntry {
 export const glossary: Record<string, GlossaryEntry> = {
   'outcome-grading': {
     term: 'Outcome grading',
-    def: 'Judging whether a result is good, precisely enough that the judgment can be applied again and again, by a person or a machine.',
-    anchor: 'You already do the simplest version every time you write a test or a definition of done.',
+    def: 'Assessing a result against explicit criteria that a person or machine can apply consistently.',
+    anchor: 'Checking a completed feature against its acceptance criteria is one familiar form.',
   },
   backpressure: {
     term: 'Backpressure',
-    def: 'Quick, inexpensive feedback an agent can act on during its work cycle. The feedback has to arrive soon enough to steer the work, with a cost in time, tokens, and context that the loop can afford.',
-    anchor: 'A focused test reports the failing case, and the agent fixes it. A small product check flags that an urgent case is missing from a dashboard, and the agent adjusts the view.',
+    def: 'Quick, inexpensive feedback from checks built into the agent’s workflow. As the agent works, these checks report problems it can correct immediately.',
+    anchor: 'When the agent tries to save a code change as a commit, an automatic check rejects a variable name that breaks the project’s naming rules. The agent corrects the name. Its next commit attempt triggers the check again.',
   },
   'search-space': {
     term: 'Search space',
-    def: 'The set of possible solutions a task allows. Context and feedback help an agent choose among them. You can also ask it to propose several candidates for comparison.',
+    def: 'The set of candidate solutions an agent can explore for a task.',
     anchor: 'Several implementations can satisfy the same requirement. Constraints help narrow the choice.',
   },
   'cynefin': {
@@ -59,63 +59,64 @@ export const glossary: Record<string, GlossaryEntry> = {
   },
   rubric: {
     term: 'Rubric',
-    def: 'A written list of what “good” means for a kind of output, so the same standard can be applied to every result.',
-    anchor: 'Acceptance criteria reused to assess several results.',
+    def: 'A guide that names the qualities to assess and describes what meeting each criterion looks like.',
+    anchor: 'For a dashboard, it might require the reason for each case’s priority to be visible and supported by the case details.',
   },
   golden: {
     term: 'Golden',
     def: 'An accepted result retained as a reference for assessing later results.',
-    anchor: 'An approved result you can compare with later attempts.',
+    anchor: 'An approved support reply shows the tone and level of detail expected in later replies.',
   },
   'counterexample': {
     term: 'Counterexample',
     def: 'A plausible but unsuitable result retained with the reason it fails the relevant criteria. It helps assess later results and the reviewer itself.',
-    anchor: 'A previously shipped defect can supply a regression case; a rejected design may need reconsideration if requirements change.',
+    anchor: 'A polished dashboard that hides a case the agreed rule marks as urgent shows what the reviewer should reject.',
   },
-  'llm-judge': {
-    term: 'LLM judge',
-    def: 'A second AI you ask to grade the first one’s output against your criteria. It scales review, but has blind spots of its own.',
-    anchor: 'A reviewer assessed against examples people have already evaluated, including plausible answers that should be rejected.',
+  'judge-evaluator': {
+    term: 'Judge/Evaluator',
+    def: 'An AI used to assess work against defined criteria. Check its judgments against examples evaluated by people who understand the task.',
+    anchor: 'For a dashboard, it can assess whether the explanation of each case’s priority is supported by the case details.',
+    match: ['evaluator'],
   },
   'reward-hacking': {
     term: 'Reward hacking',
-    def: 'When the agent learns to satisfy the letter of your grader while missing the point. The AI version of teaching to the test.',
-    anchor: 'Code that passes the test by hardcoding the expected value instead of actually solving the problem.',
+    def: 'When an agent achieves a high score by exploiting the scoring rules while failing the intended task.',
+    anchor: 'Code might return a hardcoded answer that passes one test but fails when the input changes.',
   },
   holdout: {
     term: 'Holdout',
-    def: 'Test cases you deliberately keep out of the agent’s reach, so it cannot tune itself to pass an exam it has already seen.',
-    anchor: 'Keeping the real exam questions out of the study guide.',
+    def: 'Cases set aside while developing a solution or adjusting an evaluator, then used to assess it on unfamiliar cases.',
+    anchor: 'Keep some support cases separate while refining the dashboard, then check how it handles them.',
   },
   drift: {
     term: 'Drift',
-    def: 'Slow movement away from what is correct or wanted, over time, without any single obvious break.',
-    anchor: 'The product or codebase quietly getting less coherent release after release.',
+    def: 'In this book, the gradual movement of work away from its intended requirements or design.',
+    anchor: 'Successive changes introduce conflicting design choices across the product.',
   },
   'statistical-middle': {
-    term: 'The statistical middle (slop)',
+    term: 'Slop',
     def: 'Plausible, generic work that misses what makes it fit a particular product or task. It can ignore local coding conventions, architectural decisions, or brand requirements.',
     anchor: 'A dashboard invents visual styles despite an existing set of approved components.',
-    match: ['slop'],
+    match: ['the statistical middle'],
   },
   'best-of-n': {
     term: 'Best-of-n',
-    def: 'Generate several independent attempts at a task, then select one using agreed criteria.',
+    def: 'Generate several independent attempts at a task, then select the best according to agreed criteria.',
     anchor: 'Trying 3 solutions and comparing their quality and cost before choosing one.',
   },
   'blackbox-artifact': {
     term: 'Blackbox artifact',
-    def: 'A result assessed through its observable behavior.',
-    anchor: 'Assessing a dependency through tests and observed behavior.',
+    def: 'A result assessed through its observable behavior without inspecting its internal implementation.',
+    anchor: 'Trying the dashboard with representative cases before examining its code.',
   },
   generalization: {
     term: 'Generalization',
-    def: 'Whether something keeps working on cases it was not specifically built or tested against.',
+    def: 'The ability to work on cases beyond those used to develop or adjust a solution.',
     anchor: 'Does the fix also handle inputs beyond those described in the ticket?',
   },
   'retained-feedback': {
     term: 'Retained feedback',
-    def: 'Useful feedback carried forward into a plan, test, decision record, or guidance for later work. Evaluate its effect on comparable tasks before claiming improvement.',
+    def: 'Useful feedback carried forward into a plan, test, decision record, or guidance for later work.',
     anchor: 'Keep the reason for a rejected option and the conditions that would justify reconsidering it.',
   },
   'harness': {
@@ -126,7 +127,7 @@ export const glossary: Record<string, GlossaryEntry> = {
   'dark-factory': {
     term: 'Dark factory',
     def: 'A term for highly automated delivery with limited direct human intervention. It describes one automation arrangement within a software factory.',
-    anchor: 'The team’s software factory can support tight, elastic, and loose loops for different tasks.',
+    anchor: 'For a familiar defect, agents investigate, repair, and review the change before an automatic release under the team’s agreed policy.',
   },
 
   // Lean / Toyota Production System lineage. These are the manufacturing terms
@@ -134,13 +135,13 @@ export const glossary: Record<string, GlossaryEntry> = {
   // rather than to "you already do this", since few readers run a factory.
   tpm: {
     term: 'Total productive maintenance (TPM)',
-    def: 'Keeping every machine on a line in good working order continuously, so production does not stop for failures that routine care would have prevented.',
-    anchor: 'Keeping your build scripts, docs, and dev setup current, so the next run does not break on something avoidable.',
+    def: 'An approach in which operators, maintenance staff, and other teams share responsibility for keeping equipment effective and preventing recurring losses.',
+    anchor: 'A team maintains its build scripts and setup instructions so avoidable failures do not recur.',
   },
   'spc': {
     term: 'Statistical process control (SPC)',
     def: 'Using statistical methods to compare a process with a historical baseline and calculated control limits. It requires comparable measurements and a method suited to the data.',
-    anchor: 'A control chart can help investigate changes in failure rates across comparable tasks. An ordinary trend chart alone does not establish process control.',
+    anchor: 'A control chart helps identify when failure rates depart from the variation expected across comparable tasks.',
   },
   kaizen: {
     term: 'Kaizen',
@@ -150,11 +151,11 @@ export const glossary: Record<string, GlossaryEntry> = {
   andon: {
     term: 'Andon',
     def: 'A signal that makes a production problem visible to the people who can respond.',
-    anchor: 'A pipeline that says nothing on green and pings you only on a failure.',
+    anchor: 'A failed pipeline check alerts the person responsible and shows which check failed.',
   },
   'poka-yoke': {
     term: 'Poka-yoke',
-    def: 'Designing a process to prevent or detect a particular mistake.',
+    def: 'Designing a process to prevent a particular mistake or detect it early enough to correct it.',
     anchor: 'A type checker rejects code that passes text where a number is required.',
   },
   jidoka: {
@@ -164,7 +165,7 @@ export const glossary: Record<string, GlossaryEntry> = {
   },
   oee: {
     term: 'Overall equipment effectiveness (OEE)',
-    def: 'A single measure of how productive a line is, combining how often it runs, how fast it runs, and how much of its output is good.',
-    anchor: 'In software, examine delivery together with review results and production quality; these require measures suited to software work.',
+    def: 'A manufacturing measure that multiplies availability during planned production time, speed relative to the equipment’s ideal rate, and the share of acceptable output.',
+    anchor: 'For software work, examine delivery and quality together using measures suited to the work.',
   },
 };
