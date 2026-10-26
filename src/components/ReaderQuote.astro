@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/christoph-eckerle.webp';
+import { readerQuote } from '../data/readerQuote';
+---
+
+<figure class="reader-quote" id="reader-quote">
+  <p class="label">{readerQuote.label}</p>
+  <blockquote cite={readerQuote.sourceUrl}>
+    {readerQuote.paragraphs.map((paragraph, index) => (
+      <p>{index === 0 ? '“' : ''}{paragraph}{index === readerQuote.paragraphs.length - 1 ? '”' : ''}</p>
+    ))}
+  </blockquote>
+  <figcaption>
+    <a class="person" href={readerQuote.profileUrl}>
+      <Image
+        src={portrait}
+        alt=""
+        width={64}
+        height={64}
+        widths={[64, 128]}
+        sizes="64px"
+        class="portrait"
+      />
+      <span class="name">{readerQuote.name}</span>
+    </a>
+    <span class="role">{readerQuote.role} · {readerQuote.company}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .reader-quote {
+    max-width: 740px;
+    margin: 72px auto 0;
+    text-align: center;
+  }
+
+  .label {
+    margin: 0 0 20px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--rg-fg-2);
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 0;
+    /* Override the site's mobile hanging indent for prose pull quotes. */
+    padding-left: 0 !important;
+    border: 0;
+    background: none;
+  }
+
+  blockquote::before {
+    content: none;
+  }
+
+  blockquote p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.015em;
+    color: var(--rg-fg-1);
+    text-wrap: balance;
+  }
+
+  blockquote p + p {
+    margin-top: 14px;
+  }
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 26px;
+  }
+
+  .portrait {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--rg-fg-1);
+    text-decoration: none;
+    box-shadow: none;
+  }
+
+  .name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--rg-fg-1);
+    text-decoration: underline;
+    text-decoration-color: var(--rg-border-strong);
+    text-underline-offset: 4px;
+  }
+
+  .person:hover .name {
+    text-decoration-color: var(--rg-fg-1);
+  }
+
+  .person:focus-visible {
+    outline: 2px solid var(--rg-fg-1);
+    outline-offset: 6px;
+    border-radius: 2px;
+  }
+
+  .role {
+    margin-top: 3px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--rg-fg-2);
+  }
+
+  @media (max-width: 600px) {
+    .reader-quote {
+      margin-top: 52px;
+    }
+
+    blockquote p {
+      font-size: 20px;
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+    }
+
+    figcaption {
+      margin-top: 22px;
+    }
+  }
+</style>
