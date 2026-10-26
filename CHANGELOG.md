@@ -1,5 +1,11 @@
 # Changelog
 
+## 26 Oct 2026 — Run a shared factory
+
+[`726eaa8`](https://github.com/youngbrioche/elastic-loop/commit/726eaa893d08b26314b972d7c4c9ddb275dd6a58)
+
+The Factory chapter adds guidance on shared execution, versioned configuration, and responsibility for changes. Local experiments pass through the team's checks and review before product use. A dashboard example shows how a tested check reaches later work and how the team can assess its effect.
+
 ## 22 Oct 2026 — Clarify glossary terms and automatic backpressure
 
 [`1419235`](https://github.com/youngbrioche/elastic-loop/commit/1419235983a7689c3f986624edf0023c2197f339)
