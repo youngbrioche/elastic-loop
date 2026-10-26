@@ -1,5 +1,11 @@
 # Changelog
 
+## 26 Oct 2026 — A reader's companion
+
+[`a402de8`](https://github.com/youngbrioche/elastic-loop/commit/a402de8e18c84392b9d00a940f68a79c4285173f)
+
+The home page features Christoph Eckerle's reader recommendation, with his portrait and professional role. His words cover the book's style, its use in trainings, and the idea of a team consultant grounded in the material. The same quote and attribution appear in the Markdown edition.
+
 ## 26 Oct 2026 — Run a shared factory
 
 [`726eaa8`](https://github.com/youngbrioche/elastic-loop/commit/726eaa893d08b26314b972d7c4c9ddb275dd6a58)

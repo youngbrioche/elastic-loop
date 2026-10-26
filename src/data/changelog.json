@@ -1,6 +1,13 @@
 [
   {
     "date": "26 Oct 2026",
+    "title": "A reader's companion",
+    "text": "Christoph Eckerle recommends The Elastic Loop as a training companion and a source for an agent-based team consultant.",
+    "body": "The home page features Christoph Eckerle's reader recommendation, with his portrait and professional role. His words cover the book's style, its use in trainings, and the idea of a team consultant grounded in the material. The same quote and attribution appear in the Markdown edition.",
+    "commit": "a402de8e18c84392b9d00a940f68a79c4285173f"
+  },
+  {
+    "date": "26 Oct 2026",
     "title": "Run a shared factory",
     "text": "Factory now explains shared operation and how tested improvements reach the next colleague's work.",
     "body": "The Factory chapter adds guidance on shared execution, versioned configuration, and responsibility for changes. Local experiments pass through the team's checks and review before product use. A dashboard example shows how a tested check reaches later work and how the team can assess its effect.",
