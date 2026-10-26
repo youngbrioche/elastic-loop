@@ -5,7 +5,7 @@ socialDescription: "How a team organizes agent work and invests in improvements 
 kicker: "Part four"
 order: 4
 status: seed
-updated: 2026-10-21
+updated: 2026-10-26
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
@@ -33,6 +33,16 @@ I use **software factory** for the team’s operating model for working with age
 | How do we improve context, tools, checks, and review using evidence from their use? | How does the team make that improvement a regular responsibility, fund it, and assess its effect? |
 
 Harness engineering can span several technical systems. A required check in the delivery pipeline or an independent reviewing agent belongs to that technical design. Continuous improvement belongs to both columns: people improve the harness, and the operating model gives that work time, responsibility, and regular evaluation.
+
+## Run a shared factory
+
+I'd run the factory in the cloud or on the organisation's own servers. Agent runs should continue when someone closes their laptop. The team needs to see what the agents are doing and take over when a run needs attention.
+
+For each kind of task, the factory applies the team's agreed checks and review requirements, whoever starts the work. Keep this setup under version control, with an owner responsible for approving changes and restoring an earlier version if a change fails.
+
+People can still experiment on their laptops. Before using the result in the product, put it through the factory's checks and review. The team tests changes to the factory itself on representative tasks before the owner approves them.
+
+Suppose agents keep using an old dashboard component that the team has replaced. After testing a check that catches this mistake, the team adds it to the factory. The next colleague's dashboard change goes through that check too. Examine later work to see whether people have less to correct.
 
 ## Make slop specific enough to evaluate
 
