@@ -20,8 +20,7 @@ export const benediktQuote = {
     'Tight and loose loops, backpressure, and how they work together. I haven’t seen these ideas explained this clearly anywhere else.',
   ],
   name: 'Benedikt Stemmildt',
-  role: 'Co-founder',
+  role: 'CEO, Co-founder',
   company: 'hackers&wizards',
   profileUrl: 'https://benedikt.stemmildt.com/',
-  note: 'Feedback on the first edition · approved English paraphrase',
 };

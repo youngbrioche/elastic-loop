@@ -112,7 +112,7 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
         `> ${index === 0 ? '“' : ''}${paragraph}${index === readerQuote.paragraphs.length - 1 ? '”' : ''}`,
       ).join('\n>\n') +
       `\n>\n> [${readerQuote.name}](${readerQuote.profileUrl}), ${readerQuote.role} · ${readerQuote.company}` +
-      `\n\n> “${benediktQuote.paragraphs[0]}”\n>\n> [${benediktQuote.name}](${benediktQuote.profileUrl}), ${benediktQuote.role} · ${benediktQuote.company}\n>\n> ${benediktQuote.note}`,
+      `\n\n> “${benediktQuote.paragraphs[0]}”\n>\n> [${benediktQuote.name}](${benediktQuote.profileUrl}), ${benediktQuote.role} · ${benediktQuote.company}`,
   ],
   [/<MasterGrid[\s\S]*?\/>/g, MASTER_GRID_MARKDOWN],
   [
