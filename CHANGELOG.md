@@ -1,5 +1,11 @@
 # Changelog
 
+## 27 Oct 2026 — Follow failures through to improvement
+
+[`b23f866`](https://github.com/youngbrioche/elastic-loop/commit/b23f86686c7f815d39f7714de0c05f8874cc362a)
+
+Loops clarifies delegation in existing codebases, while Harness expands its design-system example with trace evidence. Factory adds time from failure to fix, DORA delivery metrics, and Hycle’s proposal to treat the factory as an internal product.
+
 ## 26 Oct 2026 — A reader's companion
 
 [`a402de8`](https://github.com/youngbrioche/elastic-loop/commit/a402de8e18c84392b9d00a940f68a79c4285173f)

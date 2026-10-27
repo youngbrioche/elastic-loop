@@ -1,5 +1,12 @@
 [
   {
+    "date": "27 Oct 2026",
+    "title": "Follow failures through to improvement",
+    "text": "New examples cover delegation in existing codebases, tracing design inconsistencies, and measuring the time from failure to fix.",
+    "body": "Loops clarifies delegation in existing codebases, while Harness expands its design-system example with trace evidence. Factory adds time from failure to fix, DORA delivery metrics, and Hycle’s proposal to treat the factory as an internal product.",
+    "commit": "b23f86686c7f815d39f7714de0c05f8874cc362a"
+  },
+  {
     "date": "26 Oct 2026",
     "title": "A reader's companion",
     "text": "Christoph Eckerle recommends The Elastic Loop as a training companion and a source for an agent-based team consultant.",
