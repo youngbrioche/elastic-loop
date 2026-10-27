@@ -11,28 +11,8 @@ const quotes = [
 ---
 
 <reader-carousel id="reader-quote" role="region" aria-labelledby="reader-quotes-label">
-  <p class="label" id="reader-quotes-label">{readerQuote.label}</p>
-  <div class="slides" id="reader-quotes-slides">
-    {quotes.map((quote) => (
-      <div class="slide" id={quote.id} data-name={quote.name}>
-        <figure>
-          <blockquote cite={quote.sourceUrl}>
-            {quote.paragraphs.map((paragraph, index) => (
-              <p>{index === 0 ? '“' : ''}{paragraph}{index === quote.paragraphs.length - 1 ? '”' : ''}</p>
-            ))}
-          </blockquote>
-          <figcaption>
-            <a class="person" href={quote.profileUrl}>
-              <Image src={quote.portrait} alt="" width={64} height={64}
-                widths={[64, 128]} sizes="64px" class="portrait" />
-              <span class="name">{quote.name}</span>
-            </a>
-            <span class="role">{quote.role} · {quote.company}</span>
-          </figcaption>
-        </figure>
-      </div>
-    ))}
-  </div>
+  <div class="section-head">
+    <h2 id="reader-quotes-label">{readerQuote.label}</h2>
   <div class="controls" hidden>
     <button type="button" data-direction="-1" aria-label="Previous reader quote" aria-controls="reader-quotes-slides">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
@@ -42,48 +22,82 @@ const quotes = [
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
     </button>
   </div>
+  </div>
+  <div class="slides" id="reader-quotes-slides">
+    {quotes.map((quote) => (
+      <div class="slide" id={quote.id} data-name={quote.name}>
+        <figure>
+          <figcaption>
+            <a class="person" href={quote.profileUrl}>
+              <Image src={quote.portrait} alt="" width={72} height={72}
+                widths={[72, 144]} sizes="(max-width: 700px) 56px, 72px" class="portrait" />
+              <span class="attribution">
+                <span class="name">{quote.name}</span>
+                <span class="role">{quote.role} · {quote.company}</span>
+              </span>
+            </a>
+          </figcaption>
+          <blockquote cite={quote.sourceUrl}>
+            {quote.paragraphs.map((paragraph, index) => (
+              <p>{index === 0 ? '“' : ''}{paragraph}{index === quote.paragraphs.length - 1 ? '”' : ''}</p>
+            ))}
+          </blockquote>
+        </figure>
+      </div>
+    ))}
+  </div>
   <span class="sr-only" role="status" aria-atomic="true"></span>
 </reader-carousel>
 
 <script>
   class ReaderCarousel extends HTMLElement {
     private cleanup?: AbortController;
+    private observer?: ResizeObserver;
+    private scrollTimer?: ReturnType<typeof setTimeout>;
 
     connectedCallback() {
       if (this.cleanup) return;
       this.cleanup = new AbortController();
       const { signal } = this.cleanup;
       const slides = Array.from(this.querySelectorAll<HTMLElement>('.slide'));
+      const rail = this.querySelector<HTMLElement>('.slides');
       const controls = this.querySelector<HTMLElement>('.controls');
       const counter = this.querySelector('.counter');
       const status = this.querySelector('[role="status"]');
-      if (slides.length < 2 || !controls || !counter || !status) return;
+      if (slides.length < 2 || !rail || !controls || !counter || !status) return;
       let current = 0;
-
-      const show = (index: number, announce = true) => {
-        current = (index + slides.length) % slides.length;
-        // If a hash change hides the focused profile link, keep focus in the carousel.
-        if (slides.some((slide, i) => i !== current && slide.contains(document.activeElement))) {
-          controls.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true });
-        }
-        slides.forEach((slide, i) => {
-          slide.dataset.active = String(i === current);
-          slide.inert = i !== current;
-          slide.setAttribute('aria-hidden', String(i !== current));
-          slide.setAttribute('role', 'group');
-          slide.setAttribute('aria-roledescription', 'slide');
-          slide.setAttribute('aria-label', `${i + 1} of ${slides.length}: ${slide.dataset.name}`);
-        });
+      const buttons = Array.from(controls.querySelectorAll<HTMLButtonElement>('button'));
+      const target = (index: number) => {
+        const inset = parseFloat(getComputedStyle(rail).paddingLeft);
+        return Math.max(0, Math.min(rail.scrollWidth - rail.clientWidth,
+          rail.scrollLeft + slides[index].getBoundingClientRect().left - rail.getBoundingClientRect().left - inset));
+      };
+      const sync = (announce = false) => {
         counter.textContent = `${current + 1} / ${slides.length}`;
+        buttons.forEach((button) => {
+          const next = current + Number(button.dataset.direction);
+          button.setAttribute('aria-disabled', String(next < 0 || next >= slides.length));
+        });
         if (announce) status.textContent = `${current + 1} of ${slides.length}: ${slides[current].dataset.name}`;
       };
-
+      const show = (index: number, instant = false, announce = true) => {
+        current = Math.max(0, Math.min(slides.length - 1, index));
+        rail.scrollTo({ left: target(current), behavior: instant || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+        sync(announce);
+      };
       const followHash = () => {
         const index = slides.findIndex((slide) => `#${slide.id}` === location.hash);
-        if (index >= 0) show(index, false);
+        if (index >= 0) show(index, true, false);
       };
-      controls.querySelectorAll<HTMLButtonElement>('button').forEach((button) => {
-        button.addEventListener('click', () => show(current + Number(button.dataset.direction)), { signal });
+      slides.forEach((slide, i) => {
+        slide.setAttribute('role', 'group');
+        slide.setAttribute('aria-roledescription', 'slide');
+        slide.setAttribute('aria-label', `${i + 1} of ${slides.length}: ${slide.dataset.name}`);
+      });
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          if (button.getAttribute('aria-disabled') !== 'true') show(current + Number(button.dataset.direction));
+        }, { signal });
       });
       controls.addEventListener('keydown', (event) => {
         if (event.altKey || event.ctrlKey || event.metaKey) return;
@@ -92,16 +106,36 @@ const quotes = [
           show(current + (event.key === 'ArrowLeft' ? -1 : 1));
         }
       }, { signal });
-      window.addEventListener('hashchange', followHash, { signal });
-      controls.hidden = false;
-      show(0, false);
-      followHash();
-      this.setAttribute('aria-roledescription', 'carousel');
+      // Every profile stays reachable; focusing it reveals the entire quote.
+      rail.addEventListener('focusin', (event) => {
+        const index = slides.findIndex((slide) => slide.contains(event.target as Node));
+        if (index >= 0) show(index, true);
+      }, { signal });
+      rail.addEventListener('scroll', () => {
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(() => {
+          if (rail.scrollWidth <= rail.clientWidth + 1) return;
+          const distances = slides.map((_, i) => Math.abs(rail.scrollLeft - target(i)));
+          const next = distances.indexOf(Math.min(...distances));
+          if (next !== current) { current = next; sync(true); }
+        }, 160);
+      }, { signal });
+      this.observer = new ResizeObserver(() => {
+        controls.hidden = rail.scrollWidth <= rail.clientWidth + 1;
+        show(current, true, false);
+      });
       this.dataset.enhanced = 'true';
+      this.setAttribute('aria-roledescription', 'carousel');
+      this.observer.observe(rail);
+      window.addEventListener('hashchange', followHash, { signal });
+      sync();
+      followHash();
     }
 
     disconnectedCallback() {
       this.cleanup?.abort();
+      this.observer?.disconnect();
+      clearTimeout(this.scrollTimer);
       this.cleanup = undefined;
     }
   }
@@ -110,92 +144,70 @@ const quotes = [
 
 <style>
   reader-carousel {
+    --edge: 40px;
+    --card: min(68vw, 820px);
+    --quote-bg: #15171a;
+    --quote-fg: #fff;
+    --quote-muted: #bfcbc6;
+    --quote-line: #4c5c55;
     display: block;
-    max-width: 740px;
-    margin: 72px auto 0;
-    text-align: center;
+    margin: 80px -24px 72px;
+    padding: 48px 0;
+    color: var(--quote-fg);
+    background: var(--quote-bg);
+    text-align: left;
     scroll-margin-top: 100px;
   }
-  .label { margin: 0 0 24px; font-size: 14px; font-weight: 600; color: var(--rg-fg-2); }
-  .slide { scroll-margin-top: 100px; }
-  .slide + .slide { margin-top: 48px; }
-  /* Overlapping grid cells reserve the tallest quote's space without fixed heights. */
-  [data-enhanced] .slides { display: grid; }
-  [data-enhanced] .slide { grid-area: 1 / 1; margin-top: 0; min-width: 0; }
-  [data-enhanced] .slide[data-active="false"] { visibility: hidden; pointer-events: none; }
-  figure { margin: 0; height: 100%; display: grid; grid-template-rows: 1fr auto; gap: 26px; }
-  blockquote {
-    align-self: center;
-    margin: 0;
-    padding: 0 !important;
-    border: 0;
-    background: none;
-  }
+  .section-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 var(--edge); margin-bottom: 44px; }
+  .section-head h2 { margin: 0; font-size: clamp(30px, 3.4vw, 48px); font-weight: 700; line-height: 1.12; letter-spacing: -0.035em; color: var(--quote-fg); }
+  .slides { padding: 8px var(--edge) 16px; }
+  .slide { box-sizing: border-box; min-width: 0; scroll-margin-top: 100px; }
+  .slide + .slide { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--quote-line); }
+  [data-enhanced] .slides { display: flex; gap: 40px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge); overscroll-behavior-inline: contain; scrollbar-width: none; }
+  [data-enhanced] .slides::-webkit-scrollbar { display: none; }
+  [data-enhanced] .slide { display: flex; flex: 0 0 var(--card); scroll-snap-align: start; margin: 0; }
+  [data-enhanced] .slide + .slide { border-top: 0; border-left: 1px solid var(--quote-line); padding: 0 0 0 32px; }
+  figure { box-sizing: border-box; margin: 0; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; gap: 30px; padding: 0 36px 4px 0; }
+  blockquote { margin: 0; padding: 0 !important; border: 0; background: none; }
   blockquote::before { content: none; }
-  blockquote p {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: -0.015em;
-    color: var(--rg-fg-1);
-    text-wrap: balance;
-  }
-  blockquote p + p { margin-top: 14px; }
-  figcaption { display: flex; flex-direction: column; align-items: center; }
-  .portrait { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+  blockquote p { margin: 0; font-size: 23px; font-weight: 400; line-height: 1.5; letter-spacing: -0.018em; color: var(--quote-fg); }
+  blockquote p + p { margin-top: 16px; }
+  figcaption { display: flex; }
+  .portrait { flex: 0 0 72px; width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
   #reader-quote-benedikt .portrait { object-position: center top; }
-  .person {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    color: var(--rg-fg-1);
-    text-decoration: none;
-    box-shadow: none;
-  }
-  .name {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.5;
-    text-decoration: underline;
-    text-decoration-color: var(--rg-border-strong);
-    text-underline-offset: 4px;
-  }
-  .person:hover .name { text-decoration-color: var(--rg-fg-1); }
-  .person:focus-visible, button:focus-visible {
-    outline: 2px solid var(--rg-fg-1);
-    outline-offset: 5px;
-    border-radius: 4px;
-  }
-  .role { margin-top: 3px; font-size: 14px; line-height: 1.6; color: var(--rg-fg-2); }
-  .controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+  .person { display: flex; align-items: center; gap: 16px; color: var(--quote-fg); text-decoration: none; box-shadow: none; }
+  .name { display: block; font-size: 16px; font-weight: 600; line-height: 1.4; text-decoration: underline; text-decoration-color: var(--quote-line); text-underline-offset: 5px; }
+  .person:hover .name { text-decoration-color: currentColor; }
+  .person:focus-visible, button:focus-visible { outline: 3px solid var(--quote-fg); outline-offset: 5px; }
+  .role { display: block; margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--quote-muted); }
+  .controls { display: flex; flex-shrink: 0; align-items: center; gap: 14px; }
   .controls[hidden] { display: none; }
-  button {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 1px solid var(--rg-fg-2);
-    border-radius: 50%;
-    background: var(--rg-bg-1);
-    color: var(--rg-fg-1);
-    cursor: pointer;
-  }
-  button:hover { background: var(--rg-bg-2); }
-  button:active { background: var(--rg-bg-3); }
-  .counter { min-width: 3ch; font-size: 14px; color: var(--rg-fg-2); font-variant-numeric: tabular-nums; }
+  button { display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 1px solid var(--quote-fg); border-radius: 50%; background: transparent; color: var(--quote-fg); cursor: pointer; }
+  button:hover:not([aria-disabled="true"]) { background: var(--quote-fg); color: var(--quote-bg); }
+  button[aria-disabled="true"] { opacity: 0.4; cursor: default; }
+  .counter { min-width: 32px; text-align: center; font-size: 13px; color: var(--quote-muted); font-variant-numeric: tabular-nums; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-  @media (max-width: 600px) {
-    reader-carousel { margin-top: 52px; }
-    blockquote p { font-size: 20px; line-height: 1.55; }
-    figure { gap: 22px; }
+  @media (max-width: 700px) {
+    reader-carousel { --edge: 20px; --card: calc(100vw - 82px); padding: 32px 0; margin-top: 56px; margin-bottom: 52px; }
+    .section-head { gap: 18px; margin-bottom: 28px; }
+    .section-head h2 { font-size: 28px; }
+    [data-enhanced] .slides { gap: 18px; }
+    [data-enhanced] .slide + .slide { padding-left: 12px; }
+    figure { padding-right: 16px; gap: 30px; }
+    blockquote p { font-size: 19px; line-height: 1.5; }
+    .portrait { flex-basis: 56px; width: 56px; height: 56px; }
+    .person { gap: 12px; }
+    .name { font-size: 14px; }
+    .role { font-size: 12px; }
+    .controls { gap: 8px; }
+    button { width: 44px; height: 44px; }
   }
+  @media (max-width: 600px) { reader-carousel { margin-left: -20px; margin-right: -20px; } }
   @media print {
-    [data-enhanced] .slides { display: block; }
-    [data-enhanced] .slide[data-active="false"] { visibility: visible; }
-    [data-enhanced] .slide + .slide { margin-top: 48px; }
+    reader-carousel { --quote-bg: #fff; --quote-fg: #15171a; --quote-muted: #5a6168; --quote-line: #d5d9dc; margin: 40px 0; padding: 0; }
+    [data-enhanced] .slides { display: block; overflow: visible; }
+    [data-enhanced] .slide + .slide { margin-top: 24px; border-left: 0; border-top: 1px solid var(--quote-line); padding: 24px 0 0; }
+    figure { break-inside: avoid; }
     .controls { display: none; }
   }
 </style>
