@@ -1,5 +1,11 @@
 # Changelog
 
+## 27 Oct 2026 — Browse reader feedback
+
+[`5ef4a45`](https://github.com/youngbrioche/elastic-loop/commit/5ef4a4521c4cffe163143765fd9d7a6c4da73169)
+
+The home page adds previous and next controls, position announcements, and stable layout when switching between reader recommendations. Benedikt’s portrait and updated role accompany his feedback, and both recommendations remain available without JavaScript and in Markdown.
+
 ## 27 Oct 2026 — Benedikt Stemmildt’s reader feedback
 
 [`b4bc706`](https://github.com/youngbrioche/elastic-loop/commit/b4bc7060dbc7780b43cd754bbd7c669bcbed5393)

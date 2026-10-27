@@ -1,6 +1,13 @@
 [
   {
     "date": "27 Oct 2026",
+    "title": "Browse reader feedback",
+    "text": "Reader recommendations now appear in a keyboard-accessible carousel with both portraits and manual navigation.",
+    "body": "The home page adds previous and next controls, position announcements, and stable layout when switching between reader recommendations. Benedikt’s portrait and updated role accompany his feedback, and both recommendations remain available without JavaScript and in Markdown.",
+    "commit": "5ef4a4521c4cffe163143765fd9d7a6c4da73169"
+  },
+  {
+    "date": "27 Oct 2026",
     "title": "Benedikt Stemmildt’s reader feedback",
     "text": "Benedikt Stemmildt’s approved reader feedback joins the home page, with thanks for his review of the first edition.",
     "body": "The home page adds Benedikt Stemmildt’s approved English paraphrase about loop sizes and backpressure, linked to his website. The Markdown edition includes the same attribution, and the footer thanks him for his review and feedback.",
