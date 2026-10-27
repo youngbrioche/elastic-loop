@@ -13,3 +13,15 @@ export const readerQuote = {
   profileUrl: 'https://www.linkedin.com/in/christoph-eckerle-architect/',
   sourceUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7518974563091656705/',
 };
+
+// Approved English paraphrase of first-edition feedback; Robert confirmed consent on 27 October 2026.
+export const benediktQuote = {
+  paragraphs: [
+    'Tight and loose loops, backpressure, and how they work together. I haven’t seen these ideas explained this clearly anywhere else.',
+  ],
+  name: 'Benedikt Stemmildt',
+  role: 'Co-founder',
+  company: 'hackers&wizards',
+  profileUrl: 'https://benedikt.stemmildt.com/',
+  note: 'Feedback on the first edition · approved English paraphrase',
+};

@@ -4,7 +4,7 @@ import { retext } from 'retext';
 import retextSmartypants from 'retext-smartypants';
 import { glossary } from '../data/glossary';
 import { startListCards } from '../data/startList';
-import { readerQuote } from '../data/readerQuote';
+import { readerQuote, benediktQuote } from '../data/readerQuote';
 
 const SITE = 'https://elastic-loop.robert-glaser.de';
 
@@ -111,7 +111,8 @@ const COMPONENT_REPLACEMENTS: [RegExp, string][] = [
       readerQuote.paragraphs.map((paragraph, index) =>
         `> ${index === 0 ? '“' : ''}${paragraph}${index === readerQuote.paragraphs.length - 1 ? '”' : ''}`,
       ).join('\n>\n') +
-      `\n>\n> [${readerQuote.name}](${readerQuote.profileUrl}), ${readerQuote.role} · ${readerQuote.company}`,
+      `\n>\n> [${readerQuote.name}](${readerQuote.profileUrl}), ${readerQuote.role} · ${readerQuote.company}` +
+      `\n\n> “${benediktQuote.paragraphs[0]}”\n>\n> [${benediktQuote.name}](${benediktQuote.profileUrl}), ${benediktQuote.role} · ${benediktQuote.company}\n>\n> ${benediktQuote.note}`,
   ],
   [/<MasterGrid[\s\S]*?\/>/g, MASTER_GRID_MARKDOWN],
   [

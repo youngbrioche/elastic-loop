@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import portrait from '../assets/christoph-eckerle.webp';
-import { readerQuote } from '../data/readerQuote';
+import { readerQuote, benediktQuote } from '../data/readerQuote';
 ---
 
 <figure class="reader-quote" id="reader-quote">
@@ -28,11 +28,32 @@ import { readerQuote } from '../data/readerQuote';
   </figcaption>
 </figure>
 
+
+<figure class="reader-quote reader-quote-following" id="reader-quote-benedikt">
+  <blockquote>
+    <p>“{benediktQuote.paragraphs[0]}”</p>
+  </blockquote>
+  <figcaption>
+    <a class="person" href={benediktQuote.profileUrl}>
+      <span class="name">{benediktQuote.name}</span>
+    </a>
+    <span class="role">{benediktQuote.role} · {benediktQuote.company}</span>
+    <span class="quote-note">{benediktQuote.note}</span>
+  </figcaption>
+</figure>
+
 <style>
   .reader-quote {
     max-width: 740px;
     margin: 72px auto 0;
     text-align: center;
+  }
+
+  .quote-note {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--rg-fg-2);
   }
 
   .label {
