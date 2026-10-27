@@ -38,8 +38,12 @@ component.
 This means the PNGs regenerate from the component on **every** build and can never
 drift — there is nothing committed and nothing to remember. The cost is a browser
 in the build environment: locally that is a one-time `npx playwright install
-chromium`; in CI, `.github/workflows/deploy.yml` runs `npx playwright install
---with-deps chromium` before the build.
+chromium`. In CI, `.github/workflows/deploy.yml` builds inside the official
+Playwright image, which already includes browsers, shared libraries, and fonts.
+This avoids installing system packages from Ubuntu mirrors on every release.
+When updating Playwright in `package-lock.json`, update the container image tag
+to the same version. The npm package is still installed by `npm ci`; the image
+supplies its matching browser binaries.
 
 To regenerate them on their own after a build (rarely needed):
 
