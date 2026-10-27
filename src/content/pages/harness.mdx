@@ -16,11 +16,15 @@ import HarnessScene from '../../components/HarnessScene.astro';
 When you let an agent work on its own, it needs a way to find information, try things, inspect the result, and correct mistakes. It also needs limits on what it can do and a way to hand decisions back to you.
 </PageIntro>
 
+<div class="reading harness-intro">
+
 <HarnessScene />
 
 A **<Term id="harness">harness</Term>** is the software around the model that makes this possible: the execution loop, tools, context management, and controls. If you use an agent that can read files, run a program, and keep working from the result, you’re already using one. Your team supplies much of what makes that harness useful in a particular setting, from access to the codebase to the checks and review arrangements around it.
 
 Harness engineering includes the way your team designs and improves these conditions across technical systems. A check in the delivery pipeline or an independent reviewing agent can contribute from outside the agent’s runtime. Product and domain experts supply knowledge that this technical environment must make usable.
+
+</div>
 
 ## Four questions about the same change
 
