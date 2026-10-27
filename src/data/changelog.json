@@ -3,7 +3,8 @@
     "date": "27 Oct 2026",
     "title": "Full changelog for agents",
     "text": "The Markdown changelog now includes the same full descriptions and commit links as GitHub.",
-    "body": "The agent-facing changelog serves the generated GitHub changelog verbatim, including every entry’s title, full description, and available commit link. Its token estimate in llms.txt reflects the full document. The site footer continues to show three short teasers and a link to GitHub."
+    "body": "The agent-facing changelog serves the generated GitHub changelog verbatim, including every entry’s title, full description, and available commit link. Its token estimate in llms.txt reflects the full document. The site footer continues to show three short teasers and a link to GitHub.",
+    "commit": "0d8cf925b7463b7a6963215f48cde9d57d610bc7"
   },
   {
     "date": "27 Oct 2026",
