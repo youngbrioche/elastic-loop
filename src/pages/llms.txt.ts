@@ -44,7 +44,7 @@ export const GET: APIRoute = async () => {
     '',
     '## Optional',
     `- [llms-full.txt](${SITE}/llms-full.txt): ${tokenBudget(fullBody)} — all pages concatenated`,
-    `- [Changelog](${SITE}/changelog.md): ${tokenBudget(changelogBody)} — recent notable changes, mirrors the site footer`,
+    `- [Changelog](${SITE}/changelog.md): ${tokenBudget(changelogBody)} — full changelog with descriptions and commit links, identical to GitHub`,
     '',
     '## License',
     '© 2026 Robert Glaser. Code is licensed under Apache 2.0; site content is licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).',

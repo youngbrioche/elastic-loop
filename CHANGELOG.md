@@ -1,5 +1,9 @@
 # Changelog
 
+## 27 Oct 2026 — Full changelog for agents
+
+The agent-facing changelog serves the generated GitHub changelog verbatim, including every entry’s title, full description, and available commit link. Its token estimate in llms.txt reflects the full document. The site footer continues to show three short teasers and a link to GitHub.
+
 ## 27 Oct 2026 — Follow failures through to improvement
 
 [`b23f866`](https://github.com/youngbrioche/elastic-loop/commit/b23f86686c7f815d39f7714de0c05f8874cc362a)

@@ -1,7 +1,4 @@
-import changelog from '../data/changelog.json';
-
-const SITE = 'https://elastic-loop.robert-glaser.de';
-const FULL = 'https://github.com/youngbrioche/elastic-loop/blob/main/CHANGELOG.md';
+import changelog from '../../CHANGELOG.md?raw';
 
 /**
  * The full /changelog.md document body. Shared by the route that serves it and
@@ -9,24 +6,9 @@ const FULL = 'https://github.com/youngbrioche/elastic-loop/blob/main/CHANGELOG.m
  * the document's own `<!-- ~N tokens -->` stamp are computed from one identical
  * string and can never drift.
  *
- * Sourced from the same changelog.json the site footer renders, and emitted
- * verbatim (no smartypants pass) to stay byte-identical to what the footer shows.
+ * Serves the generated GitHub changelog verbatim, including titles, full prose,
+ * and commit links. The build checks that it matches changelog.json.
  */
 export function buildChangelogBody(): string {
-  const entries = changelog.map((entry) => `- **${entry.date}**: ${entry.text}`);
-
-  return [
-    '# Changelog',
-    '',
-    '> Recent notable changes to The Elastic Loop, newest first. Mirrors the changelog in the site footer.',
-    '',
-    `Part of The Elastic Loop · ${SITE}`,
-    '',
-    '---',
-    '',
-    ...entries,
-    '',
-    `Full changelog with commit links: ${FULL}`,
-    '',
-  ].join('\n');
+  return changelog;
 }

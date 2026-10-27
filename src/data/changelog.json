@@ -1,6 +1,12 @@
 [
   {
     "date": "27 Oct 2026",
+    "title": "Full changelog for agents",
+    "text": "The Markdown changelog now includes the same full descriptions and commit links as GitHub.",
+    "body": "The agent-facing changelog serves the generated GitHub changelog verbatim, including every entry’s title, full description, and available commit link. Its token estimate in llms.txt reflects the full document. The site footer continues to show three short teasers and a link to GitHub."
+  },
+  {
+    "date": "27 Oct 2026",
     "title": "Follow failures through to improvement",
     "text": "New examples cover delegation in existing codebases, tracing design inconsistencies, and measuring the time from failure to fix.",
     "body": "Loops clarifies delegation in existing codebases, while Harness expands its design-system example with trace evidence. Factory adds time from failure to fix, DORA delivery metrics, and Hycle’s proposal to treat the factory as an internal product.",
