@@ -1,6 +1,13 @@
 [
   {
     "date": "27 Oct 2026",
+    "title": "Reader voices, side by side",
+    "text": "A full-width reader section previews neighboring quotes, with portraits, clear typography, and manual navigation.",
+    "body": "Reader feedback now sits on a dark background with fine dividers and portraits above each quote. Neighboring recommendations remain visible while scrolling, and keyboard navigation, reduced motion, direct links, and the print and no-JavaScript views remain supported.",
+    "commit": "de3808e43b3d293fafe1acaa9ffffb65fbb21ff5"
+  },
+  {
+    "date": "27 Oct 2026",
     "title": "Browse reader feedback",
     "text": "Reader recommendations now appear in a keyboard-accessible carousel with both portraits and manual navigation.",
     "body": "The home page adds previous and next controls, position announcements, and stable layout when switching between reader recommendations. Benedikt’s portrait and updated role accompany his feedback, and both recommendations remain available without JavaScript and in Markdown.",

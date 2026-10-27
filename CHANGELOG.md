@@ -1,5 +1,11 @@
 # Changelog
 
+## 27 Oct 2026 — Reader voices, side by side
+
+[`de3808e`](https://github.com/youngbrioche/elastic-loop/commit/de3808e43b3d293fafe1acaa9ffffb65fbb21ff5)
+
+Reader feedback now sits on a dark background with fine dividers and portraits above each quote. Neighboring recommendations remain visible while scrolling, and keyboard navigation, reduced motion, direct links, and the print and no-JavaScript views remain supported.
+
 ## 27 Oct 2026 — Browse reader feedback
 
 [`5ef4a45`](https://github.com/youngbrioche/elastic-loop/commit/5ef4a4521c4cffe163143765fd9d7a6c4da73169)
