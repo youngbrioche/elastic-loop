@@ -5,7 +5,7 @@ socialDescription: "How engineers, product people, designers, domain experts, an
 kicker: "Part six"
 order: 6
 status: seed
-updated: 2026-10-21
+updated: 2026-10-27
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
@@ -13,14 +13,14 @@ import Term from '../../components/Term.astro';
 import StationsVsLoop from '../../components/visuals/StationsVsLoop.astro';
 
 <PageIntro kicker="Part six" title="Roles">
-Agent work needs knowledge from across the team. Product people clarify what is worth building; designers and domain experts help define and assess the result. Engineers make the context, tools, and checks usable. Those responsible for the working process and budget give that work time and ownership. These contributions shape the task from its beginning through review and subsequent use.
+Agent work needs knowledge from across the team. Product people clarify what is worth building; designers and domain experts help define and assess the result. Engineers make the context, tools, and checks usable. A factory owner looks after the shared setup and its improvement, and those responsible for the working process and budget give that work time. These contributions shape the task from its beginning through review and subsequent use.
 </PageIntro>
 
 ## The engineer: designer of the loop
 
 Engineers design and maintain the technical conditions in which agents work. That includes making the application runnable, supplying relevant context, and building quick checks that provide <Term id="backpressure">backpressure</Term>. They also arrange independent reviews and enforce permissions. [Harness](/harness) explains how these mechanisms work together.
 
-For the dashboard, an engineer might encode dependency rules as architecture tests, investigate a reviewer’s security finding, or make a realistic preview available for product feedback. <Term id="harness">Harness</Term> engineering includes improving that setup as the team learns from its use.
+For the dashboard, an engineer might encode dependency rules as architecture tests, investigate a reviewer’s security finding, or make a realistic preview available for product feedback. <Term id="harness">Harness</Term> engineering includes improving that setup as the team learns from its use. Where several people work in a shared factory, those changes go to the factory owner for approval.
 
 ## The product owner
 
@@ -38,6 +38,10 @@ In practice that splits into seven jobs:
 
 Product people help define the <Term id="search-space">search space</Term> through intent, context, and constraints. They also supply evaluation material, including acceptance scenarios, <Term id="counterexample">counterexamples</Term>, and <Term id="rubric">rubrics</Term>. The team needs these contributions throughout implementation and evaluation.
 
+Write the evaluation material while you shape the request, before implementation starts. The agent can help here. It can ask what a good and a bad result would look like and propose examples from earlier tasks, which you then accept or correct. Thinking about the assessment this early often exposes a requirement nobody had written down.
+
+Store that material where the agent implementing the change can’t read it. A separate reviewer applies it once the work is done, so the implementation can’t be tuned to the examples it will be judged by. [Grading](/grading) explains how to keep such <Term id="holdout">holdout</Term> cases separate and how to check the reviewer.
+
 ## The designer
 
 Designers provide the examples and constraints that make work fit the product and its audience. Approved components and brand assets give agents usable context. Fast checks can verify properties such as allowed colors, while a design review assesses the choices those checks leave open. Review findings can lead to better examples or new checks; their effect needs evaluation on subsequent work.
@@ -48,9 +52,21 @@ For the dashboard, designers can help the team explore how people understand a p
 
 Domain experts explain the rules, exceptions, and past decisions that an agent may be unable to find in the code or documentation. They can supply <Term id="golden">golden examples</Term> of accepted results and counterexamples that explain why a plausible answer fails. For the dashboard, this might include cases where the apparent urgency hides a contractual or operational consequence. Give experts time to make that knowledge usable.
 
+Domain experts and product people often decide whether a result may proceed. They shouldn’t need to read code to make that decision. Ask the factory for evidence they can assess: a demonstration of the important cases, including invalid input, a recording of the behavior, or an explanation that connects each change to the requirement it serves. A text change needs less of this than a change to how the dashboard ranks contractual obligations; let the depth of evidence follow the risk.
+
 ## The people who run the process
 
 The people responsible for the team’s working process help connect findings across tasks with decisions about improvement. They make room to investigate recurring problems, assign responsibility, and follow up on the effect of changes. The [Factory](/factory) chapter develops this part of the operating model. Harness engineering supplies technical improvements within it.
+
+## The factory owner
+
+A shared factory needs someone responsible for the setup the whole team works in. That includes the environment where agent runs continue after someone closes their laptop, and the context, checks, and review requirements kept under version control. The owner approves changes after the team has tested them on representative tasks, and restores the previous version when a change fails.
+
+The factory also needs its own backlog. Evaluations across tasks turn up recurring problems: a missing tool, stale guidance, a check that keeps passing work people then have to repair. The owner keeps those items next to the product backlog, finds out what the team needs, decides which improvements to try, and checks whether later work benefits. That treats the factory as an internal product whose users are the people delegating to it.
+
+When agents keep making the same mistake, the owner follows the problem until the fix is in use. If the dashboard keeps using an obsolete component, that means involving the component’s maintainer, getting the corrected guidance approved, and checking whether later runs still make the mistake. [Factory](/factory) explains how to measure the time from failure to fix.
+
+Someone also owns the quality of the evaluations: which criteria the team applies, how closely an <Term id="judge-evaluator">evaluator’s</Term> judgments match those of the people who know the work, and when to recheck it after a model change. The factory owner may hold that responsibility, or a product or quality person who already assesses the work.
 
 ## The engineering leader
 
@@ -58,19 +74,27 @@ Leaders make the investment and delegation decisions explicit:
 
 - Use evaluations of completed tasks to examine recurring failures, human rework, and evidence of improvement.
 - Investigate why a task needs close supervision. Missing context or unreliable checks may be repairable; an unresolved product question may need continued collaboration.
-- Budget for maintaining context, checks, and review, including time from product and domain experts.
+- Budget for maintaining context, checks, and review, including time from product and domain experts and from the factory owner.
 - Define authority and escalation. The [delegation agreement](/loops#agree-what-the-agent-may-do) distinguishes starting work, reporting progress, and taking actions that need separate approval.
 
 ## Do these become new jobs?
 
-Most of these responsibilities can sit within existing roles. A dedicated harness engineering role may make sense when several teams depend on shared tooling and someone needs to own its reliability and development. In a smaller team, an engineer may take that responsibility alongside product work.
+Most of these responsibilities can sit within existing roles. The factory owner is the one most likely to need dedicated time. When several teams share a factory, owning its reliability and development can become someone’s main job. In a smaller team, a product owner or engineer may take it alongside product work and look after two products. The role needs product judgment as much as engineering skill. The owner decides which improvements the team needs and whether they paid off.
 
 Assign responsibility and time for evaluation, access controls, and investment decisions. The [Factory](/factory) chapter describes how the team makes those duties part of its operating model.
+
+If someone outside the team set up the factory, the team has taken it over once it notices a recurring failure itself and improves the check or guidance that should have caught it. Until then, the people who built the setup still carry that responsibility.
 
 ## When handoffs stop making sense
 
 Agents can produce drafts, prototypes, and tests quickly enough for several roles to examine the same work together. Product and domain experts can question the behavior while engineers assess the implementation. Some handoffs remain necessary, especially where responsibility or access changes. Others can become a shared review of a working result.
 
 <StationsVsLoop />
+
+## Try it on one task
+
+Pick one bounded task whose result you can inspect, such as a small change to the dashboard. Before the agent starts, name who decides what the change should do, who assesses the result, and who looks after the setup. Agree on the criteria together and collect two or three examples of results you would accept or reject.
+
+Run the task with close checkpoints and the people involved watching the work. Afterwards, look at what each of them had to correct or supply, and choose one improvement for the next comparable task. The [FAQ](/faq#how-do-i-apply-this-framework) describes how to widen the approach from there.
 
 For your team, whose knowledge is missing from the context and review?
