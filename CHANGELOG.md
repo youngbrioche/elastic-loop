@@ -1,5 +1,11 @@
 # Changelog
 
+## 27 Oct 2026 — Benedikt Stemmildt’s reader feedback
+
+[`b4bc706`](https://github.com/youngbrioche/elastic-loop/commit/b4bc7060dbc7780b43cd754bbd7c669bcbed5393)
+
+The home page adds Benedikt Stemmildt’s approved English paraphrase about loop sizes and backpressure, linked to his website. The Markdown edition includes the same attribution, and the footer thanks him for his review and feedback.
+
 ## 27 Oct 2026 — Full changelog for agents
 
 [`0d8cf92`](https://github.com/youngbrioche/elastic-loop/commit/0d8cf925b7463b7a6963215f48cde9d57d610bc7)

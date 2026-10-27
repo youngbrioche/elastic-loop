@@ -1,6 +1,13 @@
 [
   {
     "date": "27 Oct 2026",
+    "title": "Benedikt Stemmildt’s reader feedback",
+    "text": "Benedikt Stemmildt’s approved reader feedback joins the home page, with thanks for his review of the first edition.",
+    "body": "The home page adds Benedikt Stemmildt’s approved English paraphrase about loop sizes and backpressure, linked to his website. The Markdown edition includes the same attribution, and the footer thanks him for his review and feedback.",
+    "commit": "b4bc7060dbc7780b43cd754bbd7c669bcbed5393"
+  },
+  {
+    "date": "27 Oct 2026",
     "title": "Full changelog for agents",
     "text": "The Markdown changelog now includes the same full descriptions and commit links as GitHub.",
     "body": "The agent-facing changelog serves the generated GitHub changelog verbatim, including every entry’s title, full description, and available commit link. Its token estimate in llms.txt reflects the full document. The site footer continues to show three short teasers and a link to GitHub.",
