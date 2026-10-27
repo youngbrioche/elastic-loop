@@ -1,5 +1,11 @@
 # Changelog
 
+## 27 Oct 2026 — Roles: the factory owner
+
+[`87c67e8`](https://github.com/youngbrioche/elastic-loop/commit/87c67e8906306d6b933fab162b11a060787b9496)
+
+The Roles chapter adds the factory owner, who approves changes to the shared setup, keeps the factory backlog, and follows recurring failures through to a fix. Product and domain people write their evaluation material before implementation, keep it from the implementing agent, and decide on demonstrations and explanations scaled to the risk of a change. A short sequence describes how to try this on a first task.
+
 ## 27 Oct 2026 — Reader voices, side by side
 
 [`de3808e`](https://github.com/youngbrioche/elastic-loop/commit/de3808e43b3d293fafe1acaa9ffffb65fbb21ff5)

@@ -1,6 +1,13 @@
 [
   {
     "date": "27 Oct 2026",
+    "title": "Roles: the factory owner",
+    "text": "Roles now names the factory owner and shows how product and domain people approve agent work without reading code.",
+    "body": "The Roles chapter adds the factory owner, who approves changes to the shared setup, keeps the factory backlog, and follows recurring failures through to a fix. Product and domain people write their evaluation material before implementation, keep it from the implementing agent, and decide on demonstrations and explanations scaled to the risk of a change. A short sequence describes how to try this on a first task.",
+    "commit": "87c67e8906306d6b933fab162b11a060787b9496"
+  },
+  {
+    "date": "27 Oct 2026",
     "title": "Reader voices, side by side",
     "text": "A full-width reader section previews neighboring quotes, with portraits, clear typography, and manual navigation.",
     "body": "Reader feedback now sits on a dark background with fine dividers and portraits above each quote. Neighboring recommendations remain visible while scrolling, and keyboard navigation, reduced motion, direct links, and the print and no-JavaScript views remain supported.",
