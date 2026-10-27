@@ -5,7 +5,7 @@ socialDescription: "How a team organizes agent work and invests in improvements 
 kicker: "Part four"
 order: 4
 status: seed
-updated: 2026-10-26
+updated: 2026-10-27
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
@@ -126,11 +126,19 @@ The reviewer needs enough information and access to investigate the fix, includi
 
 A vendor may supply much of the runtime, coordination, and review tooling. The team still needs to define the product criteria, access boundaries, and responsibility for exceptions. These connections can support different loop sizes for different tasks, with updates that let people know when their attention is needed.
 
+## Measure the time from failure to fix
+
+Measure the time from the first recorded failure until the fix has passed its checks and is in use. This includes the time spent waiting for someone to investigate or approve a change. Give one person responsibility for following the problem through, with access to the people who can help fix it. If the dashboard keeps using an obsolete component, the owner should be able to involve its maintainer and get the corrected guidance into use. Check later runs to see whether they still make the same mistake.
+
+If your team uses [DORA’s software delivery metrics](https://dora.dev/guides/dora-metrics/), keep them alongside these task evaluations. They help you assess delivery over time, including how quickly changes reach production and how often deployments fail. An agent may finish sooner while its work waits longer for review or needs more repairs after release. Compare delivery for the same application over time, and use feedback from users to judge whether the product itself has improved.
+
 ## Invest in the work around implementation
 
 The factory needs a budget for maintaining context, checks, and review. Product and domain experts need time to clarify rules. Engineers maintain the execution environment and its controls. Someone must own evaluation quality and follow up on recurring problems. The [Roles](/roles) chapter examines those responsibilities; one person may hold several of them.
 
 Give proposed improvements a place alongside feature work, with a named owner and evidence of the problem. For a new brand check, that might mean recurring violations, their correction cost, and a bounded trial of the proposed check. The team should be able to decide whether the expected benefit justifies the investment.
+
+[Hycle](https://hycle.org/) proposes treating the factory as an internal product for the team. That gives someone responsibility for finding out what the team needs, choosing improvements, and checking whether they help.
 
 Review capacity matters too. DX’s [Q3 2026 report](https://getdx.com/uploads/state-of-ai-impact-in-engineering-q3-report.pdf) observes growing complexity-weighted pull request throughput, a measure of proposed code changes completed. Organizations with more than 80% AI-generated code waited a median of 82 minutes for a first review, compared with 40 minutes in the 20–40% group. The report measured waiting time and did not measure how long reviewers actively worked. It cannot establish what caused the difference between organizations; context quality is one proposed explanation.
 

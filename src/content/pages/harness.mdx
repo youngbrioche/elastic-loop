@@ -5,7 +5,7 @@ socialDescription: "The context, feedback, boundaries and review that let an age
 kicker: "Part three"
 order: 3
 status: seed
-updated: 2026-10-21
+updated: 2026-10-27
 ---
 
 import PageIntro from '../../components/PageIntro.astro';
@@ -105,7 +105,7 @@ Keep the evidence connected to the result being reviewed. Identify the version a
 
 Feedback can correct the current attempt and improve future ones. **<Term id="retained-feedback">Retained feedback</Term>** is useful feedback preserved in a plan, a test, a decision record, or instructions that later work will use.
 
-Suppose the dashboard uses invented colors and controls despite an existing set of approved components. Inspect how the agent reached that result. If the project guide points to an obsolete example, repair the reference and show how the current components are used. A fast check triggered when the agent saves an interface file can then flag unsupported styling while it works. The context explains the intended design; the executed check supplies feedback on the attempt.
+Suppose the dashboard broadly follows the corporate design but still feels inconsistent: spacing varies between screens, components are used with slightly different dimensions, typography shifts across contexts, and similar interactions are implemented in different ways. There may be an approved component library, but no sufficiently complete or enforceable design system for the agent to apply directly. Instead, it has to infer missing rules from scattered examples, existing screens, documentation, and local conventions. I’d inspect the trace, the record of the agent’s steps, including tool calls and their results. It might show that the agent followed a link in the project guide to an obsolete example, copied spacing from an isolated screen, or inferred a layout rule from a component that was never intended as a general pattern. Correcting that link and making the relevant usage guidance more explicit gives the next run a better starting point. A check for unsupported styling can also catch deviations while the agent works, but it should account not only for invented colors or controls, but also for inconsistent spacing, sizing, typography, and interaction patterns. If the trace doesn’t show which examples or rules the agent relied on, you’ll need more evidence before deciding whether the problem is an implementation error, incomplete documentation, or the absence of a design system that can serve both as a source of context and as a verifier.
 
 Agent memory and skills, reusable instructions for carrying out a task, are places to retain this learning. Repeated failed commands, missing setup steps, and unnecessary retries show where those instructions need attention. An agent can propose a correction, and straightforward repairs can be delegated within agreed limits. Changes to acceptance criteria, permissions, or policy need review by whoever owns them.
 
