@@ -71,3 +71,11 @@ beneath. Keep these in sync — details in `scripts/README-diagrams.md`:
   `deploy.yml`.
 - **Changed the MasterGrid content?** Its `.md` form is a hand-kept markdown
   table in `markdown.ts` (not an image). Update it there by hand.
+
+## Editorial conventions
+
+- **Chapter arc:** Each page owns a clear slot: `index` (the living online book, framework summary, sprawl vs. slop, where to start), `loops` (sizing tight / elastic / loose), `why` (economic and technical case), `harness` (execution loop, tools, context, backpressure), `factory` (shared operating model, ownership, improving the setup), `grading` (outcome grading), `roles` (each role across the full loop), `faq` and `skill` (application and readiness skill).
+- **House terminology:** Always **"agentic engineering"** (never "agentic coding"). Refer to the home page as a **"living online book"** (avoid "hub"). Use **"agent work"** over "agent output" when referring to the whole contribution.
+- **Web-native sub-pages:** Readers deep-link into any chapter. Do not assume a fixed reading order; link to sibling chapters by path.
+- **Substance and precision:** Define mechanisms concretely (harness, backpressure, gates). Treat multi-variant search (Best-of-n) as an opt-in discipline, not the default. Frame around solution quality rather than raw throughput, and show roles contributing across intent, context, variants, and judgment.
+- **Teaser consistency:** When a page's one-line teaser changes, update its metadata, the home page list, and the agent-readable mirror together.
